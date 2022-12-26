@@ -1,9 +1,7 @@
 package com.increff.groceryPoint.service;
 
 import com.increff.groceryPoint.dao.BrandDao;
-import com.increff.groceryPoint.dao.EmployeeDao;
 import com.increff.groceryPoint.pojo.BrandPojo;
-import com.increff.groceryPoint.pojo.EmployeePojo;
 import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +51,7 @@ public class BrandService {
     public BrandPojo getCheck(int id) throws ApiException {
         BrandPojo p = dao.select(id);
         if (p == null) {
-            throw new ApiException("Employee with given ID does not exit, id: " + id);
+            throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
         return p;
     }

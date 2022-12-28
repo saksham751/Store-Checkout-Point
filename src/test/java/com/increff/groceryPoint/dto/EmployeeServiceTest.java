@@ -1,4 +1,4 @@
-package com.increff.groceryPoint.service;
+package com.increff.groceryPoint.dto;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package com.increff.groceryPoint.service;
+package com.increff.groceryPoint.dto;
 
 public class ApiException extends Exception {
 

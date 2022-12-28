@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.increff.groceryPoint.model.UserData;
 import com.increff.groceryPoint.model.UserForm;
 import com.increff.groceryPoint.pojo.UserPojo;
-import com.increff.groceryPoint.service.ApiException;
-import com.increff.groceryPoint.service.UserService;
+import com.increff.groceryPoint.dto.ApiException;
+import com.increff.groceryPoint.dto.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

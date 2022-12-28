@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.increff.groceryPoint.model.MessageData;
-import com.increff.groceryPoint.service.ApiException;
+import com.increff.groceryPoint.dto.ApiException;
 
 @RestControllerAdvice
 public class AppRestControllerAdvice {

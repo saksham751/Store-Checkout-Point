@@ -1,25 +1,29 @@
-package com.increff.groceryPoint.service;
+package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.BrandDao;
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.BrandPojo;
 import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.increff.groceryPoint.api.Helper;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
-public class BrandService {
+public class BrandMasterApi {
     @Autowired
     private BrandDao dao;
-
+    private Helper help;
     @Transactional(rollbackOn = ApiException.class)
     public void add(BrandPojo p) throws ApiException {
-        normalize(p);
+        help.normalize(p);
         if(StringUtil.isEmpty(p.getBrand())) {
             throw new ApiException("name cannot be empty");
         }
+        checkUnique(p);
         dao.insert(p);
     }
 
@@ -40,7 +44,8 @@ public class BrandService {
 
     @Transactional(rollbackOn  = ApiException.class)
     public void update(int id, BrandPojo p) throws ApiException {
-        normalize(p);
+        help.normalize(p);
+        checkUnique(p);
         BrandPojo ex = getCheck(id);
         ex.setCategory(p.getCategory());
         ex.setBrand(p.getBrand());
@@ -55,8 +60,9 @@ public class BrandService {
         }
         return p;
     }
-
-    protected static void normalize(BrandPojo p) {
-        p.setBrand(StringUtil.toLowerCase(p.getBrand()));
+    public void checkUnique(BrandPojo brandPojo) throws ApiException {
+        if (!Objects.isNull(dao.checkUnique(brandPojo.getBrand(), brandPojo.getCategory()))) {
+            throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + " pair already exists");
+        }
     }
 }

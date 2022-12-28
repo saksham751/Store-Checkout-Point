@@ -7,7 +7,7 @@ import com.increff.groceryPoint.model.ProductData;
 import com.increff.groceryPoint.model.ProductForm;
 import com.increff.groceryPoint.pojo.ProductPojo;
 
-import com.increff.groceryPoint.service.ProductService;
+import com.increff.groceryPoint.dto.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.increff.groceryPoint.service.ApiException;
+import com.increff.groceryPoint.dto.ApiException;
 
 
 import io.swagger.annotations.Api;

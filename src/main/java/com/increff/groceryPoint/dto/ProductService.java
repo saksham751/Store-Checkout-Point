@@ -1,6 +1,6 @@
-package com.increff.groceryPoint.service;
+package com.increff.groceryPoint.dto;
 
-import com.increff.groceryPoint.dao.BrandDao;
+import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dao.ProductDao;
 
 import com.increff.groceryPoint.pojo.ProductPojo;
@@ -17,7 +17,7 @@ public class ProductService {
     @Autowired
     private ProductDao dao;
     @Autowired
-    private BrandService bserv;
+    private BrandMasterApi bserv;
     @Transactional(rollbackOn = ApiException.class)
     public void add(ProductPojo p) throws ApiException {
 

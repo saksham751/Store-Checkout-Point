@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.increff.groceryPoint.model.AboutAppData;
-import com.increff.groceryPoint.service.AboutAppService;
+import com.increff.groceryPoint.dto.AboutAppService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

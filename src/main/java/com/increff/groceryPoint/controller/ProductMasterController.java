@@ -45,46 +45,21 @@ public class ProductMasterController {
     @ApiOperation(value = "Gets an product by ID")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.GET)
     public ProductMasterData getProductController(@PathVariable int id) throws ApiException {
-        ProductMasterPojo p = productDto.getProductDto(id);
-        return convert(p);
+        return productDto.getProductDto(id);
     }
 
     @ApiOperation(value = "Gets list of all products")
     @RequestMapping(path = "/api/product", method = RequestMethod.GET)
-    public List<ProductMasterData> getAllProductController() {
-        List<ProductMasterPojo> list = productDto.getAllProductDto();
-        List<ProductMasterData> list2 = new ArrayList<ProductMasterData>();
-        for (ProductMasterPojo p : list) {
-            list2.add(convert(p));
-        }
-        return list2;
+    public List<ProductMasterData> getAllProductController() throws ApiException{
+        return productDto.getAllProductDto();
+
     }
 
     @ApiOperation(value = "Updates an product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.PUT)
     public void updateProductController(@PathVariable int id, @RequestBody ProductMasterForm f) throws ApiException {
-        ProductMasterPojo p = convert(f);
-        productDto.updateProductDto(id, p);
-    }
-
-
-    private static ProductMasterData convert(ProductMasterPojo p) {
-        ProductMasterData d = new ProductMasterData();
-        d.setBrand_category(p.getBrand_category());
-        d.setName(p.getName());
-        d.setMrp(p.getMrp());
-        d.setBarcode(p.getBarcode());
-        d.setId(p.getId());
-        return d;
-    }
-
-    private static ProductMasterPojo convert(ProductMasterForm f) {
-        ProductMasterPojo p = new ProductMasterPojo();
-        p.setBrand_category(f.getBrand_category());
-        p.setName(f.getName());
-        p.setMrp(f.getMrp());
-        p.setBarcode(f.getBarcode());
-        return p;
+        //ProductMasterPojo p = convert(f);
+        productDto.updateProductDto(id, f);
     }
 
 }

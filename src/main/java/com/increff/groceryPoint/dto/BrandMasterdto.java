@@ -35,7 +35,6 @@ public class BrandMasterdto {
     }
 
     public BrandMasterData getBrandDto(int id) throws ApiException {
-
         BrandMasterPojo p = brandApi.getBrandApi(id);
         return convert(p);
     }

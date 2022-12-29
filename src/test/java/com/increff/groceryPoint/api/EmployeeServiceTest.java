@@ -1,18 +1,20 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.api;
 
-import static org.junit.Assert.assertEquals;
-
+import com.increff.groceryPoint.dto.ApiException;
+import com.increff.groceryPoint.dto.EmployeeService;
+import com.increff.groceryPoint.pojo.EmployeePojo;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.increff.groceryPoint.pojo.EmployeePojo;
+import static org.junit.Assert.assertEquals;
 
 public class EmployeeServiceTest extends AbstractUnitTest {
 
 	@Autowired
 	private EmployeeService service;
 
-	@Test
+
+    @Test
 	public void testAdd() throws ApiException {
 		EmployeePojo p = new EmployeePojo();
 		p.setName(" Romil Jain ");

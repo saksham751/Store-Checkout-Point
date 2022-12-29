@@ -8,6 +8,6 @@ import lombok.Setter;
 public class ProductMasterForm {
     private String barcode;
     private int brand_category;
-    private String name;
+    private String productName;
     private double mrp;
 }

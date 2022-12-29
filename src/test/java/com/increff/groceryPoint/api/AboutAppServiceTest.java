@@ -1,9 +1,10 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.api;
 
-import static org.junit.Assert.assertEquals;
-
+import com.increff.groceryPoint.dto.AboutAppService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.Assert.assertEquals;
 
 public class AboutAppServiceTest extends AbstractUnitTest {
 

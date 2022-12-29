@@ -1,4 +1,4 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.api;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;

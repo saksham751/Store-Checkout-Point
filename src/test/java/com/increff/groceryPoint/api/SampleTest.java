@@ -1,4 +1,4 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.api;
 
 import static org.junit.Assert.assertNotNull;
 

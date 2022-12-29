@@ -3,11 +3,11 @@ package com.increff.groceryPoint.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.increff.groceryPoint.model.ProductData;
-import com.increff.groceryPoint.model.ProductForm;
-import com.increff.groceryPoint.pojo.ProductPojo;
+import com.increff.groceryPoint.model.ProductMasterData;
+import com.increff.groceryPoint.model.ProductMasterForm;
+import com.increff.groceryPoint.pojo.ProductMasterPojo;
 
-import com.increff.groceryPoint.dto.ProductService;
+import com.increff.groceryPoint.dto.ProductMasterdto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,39 +24,37 @@ import io.swagger.annotations.ApiOperation;
 
 @Api
 @RestController
-public class ProductApiController {
+public class ProductMasterController {
 
     @Autowired
-    private ProductService service;
+    private ProductMasterdto productDto;
 
     @ApiOperation(value = "Adds a Product")
     @RequestMapping(path = "/api/product", method = RequestMethod.POST)
-    public void add(@RequestBody ProductForm form) throws ApiException {
-        ProductPojo p = convert(form);
-        service.add(p);
+    public void addProductController(@RequestBody ProductMasterForm form) throws ApiException {
+        productDto.addProductDto(form);
     }
 
 
     @ApiOperation(value = "Deletes a product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.DELETE)
-    // /api/1
-    public void delete(@PathVariable int id) {
-        service.delete(id);
+    public void deleteProductController(@PathVariable int id) {
+        productDto.deleteProductDto(id);
     }
 
     @ApiOperation(value = "Gets an product by ID")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.GET)
-    public ProductData get(@PathVariable int id) throws ApiException {
-        ProductPojo p = service.get(id);
+    public ProductMasterData getProductController(@PathVariable int id) throws ApiException {
+        ProductMasterPojo p = productDto.getProductDto(id);
         return convert(p);
     }
 
     @ApiOperation(value = "Gets list of all products")
     @RequestMapping(path = "/api/product", method = RequestMethod.GET)
-    public List<ProductData> getAll() {
-        List<ProductPojo> list = service.getAll();
-        List<ProductData> list2 = new ArrayList<ProductData>();
-        for (ProductPojo p : list) {
+    public List<ProductMasterData> getAllProductController() {
+        List<ProductMasterPojo> list = productDto.getAllProductDto();
+        List<ProductMasterData> list2 = new ArrayList<ProductMasterData>();
+        for (ProductMasterPojo p : list) {
             list2.add(convert(p));
         }
         return list2;
@@ -64,14 +62,14 @@ public class ProductApiController {
 
     @ApiOperation(value = "Updates an product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody ProductForm f) throws ApiException {
-        ProductPojo p = convert(f);
-        service.update(id, p);
+    public void updateProductController(@PathVariable int id, @RequestBody ProductMasterForm f) throws ApiException {
+        ProductMasterPojo p = convert(f);
+        productDto.updateProductDto(id, p);
     }
 
 
-    private static ProductData convert(ProductPojo p) {
-        ProductData d = new ProductData();
+    private static ProductMasterData convert(ProductMasterPojo p) {
+        ProductMasterData d = new ProductMasterData();
         d.setBrand_category(p.getBrand_category());
         d.setName(p.getName());
         d.setMrp(p.getMrp());
@@ -80,8 +78,8 @@ public class ProductApiController {
         return d;
     }
 
-    private static ProductPojo convert(ProductForm f) {
-        ProductPojo p = new ProductPojo();
+    private static ProductMasterPojo convert(ProductMasterForm f) {
+        ProductMasterPojo p = new ProductMasterPojo();
         p.setBrand_category(f.getBrand_category());
         p.setName(f.getName());
         p.setMrp(f.getMrp());

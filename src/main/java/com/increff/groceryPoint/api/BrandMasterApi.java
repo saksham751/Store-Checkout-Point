@@ -1,66 +1,59 @@
 package com.increff.groceryPoint.api;
 
-import com.increff.groceryPoint.dao.BrandDao;
+import com.increff.groceryPoint.dao.BrandMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.pojo.BrandPojo;
-import com.increff.groceryPoint.util.StringUtil;
+import com.increff.groceryPoint.pojo.BrandMasterPojo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.increff.groceryPoint.api.Helper;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
 @Service
 public class BrandMasterApi {
     @Autowired
-    private BrandDao dao;
+    private BrandMasterDao dao;
     private Helper help;
-    @Transactional(rollbackOn = ApiException.class)
-    public void add(BrandPojo p) throws ApiException {
+
+    public void addBrandApi(BrandMasterPojo p) throws ApiException {
         help.normalize(p);
-        if(StringUtil.isEmpty(p.getBrand())) {
-            throw new ApiException("name cannot be empty");
-        }
-        checkUnique(p);
-        dao.insert(p);
+        //checkUnique(p);
+        dao.insertBrandDao(p);
+    }
+//todo remove transactional
+
+    public void deleteBrandApi(int id) {
+        dao.deleteBrandDao(id);
     }
 
-    @Transactional
-    public void delete(int id) {
-        dao.delete(id);
-    }
 
-    @Transactional(rollbackOn = ApiException.class)
-    public BrandPojo get(int id) throws ApiException {
+    public BrandMasterPojo getBrandApi(int id) throws ApiException {
         return getCheck(id);
     }
 
-    @Transactional
-    public List<BrandPojo> getAll() {
-        return dao.selectAll();
+    public List<BrandMasterPojo> getAllBrandApi() {
+        return dao.selectAllBrandDao();
     }
 
-    @Transactional(rollbackOn  = ApiException.class)
-    public void update(int id, BrandPojo p) throws ApiException {
-        help.normalize(p);
+    @Transactional
+    public void updateBrandApi(int id, BrandMasterPojo p) throws ApiException {
         checkUnique(p);
-        BrandPojo ex = getCheck(id);
+        BrandMasterPojo ex = getCheck(id);
         ex.setCategory(p.getCategory());
         ex.setBrand(p.getBrand());
-        dao.update(ex);
+        dao.updateBrandDao(ex);
     }
 
-    @Transactional
-    public BrandPojo getCheck(int id) throws ApiException {
-        BrandPojo p = dao.select(id);
+    public BrandMasterPojo getCheck(int id) throws ApiException {
+        BrandMasterPojo p = dao.selectBrandDao(id);
         if (p == null) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
         return p;
     }
-    public void checkUnique(BrandPojo brandPojo) throws ApiException {
+    public void checkUnique(BrandMasterPojo brandPojo) throws ApiException {
         if (!Objects.isNull(dao.checkUnique(brandPojo.getBrand(), brandPojo.getCategory()))) {
             throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + " pair already exists");
         }

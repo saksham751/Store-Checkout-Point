@@ -1,32 +1,35 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
-import com.increff.groceryPoint.dao.ProductDao;
+import com.increff.groceryPoint.dao.ProductMasterDao;
 
-import com.increff.groceryPoint.pojo.ProductPojo;
-import com.increff.groceryPoint.pojo.BrandPojo;
+import com.increff.groceryPoint.model.ProductMasterForm;
+import com.increff.groceryPoint.pojo.ProductMasterPojo;
+import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import static com.increff.groceryPoint.dto.HelperProduct.convert;
+//import static com.increff.groceryPoint.dto.HelperProduct.validateProductForm;
+//import static com.increff.groceryPoint.dto.HelperProduct.normalize;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class ProductService {
+public class ProductMasterdto {
     @Autowired
-    private ProductDao dao;
+    private ProductMasterDao dao;
     @Autowired
     private BrandMasterApi bserv;
     @Transactional(rollbackOn = ApiException.class)
-    public void add(ProductPojo p) throws ApiException {
-
+    public void addProductDto(ProductMasterForm form) throws ApiException {
+        ProductMasterPojo p=convert(form);
         if(StringUtil.isEmpty(p.getName())) {
             throw new ApiException("name cannot be empty");
         }
         try {
             int id = p.getBrand_category();
-            BrandPojo brandPojo = bserv.get(id);
+            BrandMasterPojo brandPojo = bserv.getBrandApi(id);
             //System.out.println(brandPojo.getBrand());
             if (brandPojo != null) {
                 normalize(p);
@@ -36,7 +39,7 @@ public class ProductService {
             throw new ApiException("Brand id does not exist");
         }
         try {
-            dao.insert(p);
+            dao.insertProductDao(p);
         }catch(Exception e){
             throw new ApiException("Barcode must be unique");
         }
@@ -46,41 +49,41 @@ public class ProductService {
     }
 
     @Transactional
-    public void delete(int id) {
-        dao.delete(id);
+    public void deleteProductDto(int id) {
+        dao.deleteProductDao(id);
     }
 
     @Transactional(rollbackOn = ApiException.class)
-    public ProductPojo get(int id) throws ApiException {
-        return getCheck(id);
+    public ProductMasterPojo getProductDto(int id) throws ApiException {
+        return checkProductExists(id);
     }
 
     @Transactional
-    public List<ProductPojo> getAll() {
-        return dao.selectAll();
+    public List<ProductMasterPojo> getAllProductDto() {
+        return dao.selectAllProductDao();
     }
 
     @Transactional(rollbackOn  = ApiException.class)
-    public void update(int id, ProductPojo p) throws ApiException {
+    public void updateProductDto(int id, ProductMasterPojo p) throws ApiException {
         normalize(p);
-        ProductPojo ex = getCheck(id);
+        ProductMasterPojo ex = checkProductExists(id);
         ex.setBrand_category(p.getBrand_category());
         ex.setName(p.getName());
         ex.setBarcode(p.getBarcode());
         ex.setMrp(p.getMrp());
-        dao.update(ex);
+        dao.updateProductDao(ex);
     }
 
     @Transactional
-    public ProductPojo getCheck(int id) throws ApiException {
-        ProductPojo p = dao.select(id);
+    public ProductMasterPojo checkProductExists(int id) throws ApiException {
+        ProductMasterPojo p = dao.selectProductDao(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }
         return p;
     }
 
-    protected static void normalize(ProductPojo p) {
+    protected static void normalize(ProductMasterPojo p) {
         p.setName(StringUtil.toLowerCase(p.getName()));
     }
 }

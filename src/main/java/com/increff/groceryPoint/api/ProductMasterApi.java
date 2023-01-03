@@ -19,13 +19,19 @@ public class ProductMasterApi {
     private ProductMasterDao pdao;
     @Autowired
     private BrandMasterApi brandApi;
+
+    @Autowired
+    private InventoryMasterApi inventoryApi;
+    @Transactional
     public void addProductApi(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
         BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
         if (isNull(brandPojo)) {
             throw new ApiException("Brand id does not exist");
         }
+
         pdao.insertProductDao(p);
+        inventoryApi.addInventoryApi(p.getId());
     }
 
     public void deleteProductApi(int id) {

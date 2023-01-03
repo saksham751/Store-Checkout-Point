@@ -34,18 +34,6 @@ public class ProductMasterdto {
         isProductValid(form);
         ProductMasterPojo p=convert(form);
         productApi.addProductApi(p);
-//        try {
-//            int id = p.getBrand_category();
-//            BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
-//            //System.out.println(brandPojo.getBrand());
-//            if (brandPojo != null) {
-//                normalize(p);
-//            }
-//        }catch(Exception e) {
-//            e.printStackTrace();
-//            throw new ApiException("Brand id does not exist");
-//        }
-
     }
 
     @Transactional

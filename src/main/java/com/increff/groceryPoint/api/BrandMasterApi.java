@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-
+//todo shift update brandcode to dao
 @Service
 public class BrandMasterApi {
     @Autowired

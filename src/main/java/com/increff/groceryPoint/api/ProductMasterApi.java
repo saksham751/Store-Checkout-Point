@@ -22,7 +22,7 @@ public class ProductMasterApi {
 
     @Autowired
     private InventoryMasterApi inventoryApi;
-    @Transactional
+
     public void addProductApi(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
         BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
@@ -31,7 +31,6 @@ public class ProductMasterApi {
         }
 
         pdao.insertProductDao(p);
-        inventoryApi.addInventoryApi(p.getId());
     }
 
     public void deleteProductApi(int id) {

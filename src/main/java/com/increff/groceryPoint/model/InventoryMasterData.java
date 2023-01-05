@@ -6,5 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class InventoryMasterData extends InventoryMasterForm{
-    private int id;
+
 }

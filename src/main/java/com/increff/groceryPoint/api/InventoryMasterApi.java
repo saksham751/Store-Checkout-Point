@@ -18,11 +18,8 @@ import static java.util.Objects.isNull;
 public class InventoryMasterApi {
     @Autowired
     private InventoryMasterDao idao;
-    public void addInventoryApi(int id) throws ApiException {
-        InventoryMasterPojo inv = null;
-        inv.setId(id);
-        inv.setQuantity(0);
-        idao.insertInventorytDao(inv);
+    public void addInventoryApi(InventoryMasterPojo p) throws ApiException {
+        idao.insertInventorytDao(p);
     }
 
     public InventoryMasterPojo getInventoryApi(int id) throws ApiException {

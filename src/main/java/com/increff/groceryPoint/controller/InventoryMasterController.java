@@ -17,7 +17,12 @@ public class InventoryMasterController {
     @Autowired
     private InventoryMasterdto invDto;
 
-    @ApiOperation(value="Select particular Invnetory")
+    @ApiOperation(value = "Add a product Inventory")
+    @RequestMapping(path = "/api/inventory", method = RequestMethod.POST)
+    public void addInventoryController(@RequestBody InventoryMasterForm form) throws ApiException{
+        invDto.addInventoryDto(form);
+    }
+    @ApiOperation(value="Select particular Inventory")
     @RequestMapping(path="/api/inventory/{id}",method=RequestMethod.GET)
     public InventoryMasterData getInventoryController(@PathVariable int id)throws ApiException{
         return invDto.getInventoryDto(id);

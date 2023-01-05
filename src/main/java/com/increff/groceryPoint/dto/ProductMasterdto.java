@@ -29,24 +29,21 @@ public class ProductMasterdto {
     private ProductMasterApi productApi;
     @Autowired
     private BrandMasterApi brandApi;
-    @Transactional(rollbackOn = ApiException.class)
+//removed Transactional
     public void addProductDto(ProductMasterForm form) throws ApiException {
         isProductValid(form);
         ProductMasterPojo p=convert(form);
         productApi.addProductApi(p);
     }
 
-    @Transactional
     public void deleteProductDto(int id) {
-        dao.deleteProductDao(id);
+        productApi.deleteProductApi(id);
     }
 
-    @Transactional(rollbackOn = ApiException.class)
     public ProductMasterData getProductDto(int id) throws ApiException {
         return convert(productApi.getProductApi(id));
     }
 
-    @Transactional
     public List<ProductMasterData> getAllProductDto() throws ApiException{
         List<ProductMasterPojo> list = productApi.getAllProductApi();
         List<ProductMasterData> list2 = new ArrayList<ProductMasterData>();
@@ -56,7 +53,6 @@ public class ProductMasterdto {
         return list2;
     }
 
-    @Transactional(rollbackOn  = ApiException.class)
     public void updateProductDto(int id, ProductMasterForm form) throws ApiException {
         isProductValid(form);
         ProductMasterPojo p=convert(form);

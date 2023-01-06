@@ -13,10 +13,14 @@ public class ProductMasterPojo extends AbstractPojo{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    @Column(unique=true)
+    @Column(unique=true,nullable = false)
     private String barcode;
     private String name;
-    private int brand_category;
-    private double mrp;
+    @Column(nullable = false)
+
+    private Integer brand_category;
+    @Column(nullable = false)
+
+    private Double mrp;
 
 }

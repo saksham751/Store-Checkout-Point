@@ -13,6 +13,6 @@ import java.time.ZonedDateTime;
 public class OrderMasterPojo extends AbstractPojo{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private ZonedDateTime time;
 }

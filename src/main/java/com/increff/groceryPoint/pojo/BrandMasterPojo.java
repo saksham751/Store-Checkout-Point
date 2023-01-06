@@ -19,7 +19,11 @@ public class BrandMasterPojo extends AbstractPojo{
     //TODO index on appropriate field
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+    @Column(nullable = false)
+
     private String brand;
+    @Column(nullable = false)
+
     private String category;
 }

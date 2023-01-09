@@ -19,9 +19,8 @@ public class OrderMasterApi {
     private OrderMasterDao oDao;
 
 
-    public void addOrderApi() throws ApiException {
-        OrderMasterPojo omp= new OrderMasterPojo();
-        omp.setTime(ZonedDateTime.now());
+    public void addOrderApi(OrderMasterPojo omp) throws ApiException {
+//        System.out.println(omp.getId());
         oDao.addOrderDao(omp);
     }
 

@@ -15,8 +15,7 @@ import java.util.List;
 public class OrderItemMasterDao extends AbstractDao{
     private static String select_All="select orderitem from OrderItemMasterPojo orderitem";
     private static String select ="select orderitem from OrderItemMasterPojo orderitem where id =: id";
-
-    private static String delete_OrderItem="delete from OrderMasterPojo o where id =: id";
+    private static String delete_OrderItem="delete from OrderItemMasterPojo o where id =: id";
 
     @PersistenceContext
     private EntityManager em;
@@ -45,9 +44,7 @@ public class OrderItemMasterDao extends AbstractDao{
         return query.executeUpdate();
     }
     @Transactional
-    public void updateOrderDao(OrderItemMasterPojo p,OrderItemMasterPojo ex){
-        ex.setQuantity(p.getQuantity());
-        ex.setSellingPrice(p.getSellingPrice());
-        ex.setProductId(p.getProductId());
+    public void updateOrderDao(OrderItemMasterPojo ex){
+
     }
 }

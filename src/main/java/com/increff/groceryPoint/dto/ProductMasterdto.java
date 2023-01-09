@@ -36,7 +36,7 @@ public class ProductMasterdto {
         productApi.addProductApi(p);
     }
 
-    public void deleteProductDto(int id) {
+    public void deleteProductDto(int id) throws ApiException {
         productApi.deleteProductApi(id);
     }
 

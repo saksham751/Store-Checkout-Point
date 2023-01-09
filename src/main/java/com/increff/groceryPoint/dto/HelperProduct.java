@@ -45,9 +45,9 @@ public class HelperProduct {
         {
             throw new ApiException("Product Name cannot be Empty!");
         }
-        if(isNull(form.getMrp()))
+        if(isNull(form.getMrp()) || form.getMrp()<0)
         {
-            throw new ApiException("MRP cannot be Empty!");
+            throw new ApiException("MRP cannot be Empty! or Less than 0");
         }
         if(isNull(form.getBarcode()) || form.getBarcode().isEmpty())
         {

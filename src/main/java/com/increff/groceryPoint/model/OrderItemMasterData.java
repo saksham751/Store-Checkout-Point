@@ -9,4 +9,5 @@ import javax.persistence.Id;
 @Getter@Setter
 public class OrderItemMasterData extends OrderItemMasterForm{
     private int id;
+    private double sellingPrice;
 }

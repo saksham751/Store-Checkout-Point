@@ -4,6 +4,7 @@ import com.increff.groceryPoint.dao.ProductMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,8 @@ public class ProductMasterApi {
         pdao.insertProductDao(p);
     }
 
-    public void deleteProductApi(int id) {
+    public void deleteProductApi(int id) throws ApiException {
+        getCheck(id);
         pdao.deleteProductDao(id);
     }
 
@@ -48,9 +50,14 @@ public class ProductMasterApi {
     }
 
 
+    @Transactional
     public void updateProductApi(int id, ProductMasterPojo p) throws ApiException {
         ProductMasterPojo ex = getCheck(id);
-        pdao.updateProductDao(p,ex);
+        ex.setName(p.getName());
+        ex.setMrp(p.getMrp());
+        ex.setBarcode(p.getBarcode());
+        ex.setBrand_category(p.getBrand_category());
+        pdao.updateProductDao(ex);
 
     }
 

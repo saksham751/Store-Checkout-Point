@@ -8,6 +8,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(indexes = {
+        @Index(name ="nameIndex" ,columnList = "name"), @Index(name = "brand_categoryIndex",columnList = "brand_category"),
+        @Index(name="barcodeIndex",columnList = "barcode")
+})
 public class ProductMasterPojo extends AbstractPojo{
 
     @Id

@@ -22,6 +22,8 @@ import com.increff.groceryPoint.dto.ApiException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.validation.Valid;
+
 @Api
 @RestController
 public class ProductMasterController {
@@ -38,7 +40,7 @@ public class ProductMasterController {
 
     @ApiOperation(value = "Deletes a product")
     @RequestMapping(path = "/api/product/{id}", method = RequestMethod.DELETE)
-    public void deleteProductController(@PathVariable int id) {
+    public void deleteProductController(@PathVariable int id) throws ApiException{
         productDto.deleteProductDto(id);
     }
 

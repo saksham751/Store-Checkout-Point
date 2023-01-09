@@ -44,11 +44,8 @@ public class ProductMasterDao extends AbstractDao {
         return query.getResultList();
     }
     @Transactional
-    public void updateProductDao(ProductMasterPojo p,ProductMasterPojo ex) {
-        ex.setName(p.getName());
-        ex.setMrp(p.getMrp());
-        ex.setBarcode(p.getBarcode());
-        ex.setBrand_category(p.getBrand_category());
+    public void updateProductDao(ProductMasterPojo ex) {
+
     }
 
 

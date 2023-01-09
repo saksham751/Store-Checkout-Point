@@ -30,7 +30,7 @@ public class BrandMasterdto {
     }
 
 
-    public void deleteBrandDto(@PathVariable int id) {
+    public void deleteBrandDto(@PathVariable int id) throws ApiException{
         brandApi.deleteBrandApi(id);
     }
 

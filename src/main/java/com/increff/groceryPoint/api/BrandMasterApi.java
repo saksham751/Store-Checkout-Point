@@ -15,16 +15,17 @@ import java.util.Objects;
 public class BrandMasterApi {
     @Autowired
     private BrandMasterDao dao;
-    private Helper help;
+    //private Helper help;
 
     public void addBrandApi(BrandMasterPojo p) throws ApiException {
-        help.normalize(p);
+        //help.normalize(p);
         //checkUnique(p);
         dao.insertBrandDao(p);
     }
 //todo remove transactional
 
-    public void deleteBrandApi(int id) {
+    public void deleteBrandApi(int id) throws ApiException{
+        getCheck(id);
         dao.deleteBrandDao(id);
     }
 

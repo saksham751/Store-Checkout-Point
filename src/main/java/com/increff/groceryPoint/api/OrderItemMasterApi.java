@@ -35,13 +35,17 @@ public class OrderItemMasterApi {
         return orderItemDao.selectAllOrderItemDao();
     }
 
-
+    @Transactional
     public void updateOrderItemApi(int id, OrderItemMasterPojo p) throws ApiException {
         OrderItemMasterPojo ex = checkOrderItemExists(id);
-        orderItemDao.updateOrderDao(p,ex);
+        ex.setQuantity(p.getQuantity());
+        ex.setSellingPrice(p.getSellingPrice());
+        ex.setProductId(p.getProductId());
+        orderItemDao.updateOrderDao(ex);
 
     }
     public void deleteOrderItemApi(int id) throws ApiException{
+        checkOrderItemExists(id);
         orderItemDao.deleteOrderItemDao(id);
     }
 

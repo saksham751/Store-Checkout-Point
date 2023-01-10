@@ -89,6 +89,7 @@ var processCount = 0;
 function processData(){
 	var file = $('#employeeFile')[0].files[0];
 	readFileData(file, readFileDataCallback);
+
 }
 
 function readFileDataCallback(results){
@@ -110,7 +111,7 @@ function uploadRows(){
 	
 	var json = JSON.stringify(row);
 	var url = getEmployeeUrl();
-
+    console.log(json);
 	//Make ajax call
 	$.ajax({
 	   url: url,

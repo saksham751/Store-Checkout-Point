@@ -4,6 +4,7 @@ import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
+import io.swagger.annotations.Api;
 
 
 import static java.util.Objects.isNull;
@@ -14,13 +15,14 @@ public class HelperInventory {
         pApi.getProductApi(form.getId());
     }
     public static void isInventoryValid(InventoryMasterForm form) throws ApiException{
+        Integer qty=form.getQuantity();
         if(isNull(form.getQuantity()))
         {
             throw new ApiException("Product Name cannot be Empty!");
         }
         if(form.getQuantity()<0)
         {
-            throw new ApiException("Quantity cannot be less than 0!");
+            throw new ApiException("Quantity cannot be less than 0 or Null!");
         }
 
     }
@@ -37,4 +39,5 @@ public class HelperInventory {
         inv.setId(p.getId());
         return inv;
     }
+
 }

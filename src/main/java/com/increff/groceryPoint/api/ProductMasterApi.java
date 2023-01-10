@@ -41,8 +41,9 @@ public class ProductMasterApi {
 
 
     public ProductMasterPojo getProductApi(int id) throws ApiException {
-        checkProductExists(id,pdao);
-        return getCheck(id);
+        System.out.println(id);
+        ProductMasterPojo p = getCheck(id);
+        return p;
     }
 
     public List<ProductMasterPojo> getAllProductApi() {
@@ -63,6 +64,7 @@ public class ProductMasterApi {
 
     public ProductMasterPojo getCheck(int id) throws ApiException {
         ProductMasterPojo p = pdao.selectProductDao(id);
+        System.out.println(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }

@@ -1,17 +1,17 @@
 
-function getBrandUrl(){
+function getOrderUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/api/brand";
+	return baseUrl + "/api/order";
 }
 
 //BUTTON ACTIONS
-function addBrand(event){
+function addOrder(event){
 	//Set the values to update
 
-	var $form = $("#brand-form");
+	var $form = $("#order-form");
 	var json = toJson($form);
-	var url = getBrandUrl();
-
+	var url = getOrderUrl();
+    console.log(json);
 
 	$.ajax({
 	   url: url,
@@ -21,7 +21,7 @@ function addBrand(event){
        	'Content-Type': 'application/json'
        },
 	   success: function(response) {
-	   		getBrandList();
+	   		getOrderList();
 	   },
 	   error: handleAjaxError
 	});
@@ -29,14 +29,14 @@ function addBrand(event){
 	return false;
 }
 
-function updateBrand(event){
-	$('#edit-brand-modal').modal('toggle');
+function updateOrder(event){
+	$('#edit-order-modal').modal('toggle');
 	//Get the ID
-	var id = $("#brand-edit-form input[name=id]").val();
-	var url = getBrandUrl() + "/" + id;
+	var id = $("#order-edit-form input[name=id]").val();
+	var url = getOrderUrl() + "/" + id;
 
 	//Set the values to update
-	var $form = $("#brand-edit-form");
+	var $form = $("#order-edit-form");
 	var json = toJson($form);
 
 	$.ajax({
@@ -47,7 +47,7 @@ function updateBrand(event){
        	'Content-Type': 'application/json'
        },
 	   success: function(response) {
-	   		getBrandList();
+	   		getOrderList();
 	   },
 	   error: handleAjaxError
 	});
@@ -56,26 +56,26 @@ function updateBrand(event){
 }
 
 
-function getBrandList(){
-	var url = getBrandUrl();
+function getOrderList(){
+	var url = getOrderUrl();
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
-	   		displayBrandList(data);
+	   		displayOrderList(data);
 	   },
 	   error: handleAjaxError
 	});
 }
 
-function deleteBrand(id){
-	var url = getBrandUrl() + "/" + id;
+function deleteOrder(id){
+	var url = getOrderUrl() + "/" + id;
 
 	$.ajax({
 	   url: url,
 	   type: 'DELETE',
 	   success: function(data) {
-	   		getBrandList();
+	   		getOrderList();
 	   },
 	   error: handleAjaxError
 	});
@@ -88,15 +88,12 @@ var processCount = 0;
 
 
 function processData(){
-	var file = $('#brandFile')[0].files[0];
-	var temp = $('#brandFile')[0].files[0];
-
+	var file = $('#orderFile')[0].files[0];
 	readFileData(file, readFileDataCallback);
 }
 
 function readFileDataCallback(results){
 	fileData = results.data;
-	console.log(fileData);
 	uploadRows();
 }
 
@@ -113,8 +110,8 @@ function uploadRows(){
 	processCount++;
 
 	var json = JSON.stringify(row);
-	var url = getBrandUrl();
-    console.log(json)
+	var url = getOrderUrl();
+
 	//Make ajax call
 	$.ajax({
 	   url: url,
@@ -141,30 +138,32 @@ function downloadErrors(){
 
 //UI DISPLAY METHODS
 
-function displayBrandList(data){
-	var $tbody = $('#brand-table').find('tbody');
+function displayOrderList(data){
+	var $tbody = $('#order-table').find('tbody');
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteBrand(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditBrand(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button onclick="deleteOrder(' + e.id + ')">delete</button>'
+		buttonHtml += ' <button onclick="displayEditOrder(' + e.id + ')">edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
-		+ '<td>' + e.brand + '</td>'
-		+ '<td>'  + e.category + '</td>'
+		+ '<td>' + e.orderName + '</td>'
+		+ '<td>'  + e.brand_category + '</td>'
+		+ '<td>'  + e.barcode + '</td>'
+		+ '<td>'  + e.mrp + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
 }
 
-function displayEditBrand(id){
-	var url = getBrandUrl() + "/" + id;
+function displayEditOrder(id){
+	var url = getOrderUrl() + "/" + id;
 	$.ajax({
 	   url: url,
 	   type: 'GET',
 	   success: function(data) {
-	   		displayBrand(data);
+	   		displayOrder(data);
 	   },
 	   error: handleAjaxError
 	});
@@ -172,9 +171,9 @@ function displayEditBrand(id){
 
 function resetUploadDialog(){
 	//Reset file name
-	var $file = $('#brandFile');
+	var $file = $('#orderFile');
 	$file.val('');
-	$('#brandFileName').html("Choose File");
+	$('#orderFileName').html("Choose File");
 	//Reset various counts
 	processCount = 0;
 	fileData = [];
@@ -190,35 +189,35 @@ function updateUploadDialog(){
 }
 
 function updateFileName(){
-	var $file = $('#brandFile');
+	var $file = $('#orderFile');
 	var fileName = $file.val();
-	$('#brandFileName').html(fileName);
+	$('#orderFileName').html(fileName);
 }
 
 function displayUploadData(){
  	resetUploadDialog();
-        $('#upload-brand-modal').modal('toggle');
+	$('#upload-order-modal').modal('toggle');
 }
 
-function displayBrand(data){
-	$("#brand-edit-form input[name=brand]").val(data.brand);
-	$("#brand-edit-form input[name=category]").val(data.category);
-	$("#brand-edit-form input[name=id]").val(data.id);
-	$('#edit-brand-modal').modal('toggle');
+function displayOrder(data){
+	$("#order-edit-form input[name=orderName]").val(data.orderName);
+	$("#order-edit-form input[name=brand_category]").val(data.brand_category);
+	$("#order-edit-form input[name=id]").val(data.id);
+	$('#edit-order-modal').modal('toggle');
 }
 
 
 //INITIALIZATION CODE
 function init(){
-	$('#add-brand').click(addBrand);
-	$('#update-brand').click(updateBrand);
-	$('#refresh-data').click(getBrandList);
+	$('#add-order').click(addOrder);
+	$('#update-order').click(updateOrder);
+	$('#refresh-data').click(getOrderList);
 	$('#upload-data').click(displayUploadData);
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
-    $('#brandFile').on('change', updateFileName)
+    $('#orderFile').on('change', updateFileName)
 }
 
 $(document).ready(init);
-$(document).ready(getBrandList);
+$(document).ready(getOrderList);
 

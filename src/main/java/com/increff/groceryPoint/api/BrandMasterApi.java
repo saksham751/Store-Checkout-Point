@@ -19,7 +19,7 @@ public class BrandMasterApi {
 
     public void addBrandApi(BrandMasterPojo p) throws ApiException {
         //help.normalize(p);
-        //checkUnique(p);
+        checkUnique(p);
         dao.insertBrandDao(p);
     }
 //todo remove transactional

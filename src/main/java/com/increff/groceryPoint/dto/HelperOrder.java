@@ -51,22 +51,17 @@ public class HelperOrder {
         data.setOrderId(p.getOrderId());
         return data;
     }
-    public void checkOrderExists(int orderId) throws ApiException{
-        if(orderApi.getOrderApi(orderId)==null){
-            throw new ApiException("Order Id does not exist");
-        }
-    }
-    public void checkQuantityExists(int id,int qty) throws ApiException{
-        int availableQty=invApi.getInventoryApi(id).getQuantity();
-        if(availableQty<qty){
-            throw new ApiException("Not enough Quantity Available");
-        }
-    }
     public void isOrderItemValid(OrderItemMasterForm form) throws ApiException{
         int productId=form.getProductId();
-        pApi.getProductApi(productId);
-        checkOrderExists(form.getOrderId());
-        checkQuantityExists(productId,form.getQuantity());
+        if(form.getQuantity()<1){
+            throw new ApiException("Quantity cannot be less than 1");
+        }
+        if(form.getOrderId()<0){
+            throw new ApiException("Enter a Valid OrderId");
+        }
+        if(form.getProductId()<0){
+            throw new ApiException("Enter a Valid ProductId");
+        }
 
 
     }

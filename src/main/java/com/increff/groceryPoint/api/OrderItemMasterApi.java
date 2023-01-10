@@ -6,6 +6,7 @@ import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +20,14 @@ public class OrderItemMasterApi {
     @Autowired
     private OrderMasterApi orderApi;
     @Autowired
+    private ProductMasterApi productApi;
+    @Autowired
     private OrderItemMasterDao orderItemDao;
 
+    @Autowired
+    private InventoryMasterApi invApi;
     public void addOrderItemApi(OrderItemMasterPojo p) throws ApiException {
+        isOrderItemValid(p);
         orderItemDao.addOrderItemDao(p);
         //orderApi.addOrderApi(p);
     }
@@ -55,6 +61,16 @@ public class OrderItemMasterApi {
             throw new ApiException("Order Item with given ID does not exit, id: " + id);
         }
         return p;
+    }
+
+    public void isOrderItemValid(OrderItemMasterPojo p) throws ApiException{
+        int productId=p.getProductId();
+        productApi.getProductApi(productId);
+        orderApi.getOrderApi(p.getOrderId());
+        if(invApi.getInventoryApi(productId).getQuantity()<p.getQuantity()){
+            throw new ApiException("Not enough Quantity Available");
+        }
+
     }
 
 }

@@ -19,6 +19,7 @@ public class InventoryMasterdto {
     private InventoryMasterApi invApi;
 
     public void addInventoryDto(InventoryMasterForm form)throws ApiException{
+        isInventoryValid(form);
         invApi.addInventoryApi(convertFormtoPojo(form));
     }
     public InventoryMasterData getInventoryDto(int id) throws ApiException {

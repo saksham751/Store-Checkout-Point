@@ -40,9 +40,9 @@ public class InventoryMasterDao extends AbstractDao{
         return query.getResultList();
     }
 
-    @Transactional
+
     public void updateInventoryDao(InventoryMasterPojo p,InventoryMasterPojo ex) {
-        ex.setQuantity(p.getQuantity());
+
     }
 
 }

@@ -21,9 +21,7 @@ public class BrandMasterPojo extends AbstractPojo{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-
     private String brand;
     @Column(nullable = false)
-
     private String category;
 }

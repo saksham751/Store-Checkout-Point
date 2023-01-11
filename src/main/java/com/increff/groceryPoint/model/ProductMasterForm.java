@@ -1,6 +1,4 @@
 package com.increff.groceryPoint.model;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +6,7 @@ import lombok.Setter;
 @Setter
 public class ProductMasterForm {
     private String barcode;
-    private int brand_category;
+    private Integer brand_category;
 
     private String productName;
     private Double mrp;

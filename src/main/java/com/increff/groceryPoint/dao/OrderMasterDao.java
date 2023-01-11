@@ -39,6 +39,6 @@ public class OrderMasterDao extends AbstractDao{
     }
     @Transactional
     public void updateOrderDao(OrderMasterPojo p,OrderMasterPojo ex){
-        ex.setTime(p.getTime());
+
     }
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Getter@Setter
 public class OrderMasterData{
-    private int id;
+    private Integer id;
     private String time;
+    private String status;
 }

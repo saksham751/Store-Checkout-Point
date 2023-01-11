@@ -36,4 +36,11 @@ public class OrderMasterController {
         return orderDto.getAllOrderDto();
     }
 
+    @ApiOperation(value = "Mark order placed")
+    @RequestMapping(path = "api/order/place/{id}", method = RequestMethod.PUT)
+    public void mark_order_placed(@PathVariable int id) throws ApiException
+    {
+        orderDto.place_order(id);
+    }
+
 }

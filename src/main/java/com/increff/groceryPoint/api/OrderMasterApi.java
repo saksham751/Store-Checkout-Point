@@ -10,23 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperProduct.checkProductExists;
-
 
 @Service
 public class OrderMasterApi {
     @Autowired
-    private OrderMasterDao oDao;
+    private OrderMasterDao orderDao;
 
 
     public void addOrderApi(OrderMasterPojo omp) throws ApiException {
-//        System.out.println(omp.getId());
-        oDao.addOrderDao(omp);
+        omp.setTime(ZonedDateTime.now());
+        omp.setStatus("Pending");
+        orderDao.addOrderDao(omp);
     }
 
 
     public OrderMasterPojo getOrderApi(int id) throws ApiException {
-        OrderMasterPojo omp= oDao.selectOrderDao(id);
+        OrderMasterPojo omp= orderDao.selectOrderDao(id);
         if (omp == null) {
             throw new ApiException("Order with given ID does not exit, id: " + id);
         }
@@ -34,17 +33,19 @@ public class OrderMasterApi {
     }
 
     public List<OrderMasterPojo> getAllOrderApi() {
-        return oDao.selectAllOrderDao();
+        return orderDao.selectAllOrderDao();
     }
 
-
+    @Transactional(rollbackFor = ApiException.class)
     public void updateOrderApi(int id, OrderMasterPojo p) throws ApiException {
-        OrderMasterPojo ex = oDao.selectOrderDao(id);
+        OrderMasterPojo ex = orderDao.selectOrderDao(id);
         if (ex == null) {
             throw new ApiException("Order with given ID does not exit, id: " + id);
         }
-        oDao.updateOrderDao(p,ex);
-
+        ex.setStatus(p.getStatus());
+        ex.setTime(p.getTime());
+        orderDao.updateOrderDao(p,ex);
     }
+
 
 }

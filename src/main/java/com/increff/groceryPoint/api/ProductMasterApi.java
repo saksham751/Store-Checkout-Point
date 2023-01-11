@@ -4,14 +4,12 @@ import com.increff.groceryPoint.dao.ProductMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperProduct.checkProductExists;
 import static java.util.Objects.isNull;
 
 @Service
@@ -26,23 +24,22 @@ public class ProductMasterApi {
 
     public void addProductApi(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
-        BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
-        if (isNull(brandPojo)) {
-            throw new ApiException("Brand id does not exist");
+        checkBrandExistApi(id);
+        ProductMasterPojo ex = getProductfromBarcodeApi(p.getBarcode());
+        if(ex!=null){
+            throw new ApiException("Barcode already exists");
         }
-
         pdao.insertProductDao(p);
     }
 
     public void deleteProductApi(int id) throws ApiException {
-        getCheck(id);
+        getCheckApi(id);
         pdao.deleteProductDao(id);
     }
 
 
     public ProductMasterPojo getProductApi(int id) throws ApiException {
-        System.out.println(id);
-        ProductMasterPojo p = getCheck(id);
+        ProductMasterPojo p = getCheckApi(id);
         return p;
     }
 
@@ -53,7 +50,12 @@ public class ProductMasterApi {
 
     @Transactional
     public void updateProductApi(int id, ProductMasterPojo p) throws ApiException {
-        ProductMasterPojo ex = getCheck(id);
+        ProductMasterPojo ex = getCheckApi(id);
+        checkBrandExistApi(p.getBrand_category());
+        ProductMasterPojo pro = getProductfromBarcodeApi(p.getBarcode());
+        if(pro!=null){
+            throw new ApiException("Barcode already exists");
+        }
         ex.setName(p.getName());
         ex.setMrp(p.getMrp());
         ex.setBarcode(p.getBarcode());
@@ -62,12 +64,21 @@ public class ProductMasterApi {
 
     }
 
-    public ProductMasterPojo getCheck(int id) throws ApiException {
+    public ProductMasterPojo getCheckApi(int id) throws ApiException {
         ProductMasterPojo p = pdao.selectProductDao(id);
-        System.out.println(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }
         return p;
+    }
+    public void checkBrandExistApi(int id) throws ApiException{
+        BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
+        if (isNull(brandPojo)) {
+            throw new ApiException("Brand id does not exist");
+        }
+    }
+    public ProductMasterPojo getProductfromBarcodeApi(String barcode) throws ApiException{
+        ProductMasterPojo ex= pdao.getProductfromBarcode(barcode);
+        return ex;
     }
 }

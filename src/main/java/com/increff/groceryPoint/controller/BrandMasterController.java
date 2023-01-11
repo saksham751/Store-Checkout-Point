@@ -28,7 +28,7 @@ public class BrandMasterController {
     @Autowired
     private BrandMasterdto brandDto;
 
-    @ApiOperation(value = "Adds an Brand")
+    @ApiOperation(value = "Adds a Brand")
     @RequestMapping(path = "/api/brand", method = RequestMethod.POST)
     public void addBrandController(@RequestBody BrandMasterForm form) throws ApiException {
         brandDto.addBrandDto(form);
@@ -36,14 +36,14 @@ public class BrandMasterController {
     }
 
 
-    @ApiOperation(value = "Deletes an brand")
+    @ApiOperation(value = "Deletes a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)
     public void deleteBrandController(@PathVariable int id) throws ApiException{
         brandDto.deleteBrandDto(id);
 
     }
 
-    @ApiOperation(value = "Gets an brand by ID")
+    @ApiOperation(value = "Gets a brand by ID")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
     public BrandMasterData getBrandController(@PathVariable int id) throws ApiException {
         return brandDto.getBrandDto(id);
@@ -57,7 +57,7 @@ public class BrandMasterController {
 
     }
 
-    @ApiOperation(value = "Updates an brand")
+    @ApiOperation(value = "Updates a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
     public void updateBrandController(@PathVariable int id, @RequestBody BrandMasterForm f) throws ApiException {
         brandDto.updateBrandDto(id, f);

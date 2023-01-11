@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class InventoryMasterForm {
-    private int id;
-    private int quantity;
+    private Integer id;
+    private Integer quantity;
 }

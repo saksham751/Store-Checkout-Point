@@ -18,6 +18,7 @@ public class ProductMasterDao extends AbstractDao {
     private static String delete_id = "delete from ProductMasterPojo p where id=:id";
     private static String select_id = "select p from ProductMasterPojo p where id=:id";
     private static String select_all = "select p from ProductMasterPojo p";
+    private static String select_barcode = "select p from ProductMasterPojo p where barcode=:barcode";
 
     @PersistenceContext
     private EntityManager em;
@@ -48,6 +49,11 @@ public class ProductMasterDao extends AbstractDao {
 
     }
 
-
+    @Transactional
+    public ProductMasterPojo getProductfromBarcode(String barcode){
+        TypedQuery<ProductMasterPojo> query = getQuery(select_barcode, ProductMasterPojo.class);
+        query.setParameter("barcode", barcode);
+        return getSingle(query);
+    }
 
 }

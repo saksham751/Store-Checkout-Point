@@ -16,7 +16,7 @@ public class OrderItemMasterPojo extends AbstractPojo{
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private Integer OrderId;
+    private Integer orderId;
     @Column(nullable = false)
     private Integer productId;
     @Column(nullable = false)

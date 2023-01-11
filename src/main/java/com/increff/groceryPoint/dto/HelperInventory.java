@@ -20,7 +20,7 @@ public class HelperInventory {
         {
             throw new ApiException("Product Name cannot be Empty!");
         }
-        if(form.getQuantity()<0)
+        if(!(form.getQuantity()>=0))
         {
             throw new ApiException("Quantity cannot be less than 0 or Null!");
         }

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BrandMasterData extends BrandMasterForm {
-    private int id;
+    private Integer id;
 
 }

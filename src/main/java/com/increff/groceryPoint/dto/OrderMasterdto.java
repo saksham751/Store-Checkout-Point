@@ -6,6 +6,7 @@ import com.increff.groceryPoint.pojo.OrderMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ public class OrderMasterdto {
     private HelperOrder helpOrder;
     public void addOrderMasterDto() throws ApiException{
         OrderMasterPojo omp= new OrderMasterPojo();
-        omp.setTime(ZonedDateTime.now());
         orderApi.addOrderApi(omp);
     }
     public OrderMasterData getOrderDto(int id) throws ApiException {
@@ -35,5 +35,10 @@ public class OrderMasterdto {
             list2.add(helpOrder.convert(p));
         }
         return list2;
+    }
+    public void place_order(int id) throws ApiException {
+        OrderMasterPojo orderPojo = orderApi.getOrderApi(id);
+        orderPojo.setStatus("Placed");
+        orderApi.updateOrderApi(id, orderPojo);
     }
 }

@@ -45,6 +45,9 @@ public class HelperProduct {
         {
             throw new ApiException("Product Name cannot be Empty!");
         }
+        if(!(form.getMrp()>=0)){
+            throw new ApiException("Enter a valid MRP");
+        }
         if(isNull(form.getMrp()) || form.getMrp()<0)
         {
             throw new ApiException("MRP cannot be Empty! or Less than 0");
@@ -57,6 +60,7 @@ public class HelperProduct {
         {
             throw new ApiException("Brand Category cannot be Empty!");
         }
+
 
     }
     public static void checkBrandExists(ProductMasterPojo p) throws ApiException{

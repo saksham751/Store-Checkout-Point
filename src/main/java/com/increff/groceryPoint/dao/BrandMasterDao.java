@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import org.springframework.stereotype.Repository;
 
@@ -21,11 +22,11 @@ public class BrandMasterDao extends AbstractDao {
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public void insertBrandDao(BrandMasterPojo p) {
         em.persist(p);
     }
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public int deleteBrandDao(int id) {
         Query query = em.createQuery(delete_id);
         query.setParameter("id", id);
@@ -42,7 +43,7 @@ public class BrandMasterDao extends AbstractDao {
         TypedQuery<BrandMasterPojo> query = getQuery(select_all, BrandMasterPojo.class);
         return query.getResultList();
     }
-    @Transactional
+    @Transactional(rollbackOn = ApiException.class)
     public void updateBrandDao(BrandMasterPojo p) {
 
     }

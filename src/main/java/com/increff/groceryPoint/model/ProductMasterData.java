@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductMasterData extends ProductMasterForm {
-    private int id;
+    private Integer id;
 
 }

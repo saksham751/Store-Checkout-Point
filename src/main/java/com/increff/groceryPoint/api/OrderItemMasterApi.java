@@ -1,19 +1,14 @@
 package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.OrderItemMasterDao;
-import com.increff.groceryPoint.dao.OrderMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
+import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
-import com.increff.groceryPoint.pojo.ProductMasterPojo;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.increff.groceryPoint.dto.HelperProduct.checkProductExists;
 
 @Service
 public class OrderItemMasterApi {
@@ -23,13 +18,16 @@ public class OrderItemMasterApi {
     private ProductMasterApi productApi;
     @Autowired
     private OrderItemMasterDao orderItemDao;
-
     @Autowired
     private InventoryMasterApi invApi;
+    @Transactional(rollbackFor = ApiException.class)
     public void addOrderItemApi(OrderItemMasterPojo p) throws ApiException {
         isOrderItemValid(p);
+        InventoryMasterPojo inv= new InventoryMasterPojo();
+        inv.setId(p.getProductId());
+        inv.setQuantity(invApi.getInventoryApi(p.getProductId()).getQuantity()-p.getQuantity());
+        invApi.updateInventoryApi(p.getProductId(),inv);
         orderItemDao.addOrderItemDao(p);
-        //orderApi.addOrderApi(p);
     }
 
     public OrderItemMasterPojo getOrderItemApi(int id) throws ApiException {
@@ -44,9 +42,14 @@ public class OrderItemMasterApi {
     @Transactional
     public void updateOrderItemApi(int id, OrderItemMasterPojo p) throws ApiException {
         OrderItemMasterPojo ex = checkOrderItemExists(id);
+        isOrderItemValid(p);
         ex.setQuantity(p.getQuantity());
         ex.setSellingPrice(p.getSellingPrice());
         ex.setProductId(p.getProductId());
+        InventoryMasterPojo inv= new InventoryMasterPojo();
+        inv.setId(p.getProductId());
+        inv.setQuantity(invApi.getInventoryApi(p.getProductId()).getQuantity()-p.getQuantity());
+        invApi.updateInventoryApi(p.getProductId(),inv);
         orderItemDao.updateOrderDao(ex);
 
     }

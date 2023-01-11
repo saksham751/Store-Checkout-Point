@@ -34,8 +34,8 @@ public class InventoryMasterController {
     }
     @ApiOperation(value="Updates Inventory")
     @RequestMapping(path="/api/inventory/{id}", method = RequestMethod.PUT)
-    public void updateInventoryController(@PathVariable int id, @RequestBody InventoryMasterForm form) throws ApiException {
-        invDto.updateInventoryDto(id,form);
+    public void updateInventoryController(@RequestBody InventoryMasterForm form) throws ApiException {
+        invDto.updateInventoryDto(form.getId(),form);
     }
 
 }

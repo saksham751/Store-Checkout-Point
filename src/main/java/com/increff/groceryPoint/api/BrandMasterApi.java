@@ -23,7 +23,7 @@ public class BrandMasterApi {
         dao.insertBrandDao(p);
     }
 //todo remove transactional
-
+//todo rename to only add,delete etc. and add transactional usig rollbackfor and readonly
     public void deleteBrandApi(int id) throws ApiException{
         getCheck(id);
         dao.deleteBrandDao(id);
@@ -44,7 +44,7 @@ public class BrandMasterApi {
         BrandMasterPojo ex = getCheck(id);
         ex.setCategory(p.getCategory());
         ex.setBrand(p.getBrand());
-        dao.updateBrandDao(ex);
+    //    dao.updateBrandDao(ex);
     }
 
     public BrandMasterPojo getCheck(int id) throws ApiException {

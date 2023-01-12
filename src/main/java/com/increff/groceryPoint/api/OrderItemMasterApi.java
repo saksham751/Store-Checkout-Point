@@ -76,4 +76,7 @@ public class OrderItemMasterApi {
 
     }
 
+    public List<OrderItemMasterPojo> getAllOrderItemOrderIdApi(Integer orderId) throws ApiException{
+        return orderItemDao.getAllOrderItemOrderIdDao(orderId);
+    }
 }

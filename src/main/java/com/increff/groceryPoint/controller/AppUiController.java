@@ -1,12 +1,21 @@
 package com.increff.groceryPoint.controller;
 
+import com.increff.groceryPoint.dto.ApiException;
+import com.increff.groceryPoint.dto.OrderItemMasterdto;
+import com.increff.groceryPoint.dto.OrderMasterdto;
+import com.increff.groceryPoint.model.OrderItemMasterData;
+import com.increff.groceryPoint.model.OrderMasterData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AppUiController extends AbstractUiController {
 
+	@Autowired
+	private OrderMasterdto orderDto;
 	@RequestMapping(value = "/ui/home")
 	public ModelAndView home() {
 		return mav("home.html");
@@ -33,6 +42,10 @@ public class AppUiController extends AbstractUiController {
 	@RequestMapping(value = "/ui/inventory")
 	public ModelAndView inventory(){return mav("inventory.html");}
 	@RequestMapping(value = "/ui/orders")
-	public ModelAndView order(){return mav("orderItem.html");}
+	public ModelAndView order(){return mav("orders.html");}
+	@RequestMapping(value = "/ui/orderItem/{id}")
+	public ModelAndView orderItem(@PathVariable Integer id) throws ApiException {
+		OrderMasterData data= orderDto.getOrderDto(id);
+		return mav("orderItem.html",data);}
 }
 

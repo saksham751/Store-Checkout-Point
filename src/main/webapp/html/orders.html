@@ -3,14 +3,13 @@
 <head th:replace="snippets.html :: name_head"></head>
 <body>
 <nav th:replace="snippets.html :: name_app_navbar"></nav>
-<h3>this page will show order details </h3>
 
 <div>
     <form class="form-inline" id="order-form">
         <div class="form-group">
             <label for="inputCustomerName" class="col-sm-2 col-form-label">Customer Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="customerName" id="inputCustomerName" placeholder="Aayush Maurya">
+                <input type="text" class="form-control" name="customerName" id="inputCustomerName" placeholder="Customer Name">
             </div>
         </div>
 
@@ -52,8 +51,7 @@
             <th scope="col">Order_Id</th>
             <th scope="col">Created Date</th>
             <th scope="col">Status</th>
-            <th scope="col">Placed Date</th>
-            <th scope="col">Handel</th>
+            <th scope="col">Handle</th>
         </tr>
         </thead>
         <tbody>

@@ -49,5 +49,10 @@ public class OrderItemMasterController {
         orderItemdto.deleteOrderItemDto(id);
     }
 
+    @ApiOperation(value = "Gets orderItems using orderId")
+    @RequestMapping(path = "/api/orderitem/order-code/{orderId}",method = RequestMethod.GET)
+    public List<OrderItemMasterData> getAllOrderItemOrderIdController(@PathVariable Integer orderId) throws ApiException{
+        return orderItemdto.getOrderItemOrderIdDto(orderId);
+    }
 
 }

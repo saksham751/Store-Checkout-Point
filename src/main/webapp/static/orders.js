@@ -42,7 +42,7 @@ function displayOrderList(data){
  	$tbody.empty();
  	for(var i in data){
  		var e = data[i];
- 		var buttonHtml = ' <button class="btn btn-secondary" onClick=redirect("'+ e.orderCode +'")>open</button>'
+ 		var buttonHtml = ' <button class="btn btn-secondary" onClick=redirect("'+ e.id +'")>open</button>'
  		var row = '<tr>'
  		+ '<td>' + e.id + '</td>'
  		+ '<td>' + e.time + '</td>'
@@ -55,7 +55,7 @@ function displayOrderList(data){
 
 function redirect(id)
 {
-    window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/order-item/" + id;
+    window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/orderItem/" + id;
 }
 
  function createOrder(event)
@@ -73,7 +73,7 @@ function redirect(id)
             },
      	   success: function(response) {
      	   		getOrderList();
-     	   		setStatus(response);
+     	   		//setStatus(response);
      	   },
  //    	   error: handleAjaxError
  //            error: setStatus(response)

@@ -16,7 +16,7 @@ public class OrderItemMasterDao extends AbstractDao{
     private static String select_All="select orderitem from OrderItemMasterPojo orderitem";
     private static String select ="select orderitem from OrderItemMasterPojo orderitem where id =: id";
     private static String delete_OrderItem="delete from OrderItemMasterPojo o where id =: id";
-
+    private static String select_orderId="select orderitem from OrderItemMasterPojo orderitem where orderId =: orderId";
     @PersistenceContext
     private EntityManager em;
 
@@ -46,5 +46,12 @@ public class OrderItemMasterDao extends AbstractDao{
     @Transactional
     public void updateOrderDao(OrderItemMasterPojo ex){
 
+    }
+
+    @Transactional
+    public List<OrderItemMasterPojo> getAllOrderItemOrderIdDao(Integer orderId){
+        TypedQuery<OrderItemMasterPojo> query = getQuery(select_orderId, OrderItemMasterPojo.class);
+        query.setParameter("orderId",orderId);
+        return query.getResultList();
     }
 }

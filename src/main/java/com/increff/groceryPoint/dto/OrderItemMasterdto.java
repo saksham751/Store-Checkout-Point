@@ -48,6 +48,13 @@ public class OrderItemMasterdto {
         orderItemApi.updateOrderItemApi(id,p);
     }
 
-
+    public List<OrderItemMasterData> getOrderItemOrderIdDto(Integer orderId) throws ApiException{
+        List<OrderItemMasterPojo> list = orderItemApi.getAllOrderItemOrderIdApi(orderId);
+        List<OrderItemMasterData> list2 = new ArrayList<OrderItemMasterData>();
+        for (OrderItemMasterPojo p : list) {
+            list2.add(helpOrder.convert(p));
+        }
+        return list2;
+    }
 
 }

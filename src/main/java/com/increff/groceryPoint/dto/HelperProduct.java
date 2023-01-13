@@ -1,6 +1,5 @@
 package com.increff.groceryPoint.dto;
 
-import com.google.protobuf.Api;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dao.ProductMasterDao;
 import com.increff.groceryPoint.model.ProductMasterData;
@@ -9,9 +8,6 @@ import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 import static java.util.Objects.isNull;
 
@@ -66,7 +62,7 @@ public class HelperProduct {
     public static void checkBrandExists(ProductMasterPojo p) throws ApiException{
 
             int id = p.getBrand_category();
-            BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
+            BrandMasterPojo brandPojo = brandApi.get(id);
 
             //System.out.println(brandPojo.getBrand());
             if (isNull(brandPojo)) {

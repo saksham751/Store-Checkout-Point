@@ -2,13 +2,14 @@ var orderId;
 var orderCode
 var status;
 var customerName;
+var updateId;
 function getStoreUrl(){
  	var baseUrl = $("meta[name=baseUrl]").attr("content")
- 	return baseUrl + "/api/orderitem";
+ 	return baseUrl + "/api/orderItem";
  }
 
 function getOrderUrl(){
-var baseUrl = $("meta[name=baseUrl]").attr("content")
+    var baseUrl = $("meta[name=baseUrl]").attr("content")
  	return baseUrl + "/api/order/place";
 }
 
@@ -70,7 +71,6 @@ function addOrderItem(event)
            },
     	   success: function(response) {
     	   		getOrderItemList();
-    	   		setStatus(response);
     	   },
 //    	   error: handleAjaxError
 //            error: setStatus(response)
@@ -90,8 +90,8 @@ function placeOrder()
                },
         	   success: function(response) {
         	   console.log("order placed");
-        	   		alert(response);
-        	   		location.reload();
+        	   		//alert(response);
+        	   		window.location= $("meta[name=baseUrl]").attr("content") + "/ui/orders";
         	   },
     //    	   error: handleAjaxError
 //                error: setStatus(response)
@@ -116,20 +116,20 @@ function deleteOrderItem(id)
 function fillFields(id, orderId, productId, quantity, sellingPrice)
 {
 console.log("filling the update order item form fields");
-    document.getElementById("inputUpdateOrderItemId").value = id;
+//    document.getElementById("inputUpdateOrderItemId").value = id;
     document.getElementById("inputUpdateOrderId").value = orderId;
     document.getElementById("inputUpdateProductId").value = productId;
     document.getElementById("inputUpdateQuantity").value = quantity;
-    document.getElementById("inputUpdateMrp").value = sellingPrice;
+//    document.getElementById("inputUpdateMrp").value = sellingPrice;
+    updateId=id;
 }
 //
 function updateOrderItem()
 {
-    console.log("this function will update order item");
     var $form = $("#editOrderItemForm");
     var json = toJson($form);
     var url = getStoreUrl();
-
+    url+= "/"+updateId;
     if((JSON.parse(json).quantity) == 0)
     {
         deleteOrderItem(JSON.parse(json).id);
@@ -145,7 +145,6 @@ function updateOrderItem()
                },
         	   success: function(response) {
         	   		getOrderItemList();
-        	   		setStatus(response);
         	   },
     //    	   error: handleAjaxError
 
@@ -175,7 +174,9 @@ function downloadInvoice()
 
 function init()
 {
-    orderId = $("meta[name=orderId]").attr("content");
+    const str = document.URL;
+    orderId = str.split('/').pop();
+    //orderId = $("meta[name=orderId]").attr("content");
     id = $("meta[name=id]").attr("content");
     customerName = $("meta[name=customerName]").attr("content");
     document.getElementById("inputOrderId").value = orderId;

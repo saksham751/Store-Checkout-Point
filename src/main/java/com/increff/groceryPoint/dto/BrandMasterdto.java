@@ -21,28 +21,26 @@ import static com.increff.groceryPoint.dto.HelperBrand.normalize;
 public class BrandMasterdto {
     @Autowired
     private BrandMasterApi brandApi;
-    //todo brandapi.add
-    //todo rename everyone with master
-    public void addBrandDto(BrandMasterForm form) throws ApiException {
+    public void add(BrandMasterForm form) throws ApiException {
         validateBrandForm(form);
-        BrandMasterPojo p = convert(normalize(form));
-        brandApi.addBrandApi(p);
+        BrandMasterPojo brandPojo = convert(normalize(form));
+        brandApi.add(brandPojo);
     }
 
 
     public void deleteBrandDto(@PathVariable int id) throws ApiException{
-        brandApi.deleteBrandApi(id);
+        brandApi.delete(id);
     }
 
     public BrandMasterData getBrandDto(int id) throws ApiException {
-        BrandMasterPojo p = brandApi.getBrandApi(id);
+        BrandMasterPojo p = brandApi.get(id);
         return convert(p);
     }
 
 
     public List<BrandMasterData> getAllBrandDto() throws ApiException {
 
-        List<BrandMasterPojo> list = brandApi.getAllBrandApi();
+        List<BrandMasterPojo> list = brandApi.getAll();
         List<BrandMasterData> list2 = new ArrayList<BrandMasterData>();
         for (BrandMasterPojo p : list) {
             list2.add(convert(p));
@@ -55,6 +53,6 @@ public class BrandMasterdto {
         validateBrandForm(f);
         f=normalize(f);
         BrandMasterPojo p = convert(f);
-        brandApi.updateBrandApi(id, p);
+        brandApi.update(id, p);
     }
 }

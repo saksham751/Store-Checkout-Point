@@ -3,6 +3,7 @@ package com.increff.groceryPoint.dto;
 import com.increff.groceryPoint.api.OrderItemMasterApi;
 import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderItemMasterForm;
+import com.increff.groceryPoint.model.OrderItemUpdateForm;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,10 @@ public class OrderItemMasterdto {
         return list2;
     }
 
-    public void updateOrderItemDto(int id, OrderItemMasterForm form) throws ApiException {
-        helpOrder.isOrderItemValid(form);
+    public void updateOrderItemDto(int id, OrderItemUpdateForm form) throws ApiException {
+        helpOrder.isOrderItemUpdateValid(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
+        p.setId(id);
         orderItemApi.updateOrderItemApi(id,p);
     }
 

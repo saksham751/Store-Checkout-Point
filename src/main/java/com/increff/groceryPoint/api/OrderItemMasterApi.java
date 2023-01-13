@@ -42,13 +42,17 @@ public class OrderItemMasterApi {
     @Transactional
     public void updateOrderItemApi(int id, OrderItemMasterPojo p) throws ApiException {
         OrderItemMasterPojo ex = checkOrderItemExists(id);
-        isOrderItemValid(p);
+        Integer prevQty=ex.getQuantity();
+        OrderItemMasterPojo  checkInv= p;
+        checkInv.setQuantity(p.getQuantity()-ex.getQuantity());
+        isOrderItemValid(checkInv);
+        p.setQuantity(p.getQuantity()+ex.getQuantity());
         ex.setQuantity(p.getQuantity());
         ex.setSellingPrice(p.getSellingPrice());
         ex.setProductId(p.getProductId());
         InventoryMasterPojo inv= new InventoryMasterPojo();
         inv.setId(p.getProductId());
-        inv.setQuantity(invApi.getInventoryApi(p.getProductId()).getQuantity()-p.getQuantity());
+        inv.setQuantity(invApi.getInventoryApi(p.getProductId()).getQuantity()-p.getQuantity()+prevQty);
         invApi.updateInventoryApi(p.getProductId(),inv);
         orderItemDao.updateOrderDao(ex);
 

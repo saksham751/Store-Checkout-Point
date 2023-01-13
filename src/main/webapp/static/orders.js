@@ -43,18 +43,30 @@ function displayOrderList(data){
  	for(var i in data){
  		var e = data[i];
  		var buttonHtml = ' <button class="btn btn-secondary" onClick=redirect("'+ e.id +'")>open</button>'
- 		var row = '<tr>'
- 		+ '<td>' + e.id + '</td>'
- 		+ '<td>' + e.time + '</td>'
- 		+ '<td>' + e.status + '</td>'
- 		+ '<td>' + buttonHtml + '</td>'
- 		+ '</tr>';
-         $tbody.append(row);
+ 		if(e.status==="Placed"){
+ 		    var row = '<tr>'
+             		+ '<td>' + e.id + '</td>'
+             		+ '<td>' + e.time + '</td>'
+             		+ '<td>' + e.status + '</td>'
+             		+ '<td>'+ ""+ '</td>'
+             		+ '</tr>';
+            $tbody.append(row);
+ 		}else{
+            var row = '<tr>'
+            + '<td>' + e.id + '</td>'
+            + '<td>' + e.time + '</td>'
+            + '<td>' + e.status + '</td>'
+            + '<td>' + buttonHtml + '</td>'
+            + '</tr>';
+             $tbody.append(row);
+         }
  	}
  }
 
 function redirect(id)
 {
+//    console.log(status);
+//    if(status==="placed") return;
     window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/orderItem/" + id;
 }
 

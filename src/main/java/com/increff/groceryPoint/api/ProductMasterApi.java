@@ -72,7 +72,7 @@ public class ProductMasterApi {
         return p;
     }
     public void checkBrandExistApi(int id) throws ApiException{
-        BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
+        BrandMasterPojo brandPojo = brandApi.get(id);
         if (isNull(brandPojo)) {
             throw new ApiException("Brand id does not exist");
         }

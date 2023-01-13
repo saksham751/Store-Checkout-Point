@@ -21,50 +21,37 @@ import io.swagger.annotations.ApiOperation;
 @Api
 @RestController
 public class BrandMasterController {
-//TODO SHOULD BE CALLING DTO LAYER
-    //TODO PACKAGE FOR DTO AND ADD HELPER CLASS
-    //todo remove api from name and add master
-    //todo brnadmastercontroller should call brandmasterdto should call brandmasterapi this should call brandmasterdao.
     @Autowired
     private BrandMasterdto brandDto;
 
     @ApiOperation(value = "Adds a Brand")
     @RequestMapping(path = "/api/brand", method = RequestMethod.POST)
     public void addBrandController(@RequestBody BrandMasterForm form) throws ApiException {
-        brandDto.addBrandDto(form);
+        brandDto.add(form);
 
     }
-
-
     @ApiOperation(value = "Deletes a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)
     public void deleteBrandController(@PathVariable int id) throws ApiException{
         brandDto.deleteBrandDto(id);
 
     }
-
     @ApiOperation(value = "Gets a brand by ID")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
     public BrandMasterData getBrandController(@PathVariable int id) throws ApiException {
         return brandDto.getBrandDto(id);
 
     }
-
     @ApiOperation(value = "Gets list of all brand")
     @RequestMapping(path = "/api/brand", method = RequestMethod.GET)
     public List<BrandMasterData> getAllBrandController() throws ApiException {
         return brandDto.getAllBrandDto();
 
     }
-
     @ApiOperation(value = "Updates a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
     public void updateBrandController(@PathVariable int id, @RequestBody BrandMasterForm f) throws ApiException {
         brandDto.updateBrandDto(id, f);
 
     }
-
-
-
-
 }

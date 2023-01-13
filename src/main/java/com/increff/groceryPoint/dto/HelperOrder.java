@@ -5,6 +5,7 @@ import com.increff.groceryPoint.api.OrderMasterApi;
 import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderItemMasterForm;
+import com.increff.groceryPoint.model.OrderItemUpdateForm;
 import com.increff.groceryPoint.model.OrderMasterData;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import com.increff.groceryPoint.pojo.OrderMasterPojo;
@@ -51,6 +52,16 @@ public class HelperOrder {
         data.setOrderId(p.getOrderId());
         return data;
     }
+
+    public OrderItemMasterPojo convert(OrderItemUpdateForm form) throws ApiException{
+        OrderItemMasterPojo data = new OrderItemMasterPojo();
+        ProductMasterPojo product = pApi.getProductApi(form.getProductId());
+        data.setOrderId(form.getOrderId());
+        data.setQuantity(form.getQuantity());
+        data.setProductId(form.getProductId());
+        data.setSellingPrice(form.getQuantity()*product.getMrp());
+        return data;
+    }
     public void isOrderItemValid(OrderItemMasterForm form) throws ApiException{
         if(form.getQuantity()<1){
             throw new ApiException("Quantity cannot be less than 1");
@@ -59,5 +70,11 @@ public class HelperOrder {
             throw new ApiException("Enter a Valid OrderId");
         }
 
+    }
+
+    public void isOrderItemUpdateValid(OrderItemUpdateForm form) throws ApiException{
+        if(form.getQuantity()<1) {
+            throw new ApiException("Quantity cannot be less than 1");
+        }
     }
 }

@@ -17,34 +17,30 @@ public class BrandMasterApi {
     private BrandMasterDao dao;
     //private Helper help;
 
-    public void addBrandApi(BrandMasterPojo p) throws ApiException {
-        //help.normalize(p);
-        checkUnique(p);
-        dao.insertBrandDao(p);
+    public void add(BrandMasterPojo brandPojo) throws ApiException {
+        checkUnique(brandPojo);
+        dao.insertBrandDao(brandPojo);
     }
 //todo remove transactional
 //todo rename to only add,delete etc. and add transactional usig rollbackfor and readonly
-    public void deleteBrandApi(int id) throws ApiException{
+    public void delete(int id) throws ApiException{
         getCheck(id);
         dao.deleteBrandDao(id);
     }
-
-
-    public BrandMasterPojo getBrandApi(int id) throws ApiException {
+    public BrandMasterPojo get(int id) throws ApiException {
         return getCheck(id);
     }
 
-    public List<BrandMasterPojo> getAllBrandApi() {
+    public List<BrandMasterPojo> getAll() {
         return dao.selectAllBrandDao();
     }
 
-    @Transactional
-    public void updateBrandApi(int id, BrandMasterPojo p) throws ApiException {
-        checkUnique(p);
+    @Transactional(rollbackFor = ApiException.class)
+    public void update(int id, BrandMasterPojo brandPojo) throws ApiException {
+        checkUnique(brandPojo);
         BrandMasterPojo ex = getCheck(id);
-        ex.setCategory(p.getCategory());
-        ex.setBrand(p.getBrand());
-    //    dao.updateBrandDao(ex);
+        ex.setCategory(brandPojo.getCategory());
+        ex.setBrand(brandPojo.getBrand());
     }
 
     public BrandMasterPojo getCheck(int id) throws ApiException {

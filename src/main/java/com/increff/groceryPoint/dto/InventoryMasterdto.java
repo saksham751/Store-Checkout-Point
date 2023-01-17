@@ -18,16 +18,16 @@ public class InventoryMasterdto {
     @Autowired
     private InventoryMasterApi invApi;
 
-    public void addInventoryDto(InventoryMasterForm form)throws ApiException{
+    public void add(InventoryMasterForm form)throws ApiException{
         isInventoryValid(form);
-        invApi.addInventoryApi(convertFormtoPojo(form));
+        invApi.add(convertFormtoPojo(form));
     }
-    public InventoryMasterData getInventoryDto(int id) throws ApiException {
-        return convertPojotoData(invApi.getInventoryApi(id));
+    public InventoryMasterData get(int id) throws ApiException {
+        return convertPojotoData(invApi.get(id));
     }
 
-    public List<InventoryMasterData> getAllInventoryDto() throws ApiException{
-        List<InventoryMasterPojo> list = invApi.getAllInventoryApi();
+    public List<InventoryMasterData> getAll() throws ApiException{
+        List<InventoryMasterPojo> list = invApi.getAll();
         List<InventoryMasterData> list2 = new ArrayList<InventoryMasterData>();
         for (InventoryMasterPojo p : list) {
             list2.add(convertPojotoData(p));
@@ -35,10 +35,10 @@ public class InventoryMasterdto {
         return list2;
     }
 
-    public void updateInventoryDto(int id, InventoryMasterForm form) throws ApiException {
+    public void update(int id, InventoryMasterForm form) throws ApiException {
         isInventoryValid(form);
         InventoryMasterPojo p=convertFormtoPojo(form);
-        invApi.updateInventoryApi(id,p);
+        invApi.update(id,p);
     }
 
 

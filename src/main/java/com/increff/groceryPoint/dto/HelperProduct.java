@@ -72,7 +72,7 @@ public class HelperProduct {
     }
 
     public static ProductMasterPojo checkProductExists(int id, ProductMasterDao pdao) throws ApiException {
-        ProductMasterPojo p = pdao.selectProductDao(id);
+        ProductMasterPojo p = pdao.get(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exit, id: " + id);
         }

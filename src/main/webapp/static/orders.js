@@ -85,6 +85,7 @@ function redirect(id)
             },
      	   success: function(response) {
      	   		getOrderList();
+
      	   		//setStatus(response);
      	   },
  //    	   error: handleAjaxError

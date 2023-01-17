@@ -6,8 +6,6 @@ import com.increff.groceryPoint.pojo.OrderMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,25 +18,25 @@ public class OrderMasterdto {
 
     @Autowired
     private HelperOrder helpOrder;
-    public void addOrderMasterDto() throws ApiException{
+    public void add() throws ApiException{
         OrderMasterPojo omp= new OrderMasterPojo();
-        orderApi.addOrderApi(omp);
+        orderApi.add(omp);
     }
-    public OrderMasterData getOrderDto(int id) throws ApiException {
-        return helpOrder.convert(orderApi.getOrderApi(id));
+    public OrderMasterData get(int id) throws ApiException {
+        return helpOrder.convert(orderApi.get(id));
     }
 
-    public List<OrderMasterData> getAllOrderDto() throws ApiException{
-        List<OrderMasterPojo> list = orderApi.getAllOrderApi();
+    public List<OrderMasterData> getAll() throws ApiException{
+        List<OrderMasterPojo> list = orderApi.getAll();
         List<OrderMasterData> list2 = new ArrayList<OrderMasterData>();
         for (OrderMasterPojo p : list) {
             list2.add(helpOrder.convert(p));
         }
         return list2;
     }
-    public void place_order(int id) throws ApiException {
-        OrderMasterPojo orderPojo = orderApi.getOrderApi(id);
+    public void placeOrder(int id) throws ApiException {
+        OrderMasterPojo orderPojo = orderApi.get(id);
         orderPojo.setStatus("Placed");
-        orderApi.updateOrderApi(id, orderPojo);
+        orderApi.update(id, orderPojo);
     }
 }

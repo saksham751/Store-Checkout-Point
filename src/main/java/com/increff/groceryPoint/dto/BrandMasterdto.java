@@ -28,17 +28,17 @@ public class BrandMasterdto {
     }
 
 
-    public void deleteBrandDto(@PathVariable int id) throws ApiException{
+    public void delete(@PathVariable int id) throws ApiException{
         brandApi.delete(id);
     }
 
-    public BrandMasterData getBrandDto(int id) throws ApiException {
+    public BrandMasterData get(int id) throws ApiException {
         BrandMasterPojo p = brandApi.get(id);
         return convert(p);
     }
 
 
-    public List<BrandMasterData> getAllBrandDto() throws ApiException {
+    public List<BrandMasterData> getAll() throws ApiException {
 
         List<BrandMasterPojo> list = brandApi.getAll();
         List<BrandMasterData> list2 = new ArrayList<BrandMasterData>();
@@ -48,7 +48,7 @@ public class BrandMasterdto {
         return list2;
     }
 
-    public void updateBrandDto(int id, BrandMasterForm f) throws ApiException {
+    public void update(int id, BrandMasterForm f) throws ApiException {
 
         validateBrandForm(f);
         f=normalize(f);

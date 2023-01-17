@@ -32,7 +32,7 @@ function displayOrderItemList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = ' <button class="btn-disable btn btn-primary" onclick="deleteOrderItem('
+		var buttonHtml = ' <button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteOrderItem('
 		+ e.id + ')">delete</button>'
 		+ ' <button onclick="fillFields(' + e.id + ','
 		+ e.orderId + ',' + e.productId + ',' + e.quantity + ','
@@ -61,7 +61,7 @@ function addOrderItem(event)
     var $form = $("#orderItem-form");
     var json = toJson($form);
     var url = getStoreUrl();
-
+    console.log(json);
     $.ajax({
     	   url: url,
     	   type: 'POST',
@@ -180,7 +180,7 @@ function init()
     id = $("meta[name=id]").attr("content");
     customerName = $("meta[name=customerName]").attr("content");
     document.getElementById("inputOrderId").value = orderId;
-    document.getElementById("customer-name").innerHTML = customerName;
+//    document.getElementById("customer-name").innerHTML = customerName;
 
     status = $("meta[name=status]").attr("content");
 

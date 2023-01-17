@@ -21,26 +21,26 @@ public class OrderItemMasterApi {
     @Autowired
     private InventoryMasterApi invApi;
     @Transactional(rollbackFor = ApiException.class)
-    public void addOrderItemApi(OrderItemMasterPojo p) throws ApiException {
+    public void add(OrderItemMasterPojo p) throws ApiException {
         isOrderItemValid(p);
         InventoryMasterPojo inv= new InventoryMasterPojo();
         inv.setId(p.getProductId());
-        inv.setQuantity(invApi.getInventoryApi(p.getProductId()).getQuantity()-p.getQuantity());
-        invApi.updateInventoryApi(p.getProductId(),inv);
-        orderItemDao.addOrderItemDao(p);
+        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity());
+        invApi.update(p.getProductId(),inv);
+        orderItemDao.add(p);
     }
 
-    public OrderItemMasterPojo getOrderItemApi(int id) throws ApiException {
+    public OrderItemMasterPojo get(int id) throws ApiException {
         checkOrderItemExists(id);
-        return orderItemDao.selectOrderItemDao(id);
+        return orderItemDao.get(id);
     }
 
-    public List<OrderItemMasterPojo> getAllOrderItemApi() {
-        return orderItemDao.selectAllOrderItemDao();
+    public List<OrderItemMasterPojo> getAll() {
+        return orderItemDao.getAll();
     }
 
     @Transactional
-    public void updateOrderItemApi(int id, OrderItemMasterPojo p) throws ApiException {
+    public void update(int id, OrderItemMasterPojo p) throws ApiException {
         OrderItemMasterPojo ex = checkOrderItemExists(id);
         Integer prevQty=ex.getQuantity();
         OrderItemMasterPojo  checkInv= p;
@@ -52,18 +52,22 @@ public class OrderItemMasterApi {
         ex.setProductId(p.getProductId());
         InventoryMasterPojo inv= new InventoryMasterPojo();
         inv.setId(p.getProductId());
-        inv.setQuantity(invApi.getInventoryApi(p.getProductId()).getQuantity()-p.getQuantity()+prevQty);
-        invApi.updateInventoryApi(p.getProductId(),inv);
-        orderItemDao.updateOrderDao(ex);
+        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity()+prevQty);
+        invApi.update(p.getProductId(),inv);
+        orderItemDao.update(ex);
 
     }
-    public void deleteOrderItemApi(int id) throws ApiException{
+    public void delete(int id) throws ApiException{
         checkOrderItemExists(id);
-        orderItemDao.deleteOrderItemDao(id);
+        orderItemDao.delete(id);
+    }
+
+    public OrderItemMasterPojo get(Integer id, Integer productId){
+        return orderItemDao.get(id,productId);
     }
 
     public OrderItemMasterPojo checkOrderItemExists(int id) throws ApiException{
-        OrderItemMasterPojo p = orderItemDao.selectOrderItemDao(id);
+        OrderItemMasterPojo p = orderItemDao.get(id);
         if (p == null) {
             throw new ApiException("Order Item with given ID does not exit, id: " + id);
         }
@@ -72,15 +76,15 @@ public class OrderItemMasterApi {
 
     public void isOrderItemValid(OrderItemMasterPojo p) throws ApiException{
         int productId=p.getProductId();
-        productApi.getProductApi(productId);
-        orderApi.getOrderApi(p.getOrderId());
-        if(invApi.getInventoryApi(productId).getQuantity()<p.getQuantity()){
+        productApi.get(productId);
+        orderApi.get(p.getOrderId());
+        if(invApi.get(productId).getQuantity()<p.getQuantity()){
             throw new ApiException("Not enough Quantity Available");
         }
 
     }
 
-    public List<OrderItemMasterPojo> getAllOrderItemOrderIdApi(Integer orderId) throws ApiException{
-        return orderItemDao.getAllOrderItemOrderIdDao(orderId);
+    public List<OrderItemMasterPojo> getAllfromOrderId(Integer orderId) throws ApiException{
+        return orderItemDao.getAllfromOrderId(orderId);
     }
 }

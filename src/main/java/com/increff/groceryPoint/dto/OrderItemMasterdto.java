@@ -20,22 +20,31 @@ public class OrderItemMasterdto {
     @Autowired
     private HelperOrder helpOrder;
 
-    public void addOrderItemDto(OrderItemMasterForm form) throws ApiException {
+    public void add(OrderItemMasterForm form) throws ApiException {
         helpOrder.isOrderItemValid(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
-        orderItemApi.addOrderItemApi(p);
+        OrderItemMasterPojo prevOrderItem=orderItemApi.get(p.getOrderId(), p.getProductId());
+        if(prevOrderItem!=null){
+            OrderItemUpdateForm updateForm = new OrderItemUpdateForm();
+            updateForm.setOrderId(form.getOrderId());
+            updateForm.setQuantity(form.getQuantity());
+            updateForm.setProductId(p.getProductId());
+            update(prevOrderItem.getId(),updateForm);
+            return;
+        }
+        orderItemApi.add(p);
     }
 
-    public void deleteOrderItemDto(int id) throws ApiException{
-        orderItemApi.deleteOrderItemApi(id);
+    public void delete(int id) throws ApiException{
+        orderItemApi.delete(id);
     }
 
-    public OrderItemMasterData getOrderItemDto(int id) throws ApiException {
-        return helpOrder.convert(orderItemApi.getOrderItemApi(id));
+    public OrderItemMasterData get(int id) throws ApiException {
+        return helpOrder.convert(orderItemApi.get(id));
     }
 
-    public List<OrderItemMasterData> getAllOrderItemDto() throws ApiException{
-        List<OrderItemMasterPojo> list = orderItemApi.getAllOrderItemApi();
+    public List<OrderItemMasterData> getAll() throws ApiException{
+        List<OrderItemMasterPojo> list = orderItemApi.getAll();
         List<OrderItemMasterData> list2 = new ArrayList<OrderItemMasterData>();
         for (OrderItemMasterPojo p : list) {
             list2.add(helpOrder.convert(p));
@@ -43,15 +52,15 @@ public class OrderItemMasterdto {
         return list2;
     }
 
-    public void updateOrderItemDto(int id, OrderItemUpdateForm form) throws ApiException {
+    public void update(int id, OrderItemUpdateForm form) throws ApiException {
         helpOrder.isOrderItemUpdateValid(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
         p.setId(id);
-        orderItemApi.updateOrderItemApi(id,p);
+        orderItemApi.update(id,p);
     }
 
-    public List<OrderItemMasterData> getOrderItemOrderIdDto(Integer orderId) throws ApiException{
-        List<OrderItemMasterPojo> list = orderItemApi.getAllOrderItemOrderIdApi(orderId);
+    public List<OrderItemMasterData> getAllfromOrderId(Integer orderId) throws ApiException{
+        List<OrderItemMasterPojo> list = orderItemApi.getAllfromOrderId(orderId);
         List<OrderItemMasterData> list2 = new ArrayList<OrderItemMasterData>();
         for (OrderItemMasterPojo p : list) {
             list2.add(helpOrder.convert(p));

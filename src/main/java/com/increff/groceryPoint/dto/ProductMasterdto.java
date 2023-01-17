@@ -3,16 +3,13 @@ package com.increff.groceryPoint.dto;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dao.ProductMasterDao;
 
-import com.increff.groceryPoint.model.BrandMasterData;
 import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.model.ProductMasterForm;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import com.increff.groceryPoint.api.ProductMasterApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,22 +27,22 @@ public class ProductMasterdto {
     @Autowired
     private BrandMasterApi brandApi;
 //removed Transactional
-    public void addProductDto(ProductMasterForm form) throws ApiException {
+    public void add(ProductMasterForm form) throws ApiException {
         isProductValid(form);
         ProductMasterPojo p=convert(form);
-        productApi.addProductApi(p);
+        productApi.add(p);
     }
 
-    public void deleteProductDto(int id) throws ApiException {
-        productApi.deleteProductApi(id);
+    public void delete(int id) throws ApiException {
+        productApi.delete(id);
     }
 
-    public ProductMasterData getProductDto(int id) throws ApiException {
-        return convert(productApi.getProductApi(id));
+    public ProductMasterData get(int id) throws ApiException {
+        return convert(productApi.get(id));
     }
 
-    public List<ProductMasterData> getAllProductDto() throws ApiException{
-        List<ProductMasterPojo> list = productApi.getAllProductApi();
+    public List<ProductMasterData> getAll() throws ApiException{
+        List<ProductMasterPojo> list = productApi.getAll();
         List<ProductMasterData> list2 = new ArrayList<ProductMasterData>();
         for (ProductMasterPojo p : list) {
             list2.add(convert(p));
@@ -53,11 +50,11 @@ public class ProductMasterdto {
         return list2;
     }
 
-    public void updateProductDto(int id, ProductMasterForm form) throws ApiException {
+    public void update(int id, ProductMasterForm form) throws ApiException {
         isProductValid(form);
         ProductMasterPojo p=convert(form);
         normalize(p);
-        productApi.updateProductApi(id,p);
+        productApi.update(id,p);
     }
 
 

@@ -36,7 +36,7 @@ public class HelperOrder {
 
     public OrderItemMasterPojo convert(OrderItemMasterForm form) throws ApiException{
         OrderItemMasterPojo p=new OrderItemMasterPojo();
-        ProductMasterPojo product = pApi.getProductfromBarcodeApi(form.getBarcode());
+        ProductMasterPojo product = pApi.getfromBarcode(form.getBarcode());
         p.setProductId(product.getId());
         p.setQuantity(form.getQuantity());
         p.setOrderId(form.getOrderId());
@@ -55,7 +55,7 @@ public class HelperOrder {
 
     public OrderItemMasterPojo convert(OrderItemUpdateForm form) throws ApiException{
         OrderItemMasterPojo data = new OrderItemMasterPojo();
-        ProductMasterPojo product = pApi.getProductApi(form.getProductId());
+        ProductMasterPojo product = pApi.get(form.getProductId());
         data.setOrderId(form.getOrderId());
         data.setQuantity(form.getQuantity());
         data.setProductId(form.getProductId());
@@ -69,6 +69,7 @@ public class HelperOrder {
         if(form.getOrderId()<0){
             throw new ApiException("Enter a Valid OrderId");
         }
+        pApi.getfromBarcode(form.getBarcode());
 
     }
 

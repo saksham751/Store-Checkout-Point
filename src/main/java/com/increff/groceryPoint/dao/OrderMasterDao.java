@@ -16,7 +16,7 @@ import java.util.List;
 public class OrderMasterDao extends AbstractDao{
     private static String select_All="select order from OrderMasterPojo order";
     private static String select ="select order from OrderMasterPojo order where id =: id";
-    private static String select_between="select order from OrderMasterPojo order where time>=:start and time<=:end";
+    private static String select_between="select order from OrderMasterPojo order where order.time between :start and :end";
 
     @PersistenceContext
     private EntityManager em;
@@ -46,7 +46,7 @@ public class OrderMasterDao extends AbstractDao{
 //    public List<OrderMasterPojo> getByDateFilter(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     @Transactional(readOnly = true)
     public List<OrderMasterPojo> getByDateFilter(ZonedDateTime start, ZonedDateTime end){
-        TypedQuery<OrderMasterPojo> query=em().createQuery(select_between, OrderMasterPojo.class);
+        TypedQuery<OrderMasterPojo> query=em.createQuery(select_between, OrderMasterPojo.class);
         query.setParameter("start", start);
         query.setParameter("end",end);
         return query.getResultList();

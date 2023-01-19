@@ -17,30 +17,29 @@ function getInventoryReport() {
 
 //UI DISPLAY METHODS
 function displayInventoryReportList(data) {
-  var $tbody = $("#inventory-report-table").find("tbody");
+  var $tbody = $("#inventory-table").find("tbody");
   $tbody.empty();
   for (var i in data) {
     var e = data[i];
     var row =
       "<tr>" +
-      "<td  class='text-center'>" +
-      e.brand +
-      "</td>" +
-      "<td  class='text-center'>" +
-      e.category +
-      "</td>" +
-      "<td  class='text-center'>" +
-      e.quantity +
-      "</td>" +
-      "</tr>";
+      "<td>" + e.brand +"</td>"
+      + "<td>" + e.category + "</td>"
+      + "<td>" + e.quantity +"</td>"
+      +"</tr>";
     $tbody.append(row);
   }
+  pagination()
 }
 
 //INITIALIZATION CODE
 function init() {
   $("#refresh-data").click(getInventoryReport);
 }
-
+function pagination()
+{
+$('#inventory-table').DataTable();
+  $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getInventoryReport);

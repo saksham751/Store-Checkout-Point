@@ -18,26 +18,28 @@ function getbrandReport() {
 
 //UI DISPLAY METHODS
 function displaybrandReportList(data) {
-  var $tbody = $("#brandCategory-table").find("tbody");
+  var $tbody = $("#brand-table").find("tbody");
   $tbody.empty();
   for (var i in data) {
     var e = data[i];
     var row =
       "<tr>" +
-      "<td class='text-center'>" +
-      e.brand +
-      "</td>" +
-      "<td class='text-center'>" +
-      e.category +
-      "</td>" +
+      "<td>" + e.brand + "</td>" +
+      "<td>" + e.category + "</td>" +
       "</tr>";
     $tbody.append(row);
   }
+  pagination()
 }
 
 //INITIALIZATION CODE
 function init() {
   $("#refresh-data").click(getbrandReport);
+}
+function pagination()
+{
+$('#brand-table').DataTable();
+  $('.dataTables_length').addClass('bs-select');
 }
 
 $(document).ready(init);

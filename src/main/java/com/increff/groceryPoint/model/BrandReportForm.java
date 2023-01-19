@@ -3,11 +3,9 @@ package com.increff.groceryPoint.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter@Setter
-public class OrderMasterData{
+public class BrandReportForm {
     private Integer id;
-    private Date time;
-    private String status;
+    private String brand;
+    private String category;
 }

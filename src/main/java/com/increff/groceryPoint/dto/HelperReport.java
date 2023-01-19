@@ -1,32 +1,63 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
-import com.increff.groceryPoint.model.DateFilterForm;
-import com.increff.groceryPoint.model.InventoryReportModel;
-import com.increff.groceryPoint.model.ReportForm;
+import com.increff.groceryPoint.model.InventoryReportForm;
+import com.increff.groceryPoint.model.SalesReportForm;
 import com.increff.groceryPoint.model.SalesReportData;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
+import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 @Service
 public class HelperReport {
     @Autowired
     private BrandMasterApi brandApi;
-    public static InventoryReportModel convertToReport(BrandMasterPojo p)
-    {
-        InventoryReportModel inventoryReportModel = new InventoryReportModel();
+//    public static InventoryReportForm convertToReport(BrandMasterPojo p)
+//    {
+//        InventoryReportForm inventoryReportModel = new InventoryReportForm();
+//
+//        inventoryReportModel.setBrand(p.getBrand());
+//        inventoryReportModel.setCategory(p.getCategory());
+//        inventoryReportModel.setCategory(p.getId());
+//        inventoryReportModel.setQuantity(0);
+//
+//        return inventoryReportModel;
+//    }
+    public static Date getStartOfDay(Date day, Calendar cal) {
+        if (day == null) day = new Date();
+        cal.setTime(day);
+        cal.set(Calendar.HOUR_OF_DAY, cal.getMinimum(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE,      cal.getMinimum(Calendar.MINUTE));
+        cal.set(Calendar.SECOND,      cal.getMinimum(Calendar.SECOND));
+        cal.set(Calendar.MILLISECOND, cal.getMinimum(Calendar.MILLISECOND));
+        return cal.getTime();
+    }
 
-        inventoryReportModel.setBrand(p.getBrand());
-        inventoryReportModel.setCategory(p.getCategory());
-        inventoryReportModel.setBrandCategory(p.getId());
-        inventoryReportModel.setQuantity(0);
-
-        return inventoryReportModel;
+    public static Date getEndOfDay(Date day,Calendar cal) {
+        if (day == null) day = new Date();
+        cal.setTime(day);
+        cal.set(Calendar.HOUR_OF_DAY, cal.getMaximum(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE,      cal.getMaximum(Calendar.MINUTE));
+        cal.set(Calendar.SECOND,      cal.getMaximum(Calendar.SECOND));
+        cal.set(Calendar.MILLISECOND, cal.getMaximum(Calendar.MILLISECOND));
+        return cal.getTime();
+    }
+    public static void validate(SalesReportForm salesReportForm) {
+        salesReportForm.setBrand(StringUtil.toLowerCase(salesReportForm.getBrand()));
+        salesReportForm.setCategory(StringUtil.toLowerCase(salesReportForm.getCategory()));
+        if(salesReportForm.getEnd()==null) {
+            salesReportForm.setEnd(new Date());
+        }
+        if(salesReportForm.getStart()==null) {
+            salesReportForm.setStart(new GregorianCalendar(2022, Calendar.JANUARY, 1).getTime());
+        }
+        salesReportForm.setStart(getStartOfDay(salesReportForm.getStart(),Calendar.getInstance()));
+        salesReportForm.setEnd(getEndOfDay(salesReportForm.getEnd(),Calendar.getInstance()));
     }
     public SalesReportData convertProductToReport(ProductMasterPojo p) throws ApiException
     {
@@ -44,19 +75,19 @@ public class HelperReport {
         return salesReport;
     }
 
-    public static ReportForm convertToDatatime(DateFilterForm form){
-//        String st=form.getStart().replace('-','/');
-        ReportForm reportfilter = new ReportForm();
-//        System.out.println(form.getStart());
-        String startDate = form.getStart()+ " 00:00:00 +05:30";
-//        System.out.println(startDate+ " "+ ZonedDateTime.now());
-        final DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss ZZZZZ");
-        ZonedDateTime strt = ZonedDateTime.parse(startDate, formatter);
-        reportfilter.setStart(strt);
-        String endDate = form.getEnd()+ " 23:59:59 +05:30";
-        ZonedDateTime end = ZonedDateTime.parse(endDate, formatter);
-        reportfilter.setStart(end);
-        return reportfilter;
-    }
+//    public static ReportForm convertToDatatime(DateFilterForm form){
+////        String st=form.getStart().replace('-','/');
+//        ReportForm reportfilter = new ReportForm();
+////        System.out.println(form.getStart());
+//        String startDate = form.getStart()+ " 00:00:00";
+////        System.out.println(startDate+ " "+ Date.now());
+//
+//        Date strt = Date.parse(startDate, formatter);
+//        reportfilter.setStart(strt);
+//        String endDate = form.getEnd()+ " 23:59:59";
+//        Date end = Date.parse(endDate, formatter);
+//        reportfilter.setStart(end);
+//        return reportfilter;
+//    }
 
 }

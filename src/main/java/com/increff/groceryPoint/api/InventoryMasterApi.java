@@ -47,9 +47,16 @@ public class InventoryMasterApi {
 
     public InventoryMasterPojo checkInvExists(int id) throws ApiException{
         InventoryMasterPojo ex = invDao.get(id);
-        if (ex == null) {
-            throw new ApiException("Given product does not have any Inventory, id: " + id);
+        if(ex==null){
+            InventoryMasterPojo invPojo = new InventoryMasterPojo();
+            invPojo.setQuantity(0);
+            invPojo.setId(id);
+            add(invPojo);
+            return invPojo;
         }
+//        if (ex == null) {
+//            throw new ApiException("Given product does not have any Inventory, id: " + id);
+//        }
         return ex;
     }
 }

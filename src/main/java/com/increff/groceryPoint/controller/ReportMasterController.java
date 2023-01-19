@@ -21,23 +21,32 @@ public class ReportMasterController {
 
         @ApiOperation(value = "Get Sales report")
         @RequestMapping(path = "/api/sales-report", method = RequestMethod.POST)
-        public List<SalesReportData> getSalesReport(@RequestBody DateFilterForm form) throws ApiException{
+        public List<SalesReportData> getSalesReport(@RequestBody SalesReportForm form) throws ApiException{
                 return reportDto.getSalesReport(form);
         }
-        
-        @ApiOperation(value = "Get Revenue on product items with date as filter")
-        @RequestMapping(path = "/api/sales-report-brand", method = RequestMethod.POST)
-        public List<BrandSalesReport> getRevenueBrand(@RequestBody DateFilterForm form) throws ApiException
-        {
-                return reportDto.getBrandReport(form);
+        @ApiOperation(value = "Get inventory Report")
+        @RequestMapping(path = "/api/inventory-report", method = RequestMethod.GET)
+        public List<InventoryReportForm> getInventoryReport() throws ApiException{
+                return reportDto.getInventoryReport();
         }
-
-        @ApiOperation(value = "Get Revenue on product items with date as filter")
-        @RequestMapping(path = "/api/sales-report-category", method = RequestMethod.POST)
-        public List<CategorySalesReport> getRevenueCategory(@RequestBody DateFilterForm form) throws ApiException
-        {
-                return reportDto.getCategoryReport(form);
+        @ApiOperation(value = "Gets Brand Report")
+        @RequestMapping(path = "/api/brand-report",method =RequestMethod.GET)
+        public List<BrandMasterData> getBrandReport() throws ApiException{
+                return reportDto.getBrandReport();
         }
+//        @ApiOperation(value = "Get Revenue on product items with date as filter")
+//        @RequestMapping(path = "/api/sales-report-brand", method = RequestMethod.POST)
+//        public List<BrandSalesReport> getRevenueBrand(@RequestBody DateFilterForm form) throws ApiException
+//        {
+//                return reportDto.getBrandReport(form);
+//        }
+//
+//        @ApiOperation(value = "Get Revenue on product items with date as filter")
+//        @RequestMapping(path = "/api/sales-report-category", method = RequestMethod.POST)
+//        public List<CategorySalesReport> getRevenueCategory(@RequestBody DateFilterForm form) throws ApiException
+//        {
+//                return reportDto.getCategoryReport(form);
+//        }
 //
 //        @ApiOperation(value = "Get Inventory Report")
 //        @RequestMapping(path = "/api/inventory-report", method = RequestMethod.GET)

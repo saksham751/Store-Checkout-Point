@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InventoryReportModel {
-    private Integer brandCategory;
+public class InventoryReportForm {
     private String brand;
     private String category;
     private Integer quantity;

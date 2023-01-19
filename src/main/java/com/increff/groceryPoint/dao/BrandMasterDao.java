@@ -19,6 +19,8 @@ public class BrandMasterDao extends AbstractDao {
     private static String select_id = "select p from BrandMasterPojo p where id=:id";
     private static String select_all = "select p from BrandMasterPojo p";
     private static String select_brand_category = "select p from BrandMasterPojo p where brand=:brand and category=:category";
+    private static String select_brand = "select b from BrandMasterPojo b where b.brand =: brand";
+    private static String select_category = "select b from BrandMasterPojo b where b.category =: category";
     @PersistenceContext
     private EntityManager em;
 
@@ -46,6 +48,25 @@ public class BrandMasterDao extends AbstractDao {
     @Transactional(rollbackOn = ApiException.class)
     public void updateBrandDao(BrandMasterPojo p) {
 
+    }
+    @Transactional
+    public List<BrandMasterPojo> getByBrand(String brand){
+        TypedQuery<BrandMasterPojo> query = getQuery(select_brand, BrandMasterPojo.class);
+        query.setParameter("brand", brand);
+        return query.getResultList();
+    }
+    @Transactional
+    public List<BrandMasterPojo> getByCategory(String category){
+        TypedQuery<BrandMasterPojo> query = getQuery(select_category, BrandMasterPojo.class);
+        query.setParameter("category", category);
+        return query.getResultList();
+    }
+    @Transactional
+    public BrandMasterPojo getByBrandCategory(String brand, String category){
+        TypedQuery<BrandMasterPojo> query = getQuery(select_brand_category,BrandMasterPojo.class);
+        query.setParameter("brand",brand);
+        query.setParameter("category",category);
+        return getSingle(query);
     }
     @Transactional
     public BrandMasterPojo checkUnique(String brand, String Category){

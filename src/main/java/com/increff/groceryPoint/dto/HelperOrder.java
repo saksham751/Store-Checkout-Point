@@ -26,9 +26,7 @@ public class HelperOrder {
     private InventoryMasterApi invApi;
     public OrderMasterData convert(OrderMasterPojo p) {
         OrderMasterData d = new OrderMasterData();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy - HH:mm:ss Z");
-        String formattedString = p.getTime().format(formatter);
-        d.setTime(formattedString);
+        d.setTime(p.getTime());
         d.setId(p.getId());
         d.setStatus(p.getStatus());
         return d;

@@ -2,18 +2,14 @@ package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.OrderMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.model.ReportForm;
 import com.increff.groceryPoint.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
-
-
 @Service
 public class OrderMasterApi {
     @Autowired
@@ -21,7 +17,7 @@ public class OrderMasterApi {
 
 
     public void add(OrderMasterPojo omp) throws ApiException {
-        omp.setTime(ZonedDateTime.now());
+        omp.setTime(Date.from(Instant.now()));
         omp.setStatus("Pending");
         orderDao.add(omp);
     }
@@ -50,7 +46,7 @@ public class OrderMasterApi {
         orderDao.update(p,ex);
     }
 
-    public List<OrderMasterPojo> getByDateFilter(ZonedDateTime start,ZonedDateTime end) throws ApiException{
+    public List<OrderMasterPojo> getByDateFilter(Date start, Date end) throws ApiException{
         List<OrderMasterPojo> orderList= orderDao.getByDateFilter(start,end);
         return orderList;
     }

@@ -14,25 +14,25 @@ import java.util.Objects;
 @Service
 public class BrandMasterApi {
     @Autowired
-    private BrandMasterDao dao;
+    private BrandMasterDao brandDao;
     //private Helper help;
 
     public void add(BrandMasterPojo brandPojo) throws ApiException {
         checkUnique(brandPojo);
-        dao.insertBrandDao(brandPojo);
+        brandDao.insertBrandDao(brandPojo);
     }
 //todo remove transactional
 //todo rename to only add,delete etc. and add transactional usig rollbackfor and readonly
     public void delete(int id) throws ApiException{
         getCheck(id);
-        dao.deleteBrandDao(id);
+        brandDao.deleteBrandDao(id);
     }
     public BrandMasterPojo get(int id) throws ApiException {
         return getCheck(id);
     }
 
     public List<BrandMasterPojo> getAll() {
-        return dao.selectAllBrandDao();
+        return brandDao.selectAllBrandDao();
     }
 
     @Transactional(rollbackFor = ApiException.class)
@@ -44,15 +44,25 @@ public class BrandMasterApi {
     }
 
     public BrandMasterPojo getCheck(int id) throws ApiException {
-        BrandMasterPojo p = dao.selectBrandDao(id);
+        BrandMasterPojo p = brandDao.selectBrandDao(id);
         if (p == null) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
         return p;
     }
+    public List<BrandMasterPojo> getByBrand(String brand){
+        return brandDao.getByBrand(brand);
+    }
+    public List<BrandMasterPojo> getByCategory(String category){
+        return brandDao.getByCategory(category);
+    }
+    public BrandMasterPojo getByBrandCategory(String brand,String category){
+        return brandDao.getByBrandCategory(brand,category);
+    }
     public void checkUnique(BrandMasterPojo brandPojo) throws ApiException {
-        if (!Objects.isNull(dao.checkUnique(brandPojo.getBrand(), brandPojo.getCategory()))) {
+        if (!Objects.isNull(brandDao.checkUnique(brandPojo.getBrand(), brandPojo.getCategory()))) {
             throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + " pair already exists");
         }
     }
+
 }

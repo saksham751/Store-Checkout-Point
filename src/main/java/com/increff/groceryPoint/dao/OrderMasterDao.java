@@ -8,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -43,9 +42,9 @@ public class OrderMasterDao extends AbstractDao{
 
     }
 //    @Query(value = "SELECT * FROM PAYMENT_MASTER WHERE LAST_UPDATED >= :startDate AND LAST_UPDATED <= :endDate", nativeQuery = true)
-//    public List<OrderMasterPojo> getByDateFilter(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+//    public List<OrderMasterPojo> getByDateFilter(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
     @Transactional(readOnly = true)
-    public List<OrderMasterPojo> getByDateFilter(ZonedDateTime start, ZonedDateTime end){
+    public List<OrderMasterPojo> getByDateFilter(Date start, Date end){
         TypedQuery<OrderMasterPojo> query=em.createQuery(select_between, OrderMasterPojo.class);
         query.setParameter("start", start);
         query.setParameter("end",end);

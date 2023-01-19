@@ -3,13 +3,12 @@ package com.increff.groceryPoint.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Setter@Getter
-public class ReportForm {
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+public class SalesReportForm {
+    private Date start;
+    private Date end;
     private String brand;
     private String category;
 }

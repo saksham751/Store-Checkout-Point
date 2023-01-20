@@ -42,12 +42,14 @@ function displayOrderList(data){
  	$tbody.empty();
  	for(var i in data){
  		var e = data[i];
- 		var buttonHtml = ' <button class="btn btn-secondary" onClick=redirect("'+ e.id +'")>open</button>'
+ 		var buttonHtml = ' <button class="btn btn-secondary" onClick=redirect("'+ e.id +'")>Open</button>'
+ 		var viewButtonHtml = ' <button class="btn btn-secondary" onClick=redirect2("'+ e.id +'")>View</button>'
  		if(e.status==="Placed"){
  		    var row = '<tr>'
              		+ '<td>' + e.id + '</td>'
              		+ '<td>' + e.time + '</td>'
              		+ '<td>' + e.status + '</td>'
+             		+ '<td>' + viewButtonHtml + '</td>'
              		+ '<td>'+ ""+ '</td>'
              		+ '</tr>';
             $tbody.append(row);
@@ -68,6 +70,12 @@ function redirect(id)
 //    console.log(status);
 //    if(status==="placed") return;
     window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/orderItem/" + id;
+}
+function redirect2(id)
+{
+//    console.log(status);
+//    if(status==="placed") return;
+    window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/orderItemView/" + id;
 }
 
  function createOrder(event)

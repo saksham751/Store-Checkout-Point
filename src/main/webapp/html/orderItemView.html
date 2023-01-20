@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="snippets.html :: name_head">
+</head>
+<body>
+<nav th:replace="snippets.html :: name_app_navbar"></nav>
+
+<div class="container">
+    <!--    <h3 id="customer-name"></h3>-->
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped" id="orderItem-table">
+                <thead>
+                <tr>
+                    <th scope="col">Id#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Selling Price</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div>
+        <button type="button" class="btn btn-secondary" id="download-invoice">Download Invoice</button>
+    </div>
+</div>
+</body>
+
+<footer th:replace="snippets.html :: name_footer"></footer>
+<script th:src="@{/static/orderItemView.js}"/></script>
+
+</html>

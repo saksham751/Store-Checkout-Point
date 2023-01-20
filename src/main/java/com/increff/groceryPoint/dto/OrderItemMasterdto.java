@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 
 @Service
 public class OrderItemMasterdto {
@@ -23,8 +25,13 @@ public class OrderItemMasterdto {
     public void add(OrderItemMasterForm form) throws ApiException {
         helpOrder.isOrderItemValid(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
-        OrderItemMasterPojo prevOrderItem=orderItemApi.get(p.getOrderId(), p.getProductId());
-        if(prevOrderItem!=null){
+        OrderItemMasterPojo prevOrderItem=new OrderItemMasterPojo();
+        try{
+            prevOrderItem=orderItemApi.get(p.getOrderId(), p.getProductId());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(!isNull(prevOrderItem)){
             OrderItemUpdateForm updateForm = new OrderItemUpdateForm();
             updateForm.setOrderId(form.getOrderId());
             updateForm.setQuantity(form.getQuantity());

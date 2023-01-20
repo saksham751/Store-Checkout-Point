@@ -1,5 +1,6 @@
 package com.increff.groceryPoint.dao;
 
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,9 +57,9 @@ public class OrderItemMasterDao extends AbstractDao{
     }
 
     @Transactional(readOnly = true)
-    public OrderItemMasterPojo get(Integer id, Integer productId){
-        TypedQuery<OrderItemMasterPojo> query = getQuery(select, OrderItemMasterPojo.class);
-        query.setParameter("id", id);
+    public OrderItemMasterPojo get(Integer id, Integer productId) throws ApiException {
+        TypedQuery<OrderItemMasterPojo> query = getQuery(select_orderproduct, OrderItemMasterPojo.class);
+        query.setParameter("orderId", id);
         query.setParameter("productId", productId);
         return getSingle(query);
     }

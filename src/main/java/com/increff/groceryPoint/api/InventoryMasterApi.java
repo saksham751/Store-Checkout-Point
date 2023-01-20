@@ -34,11 +34,11 @@ public class InventoryMasterApi {
         return invDao.getAll();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public void update(int id, InventoryMasterPojo p) throws ApiException {
         InventoryMasterPojo ex = checkInvExists(id);
         ex.setQuantity(p.getQuantity());
-        invDao.update(p,ex);
+       // invDao.update(p,ex);
     }
 
     public void doesProductExists(int id) throws ApiException{

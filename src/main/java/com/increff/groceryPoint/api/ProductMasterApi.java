@@ -25,10 +25,7 @@ public class ProductMasterApi {
     public void add(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
         checkBrandExistApi(id);
-        ProductMasterPojo ex = getfromBarcode(p.getBarcode());
-        if(ex!=null){
-            throw new ApiException("Barcode already exists");
-        }
+        checkBarcodeExists(p.getBarcode());
         pdao.add(p);
     }
 
@@ -83,5 +80,12 @@ public class ProductMasterApi {
             throw new ApiException("Product with given barcode does not exist");
         }
         return ex;
+    }
+
+    public void checkBarcodeExists(String barcode) throws ApiException{
+        ProductMasterPojo ex=  pdao.getfromBarcode(barcode);
+        if(ex!=null){
+            throw new ApiException("Barcode already exists");
+        }
     }
 }

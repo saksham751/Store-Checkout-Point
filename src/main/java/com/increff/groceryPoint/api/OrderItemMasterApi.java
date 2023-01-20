@@ -23,10 +23,6 @@ public class OrderItemMasterApi {
     @Transactional(rollbackFor = ApiException.class)
     public void add(OrderItemMasterPojo p) throws ApiException {
         isOrderItemValid(p);
-        InventoryMasterPojo inv= new InventoryMasterPojo();
-        inv.setId(p.getProductId());
-        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity());
-        invApi.update(p.getProductId(),inv);
         orderItemDao.add(p);
     }
 
@@ -62,7 +58,7 @@ public class OrderItemMasterApi {
         orderItemDao.delete(id);
     }
 
-    public OrderItemMasterPojo get(Integer id, Integer productId){
+    public OrderItemMasterPojo get(Integer id, Integer productId) throws ApiException{
         return orderItemDao.get(id,productId);
     }
 

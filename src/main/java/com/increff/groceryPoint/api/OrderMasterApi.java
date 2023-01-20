@@ -15,6 +15,8 @@ public class OrderMasterApi {
     @Autowired
     private OrderMasterDao orderDao;
 
+    @Autowired
+    private InventoryMasterApi invApi;
 
     public void add(OrderMasterPojo omp) throws ApiException {
         omp.setTime(Date.from(Instant.now()));
@@ -43,12 +45,19 @@ public class OrderMasterApi {
         }
         ex.setStatus(p.getStatus());
         ex.setTime(p.getTime());
-        orderDao.update(p,ex);
+  //      orderDao.update(p,ex);
     }
 
     public List<OrderMasterPojo> getByDateFilter(Date start, Date end) throws ApiException{
         List<OrderMasterPojo> orderList= orderDao.getByDateFilter(start,end);
         return orderList;
+    }
+
+    public void placeOrder(int id,OrderItemMasterPojo orderItem) throws ApiException{
+        InventoryMasterPojo inv = new InventoryMasterPojo();
+        inv.setId(orderItem.getProductId());
+        inv.setQuantity(invApi.get(orderItem.getProductId()).getQuantity() - orderItem.getQuantity());
+        invApi.update(orderItem.getProductId(), inv);
     }
 
 }

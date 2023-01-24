@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +35,8 @@ public class LoginController {
 	private UserService service;
 	@Autowired
 	private InfoData info;
-	
+	@Value("${supervisor.email}")
+	private String supervisorEmail;
 	@ApiOperation(value = "Logs in a user")
 	@RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
@@ -64,7 +66,7 @@ public class LoginController {
 		return new ModelAndView("redirect:/site/logout");
 	}
 
-	private static Authentication convert(UserPojo p) {
+	private Authentication convert(UserPojo p) {
 		// Create principal
 		UserPrincipal principal = new UserPrincipal();
 		principal.setEmail(p.getEmail());
@@ -72,7 +74,15 @@ public class LoginController {
 
 		// Create Authorities
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(p.getRole()));
+		String role = "operator";
+		if (Objects.equals(supervisorEmail, p.getEmail()))
+			role = "supervisor";
+
+		principal.setRole(role);
+
+		authorities.add(new SimpleGrantedAuthority(role));
+		//System.out.println(role);
+		//authorities.add(new SimpleGrantedAuthority(p.getRole()));
 		// you can add more roles if required
 
 		// Create Authentication

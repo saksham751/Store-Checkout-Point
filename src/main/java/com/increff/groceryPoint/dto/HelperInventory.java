@@ -4,11 +4,13 @@ import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import static java.util.Objects.isNull;
 
 public class HelperInventory {
+    @Autowired
     private static ProductMasterApi pApi;
     public static void doesProductExists(InventoryMasterForm form) throws ApiException{
         pApi.get(form.getId());

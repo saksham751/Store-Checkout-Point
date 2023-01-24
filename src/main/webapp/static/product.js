@@ -155,6 +155,7 @@ function displayProductList(data){
 		+ '</tr>';
         $tbody.append(row);
 	}
+	pagination();
 }
 
 function displayEditProduct(id){
@@ -217,7 +218,11 @@ function init(){
 	$('#download-errors').click(downloadErrors);
     $('#productFile').on('change', updateFileName)
 }
-
+function pagination()
+{
+    $('#product-table').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getProductList);
 

@@ -1,15 +1,18 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
+import com.increff.groceryPoint.model.DaySalesData;
 import com.increff.groceryPoint.model.InventoryReportForm;
 import com.increff.groceryPoint.model.SalesReportForm;
 import com.increff.groceryPoint.model.SalesReportData;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
+import com.increff.groceryPoint.pojo.DaySalesPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -74,7 +77,15 @@ public class HelperReport {
         salesReport.setCategory(brandPojo.getCategory());
         return salesReport;
     }
-
+    protected static DaySalesData convertPojotoData(DaySalesPojo pojo)
+    {
+        DaySalesData dailyReportData = new DaySalesData();
+        dailyReportData.setDate(pojo.getDate());
+        dailyReportData.setTotalRevenue(pojo.getTotalRevenue());
+        dailyReportData.setInvoicedItemsCount(pojo.getInvoicedItemsCount());
+        dailyReportData.setInvoicedOrderCount(pojo.getInvoicedOrderCount());
+        return dailyReportData;
+    }
 //    public static ReportForm convertToDatatime(DateFilterForm form){
 ////        String st=form.getStart().replace('-','/');
 //        ReportForm reportfilter = new ReportForm();

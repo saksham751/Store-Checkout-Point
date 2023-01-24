@@ -6,8 +6,7 @@ import com.increff.groceryPoint.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.increff.groceryPoint.dto.HelperBrand.convert;
@@ -28,6 +27,8 @@ public class ReportMasterdto {
     private InventoryMasterApi invApi;
     @Autowired
     private HelperReport help;
+    @Autowired
+    private ReportMasterApi reportApi;
     public List<SalesReportData> getSalesReport(SalesReportForm form) throws ApiException{
         validate(form);
         Date startDate = form.getStart();
@@ -124,6 +125,63 @@ public class ReportMasterdto {
         return brandDataList;
     }
 
+    public void generate_pos_day_sales() throws ApiException{
+        DaySalesPojo salesreport= new DaySalesPojo();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY,00);
+        cal.set(Calendar.MINUTE,00);
+        cal.set(Calendar.SECOND,0);
+        cal.set(Calendar.MILLISECOND,0);
+        Date start = cal.getTime();
+        cal.set(Calendar.HOUR_OF_DAY,23);
+        cal.set(Calendar.MINUTE,59);
+        cal.set(Calendar.SECOND,59);
+        cal.set(Calendar.MILLISECOND,0);
+        Date end =cal.getTime();
+        Integer totalItems = 0;
+        Double totalRevenue = 0.0;
+
+
+        List<OrderMasterPojo> orderPojoList = orderApi.getByDateFilter(start, end);
+
+        Integer totalOrders = orderPojoList.size();
+
+        for (OrderMasterPojo o : orderPojoList) {
+            Integer id = o.getId();
+            List<OrderItemMasterPojo> orderItemPojoList = orderItemApi.getAllfromOrderId(id);
+            for (OrderItemMasterPojo i : orderItemPojoList) {
+                totalItems += i.getQuantity();
+                totalRevenue += i.getQuantity() * i.getSellingPrice();
+            }
+        }
+        long millis=System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        salesreport.setDate(date);
+        salesreport.setTotalRevenue(totalRevenue);
+        salesreport.setInvoicedItemsCount(totalItems);
+        salesreport.setInvoicedOrderCount(totalOrders);
+
+        DaySalesPojo pojo = reportApi.getReportByDate(date);
+        if (pojo == null) {
+            reportApi.addReport(salesreport);
+        } else {
+            reportApi.update(date, salesreport);
+        }
+
+    }
+    public List<DaySalesData> getAllDailyReport() throws ApiException
+    {
+        List<DaySalesPojo> dailyReportPojoList = reportApi.getAllReport();
+        List<DaySalesData> dailyReportData = new ArrayList<>();
+
+        for(DaySalesPojo p: dailyReportPojoList)
+        {
+            dailyReportData.add(help.convertPojotoData(p));
+        }
+
+        return dailyReportData;
+    }
 //    @Scheduled(cron = "0 49 15 * * ?")
 //    public void generateDailySalesReport() throws ApiException {
 //        DaySalesPojo daySalesPojo = new DaySalesPojo();

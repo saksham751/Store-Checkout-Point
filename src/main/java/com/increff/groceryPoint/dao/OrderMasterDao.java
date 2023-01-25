@@ -12,10 +12,11 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
+@Transactional
 public class OrderMasterDao extends AbstractDao{
     private static String select_All="select order from OrderMasterPojo order";
     private static String select ="select order from OrderMasterPojo order where id =: id";
-    private static String select_between="select order from OrderMasterPojo order where order.time between :start and :end";
+    private static String select_between="select order from OrderMasterPojo order where time between :start and :end";
 
     @PersistenceContext
     private EntityManager em;
@@ -43,7 +44,6 @@ public class OrderMasterDao extends AbstractDao{
     }
 //    @Query(value = "SELECT * FROM PAYMENT_MASTER WHERE LAST_UPDATED >= :startDate AND LAST_UPDATED <= :endDate", nativeQuery = true)
 //    public List<OrderMasterPojo> getByDateFilter(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-    @Transactional(readOnly = true)
     public List<OrderMasterPojo> getByDateFilter(Date start, Date end){
         TypedQuery<OrderMasterPojo> query=em.createQuery(select_between, OrderMasterPojo.class);
         query.setParameter("start", start);

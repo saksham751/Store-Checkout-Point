@@ -30,33 +30,15 @@ public class ReportMasterdto {
     @Autowired
     private ReportMasterApi reportApi;
     public List<SalesReportData> getSalesReport(SalesReportForm form) throws ApiException{
-        validate(form);
-        Date startDate = form.getStart();
-        Date endDate = form.getEnd();
-        String brand = form.getBrand();
-        String category = form.getCategory();
-
-        List<OrderMasterPojo> orderList = orderApi.getByDateFilter(startDate,endDate);
+        validateReportForm(form);
+        List<OrderMasterPojo> orderList = orderApi.getByDateFilter(form.getStart(),form.getEnd());
         List<OrderItemMasterPojo> orderItemList = new ArrayList<OrderItemMasterPojo>();
         for(OrderMasterPojo orderPojo:orderList){
             List<OrderItemMasterPojo> orderItemPojoList = orderItemApi.getAllfromOrderId(orderPojo.getId());
             orderItemList.addAll(orderItemPojoList);
         }
 
-        List<BrandMasterPojo> brandList = new ArrayList<BrandMasterPojo>();
-        if(brand.equals("")&&category.equals("")){
-            brandList = brandApi.getAll();
-        }
-        else if(brand.equals("")){
-            brandList = brandApi.getByCategory(category);
-        }
-        else if(category.equals("")){
-            brandList = brandApi.getByBrand(brand);
-        }
-        else{
-            BrandMasterPojo brandCategoryPojo = brandApi.getByBrandCategory(brand,category);
-            brandList.add(brandCategoryPojo);
-        }
+        List<BrandMasterPojo> brandList=reportApi.getBrandList(form.getBrand(),form.getCategory());
         List<SalesReportData> salesReportDataList = getSalesReportData(brandList,orderItemList);
         return salesReportDataList;
     }

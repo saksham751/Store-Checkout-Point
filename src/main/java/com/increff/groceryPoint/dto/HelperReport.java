@@ -2,7 +2,6 @@ package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.model.DaySalesData;
-import com.increff.groceryPoint.model.InventoryReportForm;
 import com.increff.groceryPoint.model.SalesReportForm;
 import com.increff.groceryPoint.model.SalesReportData;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
@@ -12,7 +11,6 @@ import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -50,15 +48,16 @@ public class HelperReport {
         cal.set(Calendar.MILLISECOND, cal.getMaximum(Calendar.MILLISECOND));
         return cal.getTime();
     }
-    public static void validate(SalesReportForm salesReportForm) {
-        salesReportForm.setBrand(StringUtil.toLowerCase(salesReportForm.getBrand()));
-        salesReportForm.setCategory(StringUtil.toLowerCase(salesReportForm.getCategory()));
+    public static void validateReportForm(SalesReportForm salesReportForm) {
+
         if(salesReportForm.getEnd()==null) {
             salesReportForm.setEnd(new Date());
         }
         if(salesReportForm.getStart()==null) {
-            salesReportForm.setStart(new GregorianCalendar(2022, Calendar.JANUARY, 1).getTime());
+            salesReportForm.setStart(new GregorianCalendar(2023, Calendar.JANUARY, 1).getTime());
         }
+        salesReportForm.setBrand(StringUtil.toLowerCase(salesReportForm.getBrand()));
+        salesReportForm.setCategory(StringUtil.toLowerCase(salesReportForm.getCategory()));
         salesReportForm.setStart(getStartOfDay(salesReportForm.getStart(),Calendar.getInstance()));
         salesReportForm.setEnd(getEndOfDay(salesReportForm.getEnd(),Calendar.getInstance()));
     }

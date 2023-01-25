@@ -22,10 +22,10 @@ import static com.increff.groceryPoint.dto.HelperBrand.normalize;
 public class BrandMasterdto {
     @Autowired
     private BrandMasterApi brandApi;
-    public void add(BrandMasterForm form) throws ApiException {
+    public int add(BrandMasterForm form) throws ApiException {
         validateBrandForm(form);
         BrandMasterPojo brandPojo = convert(normalize(form));
-        brandApi.add(brandPojo);
+        return brandApi.add(brandPojo);
     }
 
 

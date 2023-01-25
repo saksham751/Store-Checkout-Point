@@ -18,9 +18,9 @@ public class BrandMasterApi {
     private BrandMasterDao brandDao;
     //private Helper help;
 
-    public void add(BrandMasterPojo brandPojo) throws ApiException {
+    public int add(BrandMasterPojo brandPojo) throws ApiException {
         checkUnique(brandPojo);
-        brandDao.insertBrandDao(brandPojo);
+        return brandDao.insertBrandDao(brandPojo);
     }
 //todo remove transactional
 //todo rename to only add,delete etc. and add transactional usig rollbackfor and readonly

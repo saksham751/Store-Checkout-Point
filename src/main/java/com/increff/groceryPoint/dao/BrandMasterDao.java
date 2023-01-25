@@ -25,8 +25,9 @@ public class BrandMasterDao extends AbstractDao {
     private EntityManager em;
 
     @Transactional(rollbackOn = ApiException.class)
-    public void insertBrandDao(BrandMasterPojo p) {
+    public int insertBrandDao(BrandMasterPojo p) {
         em.persist(p);
+        return p.getId();
     }
     @Transactional(rollbackOn = ApiException.class)
     public int deleteBrandDao(int id) {

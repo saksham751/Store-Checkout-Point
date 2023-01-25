@@ -22,6 +22,7 @@ public class ReportMasterController {
         @ApiOperation(value = "Get Sales report")
         @RequestMapping(path = "/api/sales-report", method = RequestMethod.POST)
         public List<SalesReportData> getSalesReport(@RequestBody SalesReportForm form) throws ApiException{
+                System.out.println(form.getStart()+" "+form.getEnd());
                 return reportDto.getSalesReport(form);
         }
         @ApiOperation(value = "Get inventory Report")

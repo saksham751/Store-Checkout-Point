@@ -27,7 +27,7 @@ public class ProductMasterDao extends AbstractDao {
     public void add(ProductMasterPojo p) {
         em.persist(p);
     }
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public int delete(int id) {
         Query query = em.createQuery(delete_id);
         query.setParameter("id", id);
@@ -44,12 +44,12 @@ public class ProductMasterDao extends AbstractDao {
         TypedQuery<ProductMasterPojo> query = getQuery(select_all, ProductMasterPojo.class);
         return query.getResultList();
     }
-    @Transactional
+
     public void update(ProductMasterPojo ex) {
         //Symbolic
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ProductMasterPojo getfromBarcode(String barcode){
         TypedQuery<ProductMasterPojo> query = getQuery(select_barcode, ProductMasterPojo.class);
         query.setParameter("barcode", barcode);

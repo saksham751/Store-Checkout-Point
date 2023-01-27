@@ -44,7 +44,7 @@ public class ReportMasterApi {
         return reportDao.select(date);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public void update(Date date, DaySalesPojo newPojo)
     {
         DaySalesPojo pojo = reportDao.select(date);

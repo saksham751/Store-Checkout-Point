@@ -47,11 +47,11 @@ public class BrandMasterdto {
         return list2;
     }
 
-    public void update(int id, BrandMasterForm f) throws ApiException {
+    public void update(int id, BrandMasterForm form) throws ApiException {
 
-        validateBrandForm(f);
-        f=normalize(f);
-        BrandMasterPojo p = convert(f);
+        validateBrandForm(form);
+        form=normalize(form);
+        BrandMasterPojo p = convert(form);
         brandApi.update(id, p);
     }
 }

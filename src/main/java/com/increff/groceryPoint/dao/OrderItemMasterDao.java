@@ -21,35 +21,35 @@ public class OrderItemMasterDao extends AbstractDao{
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public void add(OrderItemMasterPojo orderItem){
         em.persist(orderItem);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public OrderItemMasterPojo get(int id){
         TypedQuery<OrderItemMasterPojo> query = getQuery(select, OrderItemMasterPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<OrderItemMasterPojo> getAll(){
         TypedQuery<OrderItemMasterPojo> query = getQuery(select_All, OrderItemMasterPojo.class);
         return query.getResultList();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public int delete(int id){
         Query query = em.createQuery(delete_OrderItem);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
-    @Transactional
+
     public void update(OrderItemMasterPojo ex){
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<OrderItemMasterPojo> getAllfromOrderId(Integer orderId){
         TypedQuery<OrderItemMasterPojo> query = getQuery(select_orderId, OrderItemMasterPojo.class);
         query.setParameter("orderId",orderId);

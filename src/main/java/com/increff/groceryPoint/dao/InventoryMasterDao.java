@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
@@ -20,18 +20,18 @@ public class InventoryMasterDao extends AbstractDao{
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional(rollbackOn = ApiException.class)
+    @Transactional(rollbackFor = ApiException.class)
     public void add(InventoryMasterPojo I) {
         em.persist(I);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public InventoryMasterPojo get(int id){
         TypedQuery<InventoryMasterPojo> query = getQuery(select, InventoryMasterPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public List<InventoryMasterPojo> getAll(){
         TypedQuery<InventoryMasterPojo> query = getQuery(select_all, InventoryMasterPojo.class);
         return query.getResultList();

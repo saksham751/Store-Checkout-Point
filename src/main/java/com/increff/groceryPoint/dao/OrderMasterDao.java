@@ -1,5 +1,6 @@
 package com.increff.groceryPoint.dao;
 
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.OrderMasterPojo;
 import org.jboss.logging.Param;
 import org.springframework.stereotype.Repository;
@@ -21,29 +22,28 @@ public class OrderMasterDao extends AbstractDao{
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public void add(OrderMasterPojo order){
         em.persist(order);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public OrderMasterPojo get(int id){
         TypedQuery<OrderMasterPojo> query = getQuery(select, OrderMasterPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<OrderMasterPojo> getAll(){
         TypedQuery<OrderMasterPojo> query = getQuery(select_All, OrderMasterPojo.class);
         return query.getResultList();
     }
-    @Transactional
+
     public void update(OrderMasterPojo p, OrderMasterPojo ex){
 
     }
-//    @Query(value = "SELECT * FROM PAYMENT_MASTER WHERE LAST_UPDATED >= :startDate AND LAST_UPDATED <= :endDate", nativeQuery = true)
-//    public List<OrderMasterPojo> getByDateFilter(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Transactional(readOnly = true)
     public List<OrderMasterPojo> getByDateFilter(Date start, Date end){
         TypedQuery<OrderMasterPojo> query=em.createQuery(select_between, OrderMasterPojo.class);
         query.setParameter("start", start);

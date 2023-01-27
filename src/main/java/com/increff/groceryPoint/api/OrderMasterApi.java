@@ -14,10 +14,6 @@ import java.util.List;
 public class OrderMasterApi {
     @Autowired
     private OrderMasterDao orderDao;
-
-    @Autowired
-    private InventoryMasterApi invApi;
-
     public void add(OrderMasterPojo omp) throws ApiException {
         omp.setTime(Date.from(Instant.now()));
         omp.setStatus("Pending");
@@ -53,11 +49,5 @@ public class OrderMasterApi {
         return orderList;
     }
 
-    public void placeOrder(int id,OrderItemMasterPojo orderItem) throws ApiException{
-        InventoryMasterPojo inv = new InventoryMasterPojo();
-        inv.setId(orderItem.getProductId());
-        inv.setQuantity(invApi.get(orderItem.getProductId()).getQuantity() - orderItem.getQuantity());
-        invApi.update(orderItem.getProductId(), inv);
-    }
 
 }

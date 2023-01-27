@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
-//todo shift update brandcode to dao
+
 @Service
 public class BrandMasterApi {
     @Autowired
@@ -22,8 +22,7 @@ public class BrandMasterApi {
         checkUnique(brandPojo);
         return brandDao.insertBrandDao(brandPojo);
     }
-//todo remove transactional
-//todo rename to only add,delete etc. and add transactional usig rollbackfor and readonly
+
     public void delete(int id) throws ApiException{
         getCheck(id);
         brandDao.deleteBrandDao(id);

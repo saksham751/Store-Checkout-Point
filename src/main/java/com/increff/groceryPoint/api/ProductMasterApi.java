@@ -16,15 +16,9 @@ import static java.util.Objects.isNull;
 public class ProductMasterApi {
     @Autowired
     private ProductMasterDao pdao;
-    @Autowired
-    private BrandMasterApi brandApi;
-
-    @Autowired
-    private InventoryMasterApi inventoryApi;
 
     public void add(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
-        checkBrandExistApi(id);
         checkBarcodeExists(p.getBarcode());
         pdao.add(p);
     }
@@ -33,7 +27,6 @@ public class ProductMasterApi {
         getCheckApi(id);
         pdao.delete(id);
     }
-
 
     public ProductMasterPojo get(int id) throws ApiException {
         ProductMasterPojo p = getCheckApi(id);
@@ -45,10 +38,9 @@ public class ProductMasterApi {
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = ApiException.class)
     public void update(int id, ProductMasterPojo p) throws ApiException {
         ProductMasterPojo ex = getCheckApi(id);
-        checkBrandExistApi(p.getBrand_category());
         ProductMasterPojo pro = getfromBarcode(p.getBarcode());
         if(pro!=null){
             throw new ApiException("Barcode already exists");
@@ -64,15 +56,9 @@ public class ProductMasterApi {
     public ProductMasterPojo getCheckApi(int id) throws ApiException {
         ProductMasterPojo p = pdao.get(id);
         if (p == null) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
+            throw new ApiException("Product with given ID does not exist, id: " + id);
         }
         return p;
-    }
-    public void checkBrandExistApi(int id) throws ApiException{
-        BrandMasterPojo brandPojo = brandApi.get(id);
-        if (isNull(brandPojo)) {
-            throw new ApiException("Brand id does not exist");
-        }
     }
     public ProductMasterPojo getfromBarcode(String barcode) throws ApiException{
         ProductMasterPojo ex= pdao.getfromBarcode(barcode);

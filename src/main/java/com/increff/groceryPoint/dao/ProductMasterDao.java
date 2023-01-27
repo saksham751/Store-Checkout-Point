@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
@@ -23,7 +23,7 @@ public class ProductMasterDao extends AbstractDao {
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional(rollbackOn = ApiException.class)
+    @Transactional(rollbackFor = ApiException.class)
     public void add(ProductMasterPojo p) {
         em.persist(p);
     }
@@ -33,13 +33,13 @@ public class ProductMasterDao extends AbstractDao {
         query.setParameter("id", id);
         return query.executeUpdate();
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public ProductMasterPojo get(int id) {
         TypedQuery<ProductMasterPojo> query = getQuery(select_id, ProductMasterPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ProductMasterPojo> getAll() {
         TypedQuery<ProductMasterPojo> query = getQuery(select_all, ProductMasterPojo.class);
         return query.getResultList();

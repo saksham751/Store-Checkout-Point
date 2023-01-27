@@ -23,7 +23,7 @@ public class InventoryMasterdto {
 
     public void add(InventoryMasterForm form)throws ApiException{
         isInventoryValid(form);
-        doesProductExists(form);
+        doesProductExists(form.getId());
         invApi.add(convertFormtoPojo(form));
     }
     public InventoryMasterData get(int id) throws ApiException {
@@ -44,6 +44,9 @@ public class InventoryMasterdto {
         isInventoryValid(form);
         InventoryMasterPojo p=convertFormtoPojo(form);
         invApi.update(id,p);
+    }
+    public void doesProductExists(int id) throws ApiException{
+        productApi.get(id);
     }
 
 

@@ -13,17 +13,11 @@ import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
-
 
 @Service
 public class HelperOrder {
     @Autowired
-    private OrderMasterApi orderApi;
-    @Autowired
-    private ProductMasterApi pApi;
-    @Autowired
-    private InventoryMasterApi invApi;
+    private ProductMasterApi productpApi;
     public OrderMasterData convert(OrderMasterPojo p) {
         OrderMasterData d = new OrderMasterData();
         d.setTime(p.getTime());
@@ -34,7 +28,7 @@ public class HelperOrder {
 
     public OrderItemMasterPojo convert(OrderItemMasterForm form) throws ApiException{
         OrderItemMasterPojo p=new OrderItemMasterPojo();
-        ProductMasterPojo product = pApi.getfromBarcode(form.getBarcode());
+        ProductMasterPojo product = productpApi.getfromBarcode(form.getBarcode());
         p.setProductId(product.getId());
         p.setQuantity(form.getQuantity());
         p.setOrderId(form.getOrderId());
@@ -52,22 +46,12 @@ public class HelperOrder {
     }
     public OrderItemMasterPojo convert(OrderItemUpdateForm form) throws ApiException{
         OrderItemMasterPojo data = new OrderItemMasterPojo();
-        ProductMasterPojo product = pApi.get(form.getProductId());
+        ProductMasterPojo product = productpApi.get(form.getProductId());
         data.setOrderId(form.getOrderId());
         data.setQuantity(form.getQuantity());
         data.setProductId(form.getProductId());
         data.setSellingPrice(form.getQuantity()*product.getMrp());
         return data;
-    }
-    public void isOrderItemValid(OrderItemMasterForm form) throws ApiException{
-        if(form.getQuantity()<1){
-            throw new ApiException("Quantity cannot be less than 1");
-        }
-        if(form.getOrderId()<0){
-            throw new ApiException("Enter a Valid OrderId");
-        }
-        pApi.getfromBarcode(form.getBarcode());
-
     }
 
     public void isOrderItemUpdateValid(OrderItemUpdateForm form) throws ApiException{
@@ -75,4 +59,5 @@ public class HelperOrder {
             throw new ApiException("Quantity cannot be less than 1");
         }
     }
+
 }

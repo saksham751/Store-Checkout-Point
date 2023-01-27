@@ -28,7 +28,6 @@ public class BrandMasterdto {
         return brandApi.add(brandPojo);
     }
 
-
     public void delete(@PathVariable int id) throws ApiException{
         brandApi.delete(id);
     }
@@ -37,7 +36,6 @@ public class BrandMasterdto {
         BrandMasterPojo p = brandApi.get(id);
         return convert(p);
     }
-
 
     public List<BrandMasterData> getAll() throws ApiException {
 

@@ -71,11 +71,17 @@ public class OrderMasterdto {
         invoice.setOrderId(order.getId());
         return invoice;
     }
+    public void reduceInventory(int id,OrderItemMasterPojo orderItem) throws ApiException{
+        InventoryMasterPojo inv = new InventoryMasterPojo();
+        inv.setId(orderItem.getProductId());
+        inv.setQuantity(invApi.get(orderItem.getProductId()).getQuantity() - orderItem.getQuantity());
+        invApi.update(orderItem.getProductId(), inv);
+    }
     @Transactional(rollbackFor = ApiException.class)
     public void placeOrder(int id) throws ApiException, IOException{
         List<OrderItemMasterPojo> orderItemList = orderItemApi.getAllfromOrderId(id);
         for (OrderItemMasterPojo orderItem : orderItemList) {
-            orderApi.placeOrder(id,orderItem);
+            reduceInventory(id,orderItem);
         }
         OrderMasterPojo orderPojo = orderApi.get(id);
         orderPojo.setStatus("Placed");

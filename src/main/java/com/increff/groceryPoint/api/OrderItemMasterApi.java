@@ -13,16 +13,9 @@ import java.util.List;
 @Service
 public class OrderItemMasterApi {
     @Autowired
-    private OrderMasterApi orderApi;
-    @Autowired
-    private ProductMasterApi productApi;
-    @Autowired
     private OrderItemMasterDao orderItemDao;
-    @Autowired
-    private InventoryMasterApi invApi;
     @Transactional(rollbackFor = ApiException.class)
     public void add(OrderItemMasterPojo p) throws ApiException {
-        isOrderItemValid(p);
         orderItemDao.add(p);
     }
 
@@ -36,20 +29,10 @@ public class OrderItemMasterApi {
     }
 
     @Transactional
-    public void update(int id, OrderItemMasterPojo p) throws ApiException {
-        OrderItemMasterPojo ex = checkOrderItemExists(id);
-        Integer prevQty=ex.getQuantity();
-        OrderItemMasterPojo  checkInv= p;
-        checkInv.setQuantity(p.getQuantity()-ex.getQuantity());
-        isOrderItemValid(checkInv);
-        p.setQuantity(p.getQuantity()+ex.getQuantity());
+    public void update(OrderItemMasterPojo p,OrderItemMasterPojo ex) throws ApiException {
         ex.setQuantity(p.getQuantity());
         ex.setSellingPrice(p.getSellingPrice());
         ex.setProductId(p.getProductId());
-        InventoryMasterPojo inv= new InventoryMasterPojo();
-        inv.setId(p.getProductId());
-        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity()+prevQty);
-        invApi.update(p.getProductId(),inv);
         orderItemDao.update(ex);
 
     }
@@ -70,15 +53,6 @@ public class OrderItemMasterApi {
         return p;
     }
 
-    public void isOrderItemValid(OrderItemMasterPojo p) throws ApiException{
-        int productId=p.getProductId();
-        productApi.get(productId);
-        orderApi.get(p.getOrderId());
-        if(invApi.get(productId).getQuantity()<p.getQuantity()){
-            throw new ApiException("Not enough Quantity Available");
-        }
-
-    }
 
     public List<OrderItemMasterPojo> getAllfromOrderId(Integer orderId) throws ApiException{
         return orderItemDao.getAllfromOrderId(orderId);

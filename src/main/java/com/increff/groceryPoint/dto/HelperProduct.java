@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static java.util.Objects.isNull;
 
 public class HelperProduct {
-    @Autowired
-    private static BrandMasterApi brandApi;
     public static void normalize(ProductMasterPojo p) {
-        p.setName(StringUtil.toLowerCase(p.getName()));
+        p.setName(StringUtil.toLowerCase(p.getName().trim()));
+        p.setBarcode(p.getBarcode().trim().toLowerCase());
     }
     public static ProductMasterData convert(ProductMasterPojo p) {
         ProductMasterData d = new ProductMasterData();
@@ -59,23 +58,6 @@ public class HelperProduct {
 
 
     }
-    public static void checkBrandExists(ProductMasterPojo p) throws ApiException{
 
-            int id = p.getBrand_category();
-            BrandMasterPojo brandPojo = brandApi.get(id);
 
-            //System.out.println(brandPojo.getBrand());
-            if (isNull(brandPojo)) {
-                throw new ApiException("Brand id does not exist");
-            }
-
-    }
-
-    public static ProductMasterPojo checkProductExists(int id, ProductMasterDao pdao) throws ApiException {
-        ProductMasterPojo p = pdao.get(id);
-        if (p == null) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
-        }
-        return p;
-    }
 }

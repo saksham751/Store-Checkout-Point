@@ -10,26 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static java.util.Objects.isNull;
 
 public class HelperInventory {
-    @Autowired
-    private static ProductMasterApi pApi;
-    public static void doesProductExists(InventoryMasterForm form) throws ApiException{
-        pApi.get(form.getId());
-    }
     public static void isInventoryValid(InventoryMasterForm form) throws ApiException{
         Integer qty=form.getQuantity();
         if(isNull(form.getQuantity()))
         {
-            throw new ApiException("Product Name cannot be Empty!");
+            throw new ApiException("Quantity cannot be Empty!");
         }
         if(!(form.getQuantity()>=0))
         {
             throw new ApiException("Quantity cannot be less than 0 or Null!");
         }
+    }
 
-    }
-    public static void doesProductExists(int id) throws ApiException{
-        pApi.get(id);
-    }
 
     public static InventoryMasterPojo convertFormtoPojo(InventoryMasterForm form) throws ApiException{
         InventoryMasterPojo inv=new InventoryMasterPojo();

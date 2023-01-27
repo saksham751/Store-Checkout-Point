@@ -17,7 +17,6 @@ import java.util.List;
 public class ReportMasterApi {
     @Autowired
     private ReportMasterDao reportDao;
-
     @Autowired
     private BrandMasterApi brandApi;
     @Autowired

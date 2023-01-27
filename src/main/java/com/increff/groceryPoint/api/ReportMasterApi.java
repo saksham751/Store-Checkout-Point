@@ -2,8 +2,9 @@ package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.ReportMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
-import com.increff.groceryPoint.pojo.DaySalesPojo;
+import com.increff.groceryPoint.model.InventoryReportForm;
+import com.increff.groceryPoint.model.SalesReportData;
+import com.increff.groceryPoint.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class ReportMasterApi {
 
     @Autowired
     private BrandMasterApi brandApi;
+    @Autowired
+    private ProductMasterApi productApi;
     @Transactional
     public void addReport(DaySalesPojo pojo) throws ApiException {
         try {
@@ -67,5 +70,28 @@ public class ReportMasterApi {
             brandList.add(brandCategoryPojo);
         }
         return brandList;
+    }
+
+    public List<SalesReportData> getSalesReportData(List<BrandMasterPojo> brandCategoryPojos,
+                                                     List<OrderItemMasterPojo> orderItemPojos) throws ApiException {
+        List<SalesReportData> salesReportDataList = new ArrayList<SalesReportData>();
+        for(BrandMasterPojo brandCategoryPojo:brandCategoryPojos){
+            SalesReportData salesReportData = new SalesReportData();
+            salesReportData.setCategory(brandCategoryPojo.getCategory());
+            salesReportData.setBrand(brandCategoryPojo.getBrand());
+            Integer quantity = 0;
+            Double revenue = 0.0;
+            for(OrderItemMasterPojo orderItemPojo:orderItemPojos){
+                ProductMasterPojo productPojo = productApi.get(orderItemPojo.getProductId());
+                if(productPojo.getBrand_category()==brandCategoryPojo.getId()){
+                    quantity += orderItemPojo.getQuantity();
+                    revenue += (orderItemPojo.getQuantity())*(orderItemPojo.getSellingPrice());
+                }
+            }
+            salesReportData.setQuantity(quantity);
+            salesReportData.setTotal(revenue);
+            salesReportDataList.add(salesReportData);
+        }
+        return salesReportDataList;
     }
 }

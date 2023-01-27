@@ -63,6 +63,7 @@ function displayOrderList(data){
              $tbody.append(row);
          }
  	}
+ 	pagination();
  }
 
 function redirect(id)
@@ -102,7 +103,18 @@ function redirect2(id)
      	});
      	return false;
  }
+function disableEditing()
+{
+    const buttons = document.getElementsByClassName("btn-disable");
+    for (let i = 0; i < buttons.length; i++)
+      buttons[i].disabled=true;
 
+    document.getElementById('add-Item').disabled = true;
+    document.getElementById('place-order').disabled = true;
+    $('#download-invoice').disabled = false;
+
+    document.getElementById("customerName").readOnly = true;
+}
  function setStatus(message)
  {
      document.getElementById("status").innerHTML = "status: " + message;
@@ -112,6 +124,11 @@ function redirect2(id)
  {
     $('#create-order').click(createOrder);
     $('#apply-date-filter').click(getOrderListByDateFilter);
+ }
+ function pagination()
+ {
+    $('#order-table').DataTable();
+    $('.dataTables_length').addClass('bs-select');
  }
 
  $(document).ready(init);

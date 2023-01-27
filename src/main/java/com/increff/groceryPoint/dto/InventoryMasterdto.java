@@ -1,6 +1,7 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.InventoryMasterApi;
+import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
@@ -17,12 +18,16 @@ import static com.increff.groceryPoint.dto.HelperInventory.*;
 public class InventoryMasterdto {
     @Autowired
     private InventoryMasterApi invApi;
+    @Autowired
+    private ProductMasterApi productApi;
 
     public void add(InventoryMasterForm form)throws ApiException{
         isInventoryValid(form);
+        doesProductExists(form);
         invApi.add(convertFormtoPojo(form));
     }
     public InventoryMasterData get(int id) throws ApiException {
+        doesProductExists(id);
         return convertPojotoData(invApi.get(id));
     }
 

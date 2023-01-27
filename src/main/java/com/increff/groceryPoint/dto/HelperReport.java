@@ -29,6 +29,22 @@ public class HelperReport {
 //
 //        return inventoryReportModel;
 //    }
+    public static Date getStart(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY,00);
+        cal.set(Calendar.MINUTE,00);
+        cal.set(Calendar.SECOND,0);
+        cal.set(Calendar.MILLISECOND,0);
+        return cal.getTime();
+    }
+    public static Date getEnd(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY,23);
+        cal.set(Calendar.MINUTE,59);
+        cal.set(Calendar.SECOND,59);
+        cal.set(Calendar.MILLISECOND,0);
+        return cal.getTime();
+    }
     public static Date getStartOfDay(Date day, Calendar cal) {
         if (day == null) day = new Date();
         cal.setTime(day);
@@ -56,8 +72,8 @@ public class HelperReport {
         if(salesReportForm.getStart()==null) {
             salesReportForm.setStart(new GregorianCalendar(2023, Calendar.JANUARY, 1).getTime());
         }
-        salesReportForm.setBrand(StringUtil.toLowerCase(salesReportForm.getBrand()));
-        salesReportForm.setCategory(StringUtil.toLowerCase(salesReportForm.getCategory()));
+        salesReportForm.setBrand(StringUtil.toLowerCase(salesReportForm.getBrand().trim().toLowerCase()));
+        salesReportForm.setCategory(StringUtil.toLowerCase(salesReportForm.getCategory().trim().toLowerCase()));
         salesReportForm.setStart(getStartOfDay(salesReportForm.getStart(),Calendar.getInstance()));
         salesReportForm.setEnd(getEndOfDay(salesReportForm.getEnd(),Calendar.getInstance()));
     }

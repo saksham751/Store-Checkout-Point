@@ -37,6 +37,7 @@ function filterSalesReport() {
        },
        success: function(response) {
 //            console.log(response);
+            downloadTSV(response);
             displaySalesReport(response);
        },
        error: handleAjaxError
@@ -152,11 +153,35 @@ function displaySalesReport(data) {
 
     pagination();
 }
-
+function downloadSalesReport() {
+    var $form = $("#sales-form");
+    var json = toJson($form);
+    var url = getSalesReportUrl();
+//    console.log(url);
+    console.log(json);
+    $.ajax({
+       url: url,
+       type: 'POST',
+       data: json,
+       headers: {
+        'Content-Type': 'application/json'
+       },
+       success: function(response) {
+//            console.log(response);
+            downloadTSV(response);
+       },
+       error: handleAjaxError
+    });
+}
+function downloadTSV(response){
+	writeFileData(response);
+}
 //INITIALIZATION CODE
 function init(){
    $('#filter-sales-report').click(filterSalesReport);
    $('#inputBrand').change(displayCategoryList);
+   $('#download-sales-report').click(downloadSalesReport);
+
 }
 function pagination()
 {

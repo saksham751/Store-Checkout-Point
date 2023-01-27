@@ -30,7 +30,7 @@ public class HelperProduct {
     public static ProductMasterPojo convert(ProductMasterForm f) {
         ProductMasterPojo p = new ProductMasterPojo();
         p.setBrand_category(f.getBrand_category());
-        p.setName(f.getProductName());
+        p.setName(f.getProductName().trim().toLowerCase());
         p.setMrp(f.getMrp());
         p.setBarcode(f.getBarcode());
         return p;

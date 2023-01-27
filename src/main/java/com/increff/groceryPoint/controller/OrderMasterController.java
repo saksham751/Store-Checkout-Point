@@ -53,7 +53,7 @@ public class OrderMasterController {
     @ApiOperation(value = "Download Invoice")
     @ResponseBody
     @RequestMapping(path = "/api/invoice/{orderId}", method = RequestMethod.GET)
-    public Resource getInvoice(@PathVariable Integer orderId) throws Exception {
+    public ResponseEntity<byte[]>  getInvoice(@PathVariable Integer orderId) throws Exception {
        return orderDto.getInvoice(orderId);
     }
 

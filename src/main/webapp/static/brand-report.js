@@ -31,14 +31,29 @@ function displaybrandReportList(data) {
   }
   pagination()
 }
-
+function downloadBrandReport() {
+  var url = getbrandReportUrl();
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      console.log(data);
+        downloadTSV(data);
+    },
+    error: handleAjaxError,
+  });
+}
+function downloadTSV(response){
+	writeFileData(response);
+}
 //INITIALIZATION CODE
 function init() {
   $("#refresh-data").click(getbrandReport);
+  $('#download-brand-report').click(downloadBrandReport);
 }
 function pagination()
 {
-$('#brand-table').DataTable();
+  $('#brand-table').DataTable();
   $('.dataTables_length').addClass('bs-select');
 }
 

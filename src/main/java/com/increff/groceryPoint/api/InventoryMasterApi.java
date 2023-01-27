@@ -13,10 +13,7 @@ import java.util.List;
 public class InventoryMasterApi {
     @Autowired
     private InventoryMasterDao invDao;
-    @Autowired
-    private ProductMasterApi productApi;
     public void add(InventoryMasterPojo p) throws ApiException {
-        doesProductExists(p.getId());
         InventoryMasterPojo ex = invDao.get(p.getId());
         if(ex!=null){
             throw new ApiException("Inventory ID already Exists");
@@ -26,7 +23,6 @@ public class InventoryMasterApi {
     }
 
     public InventoryMasterPojo get(int id) throws ApiException {
-        doesProductExists(id);
         return checkInvExists(id);
     }
 
@@ -41,9 +37,6 @@ public class InventoryMasterApi {
        // invDao.update(p,ex);
     }
 
-    public void doesProductExists(int id) throws ApiException{
-        productApi.get(id);
-    }
 
     public InventoryMasterPojo checkInvExists(int id) throws ApiException{
         InventoryMasterPojo ex = invDao.get(id);

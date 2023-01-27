@@ -26,7 +26,7 @@ public class ReportMasterdto {
     @Autowired
     private InventoryMasterApi invApi;
     @Autowired
-    private HelperReport help;
+    private HelperReport helper;
     @Autowired
     private ReportMasterApi reportApi;
     public List<SalesReportData> getSalesReport(SalesReportForm form) throws ApiException{
@@ -39,60 +39,31 @@ public class ReportMasterdto {
         }
 
         List<BrandMasterPojo> brandList=reportApi.getBrandList(form.getBrand(),form.getCategory());
-        List<SalesReportData> salesReportDataList = getSalesReportData(brandList,orderItemList);
-        return salesReportDataList;
-    }
-    private List<SalesReportData> getSalesReportData(List<BrandMasterPojo> brandCategoryPojos,
-                                                     List<OrderItemMasterPojo> orderItemPojos) throws ApiException {
-        List<SalesReportData> salesReportDataList = new ArrayList<SalesReportData>();
-        for(BrandMasterPojo brandCategoryPojo:brandCategoryPojos){
-            SalesReportData salesReportData = new SalesReportData();
-            salesReportData.setCategory(brandCategoryPojo.getCategory());
-            salesReportData.setBrand(brandCategoryPojo.getBrand());
-            Integer quantity = 0;
-            Double revenue = 0.0;
-            for(OrderItemMasterPojo orderItemPojo:orderItemPojos){
-                ProductMasterPojo productPojo = productApi.get(orderItemPojo.getProductId());
-                if(productPojo.getBrand_category()==brandCategoryPojo.getId()){
-                    quantity += orderItemPojo.getQuantity();
-                    revenue += (orderItemPojo.getQuantity())*(orderItemPojo.getSellingPrice());
-                }
-            }
-            salesReportData.setQuantity(quantity);
-            salesReportData.setTotal(revenue);
-            salesReportDataList.add(salesReportData);
-        }
+        List<SalesReportData> salesReportDataList = reportApi.getSalesReportData(brandList,orderItemList);
         return salesReportDataList;
     }
 
     public List<InventoryReportForm> getInventoryReport() throws ApiException {
-
-        Map<Integer,InventoryReportForm> brandIdToInventoryReportFormMap = new HashMap<Integer,InventoryReportForm>();
-        List<ProductMasterPojo> productPojos = productApi.getAll();
-        for(ProductMasterPojo productPojo:productPojos){
+        List<ProductMasterPojo> productList = productApi.getAll();
+        Map<Integer,InventoryReportForm> invMap = new HashMap<Integer,InventoryReportForm>();
+        for(ProductMasterPojo productPojo:productList){
             InventoryMasterPojo inventoryPojo = invApi.get(productPojo.getId());
-            Integer brandId = productPojo.getBrand_category();
-            BrandMasterPojo brandCategoryPojo = brandApi.get(brandId);
-            if(brandIdToInventoryReportFormMap.containsKey(brandId)==false){
-                InventoryReportForm inventoryReportData = new InventoryReportForm();
-                inventoryReportData.setBrand(brandCategoryPojo.getBrand());
-                inventoryReportData.setCategory(brandCategoryPojo.getCategory());
-                inventoryReportData.setQuantity(inventoryPojo.getQuantity());
-                brandIdToInventoryReportFormMap.put(brandId,inventoryReportData);
+            BrandMasterPojo brandPojo = brandApi.get( productPojo.getBrand_category());
+            InventoryReportForm invReportData = new InventoryReportForm();
+            if(invMap.containsKey( productPojo.getBrand_category())){
+                invReportData = invMap.get( productPojo.getBrand_category());
+                Integer qty = invReportData.getQuantity();
+                qty+=inventoryPojo.getQuantity();
+                invReportData.setQuantity(qty);
+            }else {
+                invReportData.setBrand(brandPojo.getBrand());
+                invReportData.setCategory(brandPojo.getCategory());
+                invReportData.setQuantity(inventoryPojo.getQuantity());
             }
-            else
-            {
-                InventoryReportForm inventoryReportData = brandIdToInventoryReportFormMap.get(brandId);
-                Integer quant = inventoryReportData.getQuantity();
-                quant+=inventoryPojo.getQuantity();
-                inventoryReportData.setQuantity(quant);
-                brandIdToInventoryReportFormMap.put(brandId,inventoryReportData);
-
-            }
+            invMap.put( productPojo.getBrand_category(),invReportData);
         }
-
         List<InventoryReportForm> inventoryReportDataList = new ArrayList<InventoryReportForm>();
-        for(Map.Entry m:brandIdToInventoryReportFormMap.entrySet()){
+        for(Map.Entry m:invMap.entrySet()){
             inventoryReportDataList.add((InventoryReportForm) m.getValue());
         }
         return inventoryReportDataList;
@@ -109,39 +80,25 @@ public class ReportMasterdto {
 
     public void generate_pos_day_sales() throws ApiException{
         DaySalesPojo salesreport= new DaySalesPojo();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY,00);
-        cal.set(Calendar.MINUTE,00);
-        cal.set(Calendar.SECOND,0);
-        cal.set(Calendar.MILLISECOND,0);
-        Date start = cal.getTime();
-        cal.set(Calendar.HOUR_OF_DAY,23);
-        cal.set(Calendar.MINUTE,59);
-        cal.set(Calendar.SECOND,59);
-        cal.set(Calendar.MILLISECOND,0);
-        Date end =cal.getTime();
-        Integer totalItems = 0;
-        Double totalRevenue = 0.0;
-
-
+        Date start = helper.getStart();
+        Date end =helper.getEnd();
+        Integer items = 0;
+        Double revenue = 0.0;
         List<OrderMasterPojo> orderPojoList = orderApi.getByDateFilter(start, end);
-
         Integer totalOrders = orderPojoList.size();
-
         for (OrderMasterPojo o : orderPojoList) {
             Integer id = o.getId();
             List<OrderItemMasterPojo> orderItemPojoList = orderItemApi.getAllfromOrderId(id);
             for (OrderItemMasterPojo i : orderItemPojoList) {
-                totalItems += i.getQuantity();
-                totalRevenue += i.getQuantity() * i.getSellingPrice();
+                items += i.getQuantity();
+                revenue += i.getQuantity() * i.getSellingPrice();
             }
         }
         long millis=System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
         salesreport.setDate(date);
-        salesreport.setTotalRevenue(totalRevenue);
-        salesreport.setInvoicedItemsCount(totalItems);
+        salesreport.setTotalRevenue(revenue);
+        salesreport.setInvoicedItemsCount(items);
         salesreport.setInvoicedOrderCount(totalOrders);
 
         DaySalesPojo pojo = reportApi.getReportByDate(date);
@@ -159,7 +116,7 @@ public class ReportMasterdto {
 
         for(DaySalesPojo p: dailyReportPojoList)
         {
-            dailyReportData.add(help.convertPojotoData(p));
+            dailyReportData.add(helper.convertPojotoData(p));
         }
 
         return dailyReportData;

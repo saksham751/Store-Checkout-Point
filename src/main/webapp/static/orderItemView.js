@@ -12,7 +12,10 @@ function getOrderUrl(){
     var baseUrl = $("meta[name=baseUrl]").attr("content")
  	return baseUrl + "/api/order/place";
 }
-
+function getInvoiceUrl(){
+  	var baseUrl = $("meta[name=baseUrl]").attr("content")
+  	return baseUrl + "/api/invoice";
+ }
 function getOrderItemList(){
 
 	var url = getStoreUrl();
@@ -80,7 +83,9 @@ function setStatus(message)
 
 function downloadInvoice()
 {
-    console.log("This will start downloading invoice");
+    var url = getInvoiceUrl() + "/" + orderId;
+    console.log(url);
+    window.location.href = url;
 }
 
 function init()

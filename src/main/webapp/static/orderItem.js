@@ -12,7 +12,10 @@ function getOrderUrl(){
     var baseUrl = $("meta[name=baseUrl]").attr("content")
  	return baseUrl + "/api/order/place";
 }
-
+ function getInvoiceUrl(){
+  	var baseUrl = $("meta[name=baseUrl]").attr("content")
+  	return baseUrl + "/api/invoice";
+  }
 function getOrderItemList(){
 	var url = getStoreUrl();
 	url += "/order-code/" + orderId;
@@ -167,10 +170,6 @@ function setStatus(message)
     document.getElementById("status").innerHTML = "status: " + message;
 }
 
-function downloadInvoice()
-{
-    console.log("This will start downloading invoice");
-}
 
 function init()
 {
@@ -187,7 +186,6 @@ function init()
     $('#add-Item').click(addOrderItem);
     $('#place-order').click(placeOrder);
     $('#update-orderItem').click(updateOrderItem);
-    $('#download-invoice').click(downloadInvoice).disabled = true;
 }
 
 $(document).ready(init);

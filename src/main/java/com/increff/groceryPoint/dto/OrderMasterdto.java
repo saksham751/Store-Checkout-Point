@@ -97,7 +97,7 @@ public class OrderMasterdto {
 //        Files.write(pdfPath, contents);
     }
 
-    public ResponseEntity<byte[]>  generateInvoice(int id) throws ApiException, IOException {
+    public ResponseEntity<byte[]>  getInvoice(int id) throws ApiException, IOException {
         OrderMasterPojo orderData = orderApi.get(id);
 
         Path pdfPath = Paths.get("./src/main/resources/pdf/" + orderData.getId() + "_invoice.pdf");
@@ -114,19 +114,20 @@ public class OrderMasterdto {
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
         return response;
     }
-    public Resource getInvoice(Integer orderId) throws ApiException, IOException {
-        OrderMasterPojo orderPojo = orderApi.get(orderId);
-        String billDirPath =  "/home/sakshamyadav/repos/pos/grocery-point/src/main/resources/pdf/"+orderId+"_invoice.pdf";   //"D:\\IncreffProjectPOS BILLS\\bills\\" + orderId + ".pdf";
-        File file = new File(billDirPath);
-        Path path = Paths.get(file.getAbsolutePath());
-        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-        return resource;
-    }
+//    public Resource getInvoice(Integer orderId) throws ApiException, IOException {
+//        OrderMasterPojo orderPojo = orderApi.get(orderId);
+//        String billDirPath =  "/home/sakshamyadav/repos/pos/grocery-point/src/main/resources/pdf/"+orderId+"_invoice.pdf";   //"D:\\IncreffProjectPOS BILLS\\bills\\" + orderId + ".pdf";
+//        File file = new File(billDirPath);
+//        Path path = Paths.get(file.getAbsolutePath());
+//        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+//        System.out.println(resource.toString());
+//        return resource;
+//    }
     public static String generatePDF(InvoiceForm invoiceData) throws IOException {
         String encodedPdf = getEncodedPdf(invoiceData);
         BASE64Decoder decoder = new BASE64Decoder();
         byte[] decodedBytes = decoder.decodeBuffer(encodedPdf);
-        String filePath = "/home/sakshamyadav/repos/pos/grocery-point/src/main/resources/pdf/"  + invoiceData.getOrderId().toString() + ".pdf";
+        String filePath = "/home/sakshamyadav/repos/pos/grocery-point/src/main/resources/pdf/"  + invoiceData.getOrderId().toString() + "_invoice.pdf";
         File file = new File(filePath);
         FileOutputStream fop = new FileOutputStream(file);
         fop.write(decodedBytes);

@@ -31,10 +31,24 @@ function displayInventoryReportList(data) {
   }
   pagination()
 }
-
+function downloadInventoryReport() {
+  var url = getInventoryReportUrl();
+  $.ajax({
+    url: url,
+    type: "GET",
+    success: function (data) {
+      downloadTSV(data);
+    },
+    error: handleAjaxError,
+  });
+}
+function downloadTSV(response){
+	writeFileData(response);
+}
 //INITIALIZATION CODE
 function init() {
   $("#refresh-data").click(getInventoryReport);
+  $('#download-inventory-report').click(downloadInventoryReport);
 }
 function pagination()
 {

@@ -27,6 +27,9 @@ public class HelperInventory {
         }
 
     }
+    public static void doesProductExists(int id) throws ApiException{
+        pApi.get(id);
+    }
 
     public static InventoryMasterPojo convertFormtoPojo(InventoryMasterForm form) throws ApiException{
         InventoryMasterPojo inv=new InventoryMasterPojo();

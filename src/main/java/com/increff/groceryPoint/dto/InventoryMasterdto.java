@@ -21,10 +21,10 @@ public class InventoryMasterdto {
     @Autowired
     private ProductMasterApi productApi;
 
-    public void add(InventoryMasterForm form)throws ApiException{
+    public int add(InventoryMasterForm form)throws ApiException{
         isInventoryValid(form);
         doesProductExists(form.getId());
-        invApi.add(convertFormtoPojo(form));
+        return invApi.add(convertFormtoPojo(form));
     }
     public InventoryMasterData get(int id) throws ApiException {
         doesProductExists(id);

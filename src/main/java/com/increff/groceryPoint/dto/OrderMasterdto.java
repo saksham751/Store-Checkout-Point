@@ -41,9 +41,9 @@ public class OrderMasterdto {
     private InventoryMasterApi invApi;
     @Autowired
     private HelperOrder helpOrder;
-    public void add() throws ApiException{
+    public int add() throws ApiException{
         OrderMasterPojo omp= new OrderMasterPojo();
-        orderApi.add(omp);
+        return orderApi.add(omp);
     }
     public OrderMasterData get(int id) throws ApiException {
         return helpOrder.convert(orderApi.get(id));

@@ -17,10 +17,10 @@ public class ProductMasterApi {
     @Autowired
     private ProductMasterDao pdao;
 
-    public void add(ProductMasterPojo p) throws ApiException {
+    public int add(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
         checkBarcodeExists(p.getBarcode());
-        pdao.add(p);
+        return pdao.add(p);
     }
 
     public void delete(int id) throws ApiException {
@@ -42,7 +42,7 @@ public class ProductMasterApi {
     public void update(int id, ProductMasterPojo p) throws ApiException {
         ProductMasterPojo ex = getCheckApi(id);
         ProductMasterPojo pro = getfromBarcode(p.getBarcode());
-        if(pro!=null){
+        if(pro!=null && pro.getId()!=ex.getId()) {
             throw new ApiException("Barcode already exists");
         }
         ex.setName(p.getName());

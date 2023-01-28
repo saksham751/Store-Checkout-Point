@@ -21,8 +21,9 @@ public class InventoryMasterDao extends AbstractDao{
     private EntityManager em;
 
     @Transactional(rollbackFor = ApiException.class)
-    public void add(InventoryMasterPojo I) {
+    public int add(InventoryMasterPojo I) {
         em.persist(I);
+        return I.getId();
     }
 
     @Transactional(readOnly = true)

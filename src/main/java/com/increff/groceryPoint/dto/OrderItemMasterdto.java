@@ -31,7 +31,7 @@ public class OrderItemMasterdto {
     @Autowired
     private OrderMasterApi orderApi;
 
-    public void add(OrderItemMasterForm form) throws ApiException {
+    public int add(OrderItemMasterForm form) throws ApiException {
         isOrderItemValid(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
         isOrderItemPojoValid(p);
@@ -47,9 +47,9 @@ public class OrderItemMasterdto {
             updateForm.setQuantity(form.getQuantity());
             updateForm.setProductId(p.getProductId());
             update(prevOrderItem.getId(),updateForm);
-            return;
+            return prevOrderItem.getId();
         }
-        orderItemApi.add(p);
+        return orderItemApi.add(p);
     }
 
     public void delete(int id) throws ApiException{

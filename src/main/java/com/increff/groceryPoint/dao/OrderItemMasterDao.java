@@ -22,8 +22,9 @@ public class OrderItemMasterDao extends AbstractDao{
     private EntityManager em;
 
     @Transactional(rollbackFor = ApiException.class)
-    public void add(OrderItemMasterPojo orderItem){
+    public int add(OrderItemMasterPojo orderItem){
         em.persist(orderItem);
+        return orderItem.getId();
     }
     @Transactional(readOnly = true)
     public OrderItemMasterPojo get(int id){

@@ -13,13 +13,13 @@ import java.util.List;
 public class InventoryMasterApi {
     @Autowired
     private InventoryMasterDao invDao;
-    public void add(InventoryMasterPojo p) throws ApiException {
+    public int add(InventoryMasterPojo p) throws ApiException {
         InventoryMasterPojo ex = invDao.get(p.getId());
         if(ex!=null){
             throw new ApiException("Inventory ID already Exists");
         }
 
-        invDao.add(p);
+        return invDao.add(p);
     }
 
     public InventoryMasterPojo get(int id) throws ApiException {

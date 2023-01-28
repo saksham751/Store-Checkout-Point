@@ -28,8 +28,8 @@ public class BrandMasterdto {
         return brandApi.add(brandPojo);
     }
 
-    public void delete(@PathVariable int id) throws ApiException{
-        brandApi.delete(id);
+    public int delete(@PathVariable int id) throws ApiException{
+        return brandApi.delete(id);
     }
 
     public BrandMasterData get(int id) throws ApiException {

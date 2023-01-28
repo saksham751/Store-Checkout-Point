@@ -23,13 +23,13 @@ public class HelperInventory {
     }
 
 
-    public static InventoryMasterPojo convertFormtoPojo(InventoryMasterForm form) throws ApiException{
+    public static InventoryMasterPojo convertFormtoPojo(InventoryMasterForm form){
         InventoryMasterPojo inv=new InventoryMasterPojo();
         inv.setQuantity(form.getQuantity());
         inv.setId(form.getId());
         return inv;
     }
-    public static InventoryMasterData convertPojotoData(InventoryMasterPojo p) throws ApiException{
+    public static InventoryMasterData convertPojotoData(InventoryMasterPojo p){
         InventoryMasterData inv=new InventoryMasterData();
         inv.setQuantity(p.getQuantity());
         inv.setId(p.getId());

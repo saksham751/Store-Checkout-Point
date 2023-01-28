@@ -14,10 +14,10 @@ import java.util.List;
 public class OrderMasterApi {
     @Autowired
     private OrderMasterDao orderDao;
-    public void add(OrderMasterPojo omp) throws ApiException {
+    public int add(OrderMasterPojo omp) throws ApiException {
         omp.setTime(Date.from(Instant.now()));
         omp.setStatus("Pending");
-        orderDao.add(omp);
+        return orderDao.add(omp);
     }
 
 

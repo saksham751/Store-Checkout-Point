@@ -15,8 +15,8 @@ public class OrderItemMasterApi {
     @Autowired
     private OrderItemMasterDao orderItemDao;
     @Transactional(rollbackFor = ApiException.class)
-    public void add(OrderItemMasterPojo p) throws ApiException {
-        orderItemDao.add(p);
+    public int add(OrderItemMasterPojo p) throws ApiException {
+        return orderItemDao.add(p);
     }
 
     public OrderItemMasterPojo get(int id) throws ApiException {

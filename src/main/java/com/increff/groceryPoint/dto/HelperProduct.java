@@ -12,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static java.util.Objects.isNull;
 
 public class HelperProduct {
-    public static void normalize(ProductMasterPojo p) {
+    public static ProductMasterPojo normalize(ProductMasterPojo p) {
         p.setName(StringUtil.toLowerCase(p.getName().trim()));
         p.setBarcode(p.getBarcode().trim().toLowerCase());
+        return p;
     }
     public static ProductMasterData convert(ProductMasterPojo p) {
         ProductMasterData d = new ProductMasterData();

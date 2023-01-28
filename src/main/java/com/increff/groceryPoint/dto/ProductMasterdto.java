@@ -29,12 +29,12 @@ public class ProductMasterdto {
     @Autowired
     private BrandMasterApi brandApi;
 //removed Transactional
-    public void add(ProductMasterForm form) throws ApiException {
+    public int add(ProductMasterForm form) throws ApiException {
         isProductValid(form);
         ProductMasterPojo p=convert(form);
         checkBrandExistApi(form.getBrand_category());
-        normalize(p);
-        productApi.add(p);
+        p=normalize(p);
+        return productApi.add(p);
     }
 
     public void delete(int id) throws ApiException {

@@ -24,8 +24,9 @@ public class ProductMasterDao extends AbstractDao {
     private EntityManager em;
 
     @Transactional(rollbackFor = ApiException.class)
-    public void add(ProductMasterPojo p) {
+    public int add(ProductMasterPojo p) {
         em.persist(p);
+        return p.getId();
     }
     @Transactional(rollbackFor = ApiException.class)
     public int delete(int id) {

@@ -37,7 +37,6 @@ public class InventoryMasterApi {
        // invDao.update(p,ex);
     }
 
-
     public InventoryMasterPojo checkInvExists(int id) throws ApiException{
         InventoryMasterPojo ex = invDao.get(id);
         if(ex==null){
@@ -47,9 +46,6 @@ public class InventoryMasterApi {
             add(invPojo);
             return invPojo;
         }
-//        if (ex == null) {
-//            throw new ApiException("Given product does not have any Inventory, id: " + id);
-//        }
         return ex;
     }
 }

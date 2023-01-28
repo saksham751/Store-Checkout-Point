@@ -51,14 +51,14 @@ public class orderDtoTest extends AbstractUnitTest {
 
     }
     @Test
-    public void test_add() throws ApiException {
+    public void testAdd() throws ApiException {
         int id=orderDto.add();
         OrderMasterData orderData=orderDto.get(id);
         assertEquals(Integer.valueOf(id),orderData.getId());
     }
 
     @Test
-    public void test_reduceInventory() throws ApiException{
+    public void testReduceInventory() throws ApiException{
         OrderItemMasterPojo orderItem =new OrderItemMasterPojo();
         int id=orderDto.add();
         orderItem.setOrderId(id);
@@ -71,7 +71,7 @@ public class orderDtoTest extends AbstractUnitTest {
         assertEquals(Integer.valueOf(18),invData.getQuantity());
     }
     @Test
-    public void test_convert() {
+    public void testConvert() {
         OrderMasterPojo orderPojo = new OrderMasterPojo();
         orderPojo.setStatus("Placed");
         Date time= Date.from(Instant.now());

@@ -30,7 +30,7 @@ public class productDtoTest extends AbstractUnitTest {
         brandCategory=brandApi.add(brandCategoryPojo);
     }
     @Test
-    public void test_add() throws ApiException {
+    public void testAdd() throws ApiException {
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("testproduct");
         productForm.setBarcode("testb@rc0de");
@@ -44,7 +44,7 @@ public class productDtoTest extends AbstractUnitTest {
         assertEquals(Double.valueOf(20.0),productData.getMrp());
     }
     @Test(expected = ApiException.class)
-    public void test_add_empty() throws ApiException {
+    public void testAddEmpty() throws ApiException {
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("");
         productForm.setBarcode("");
@@ -53,7 +53,7 @@ public class productDtoTest extends AbstractUnitTest {
         productDto.add(productForm);
     }
     @Test(expected = ApiException.class)
-    public void test_add_mrp() throws ApiException {
+    public void testAddmrp() throws ApiException {
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("");
         productForm.setBarcode("");
@@ -62,7 +62,7 @@ public class productDtoTest extends AbstractUnitTest {
         productDto.add(productForm);
     }
     @Test(expected = ApiException.class)
-    public void test_add_brandCategory() throws ApiException {
+    public void testAddBrandCategory() throws ApiException {
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("");
         productForm.setBarcode("");
@@ -71,7 +71,7 @@ public class productDtoTest extends AbstractUnitTest {
         productDto.add(productForm);
     }
     @Test
-    public void test_update() throws ApiException{
+    public void testUpdate() throws ApiException{
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("testproduct");
         productForm.setBarcode("testb@rc0de");
@@ -91,7 +91,7 @@ public class productDtoTest extends AbstractUnitTest {
         assertEquals(Double.valueOf(20.0),productData.getMrp());
     }
     @Test(expected = ApiException.class)
-    public void test_delete() throws ApiException{
+    public void testDelete() throws ApiException{
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("testproduct");
         productForm.setBarcode("testb@rc0de");
@@ -102,7 +102,7 @@ public class productDtoTest extends AbstractUnitTest {
         productDto.get(id);
     }
     @Test
-    public void test_normalize() throws ApiException{
+    public void testNormalize() throws ApiException{
         ProductMasterPojo productPojo = new ProductMasterPojo();
         productPojo.setName("TeSTPRoduct         ");
         productPojo.setBarcode("     TESTb@rc0de   ");
@@ -117,7 +117,7 @@ public class productDtoTest extends AbstractUnitTest {
 
 
     @Test
-    public void test_convertFormtoPojo(){
+    public void testConvertFormtoPojo(){
         ProductMasterForm productForm = new ProductMasterForm();
         productForm.setProductName("testproduct");
         productForm.setBarcode("testb@rc0de");
@@ -130,7 +130,7 @@ public class productDtoTest extends AbstractUnitTest {
         assertEquals(Double.valueOf(20.0),productPojo.getMrp());
     }
     @Test
-    public void test_convertPojotoData(){
+    public void testConvertPojotoData(){
         ProductMasterPojo productPojo = new ProductMasterPojo();
         productPojo.setName("testproduct");
         productPojo.setBarcode("testb@rc0de");

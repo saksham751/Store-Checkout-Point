@@ -35,7 +35,7 @@ public class inventoryDtoTest extends AbstractUnitTest {
     private Integer brandCategory;
     private Integer productId;
     @Before
-    public void addBrand_and_Product() throws ApiException {
+    public void addBrandandProduct() throws ApiException {
         BrandMasterPojo brandCategoryPojo = new BrandMasterPojo();
         brandCategoryPojo.setBrand("testbrand");
         brandCategoryPojo.setCategory("testcategory");
@@ -48,7 +48,7 @@ public class inventoryDtoTest extends AbstractUnitTest {
         productId=productDto.add(productForm);
     }
     @Test
-    public void test_add() throws ApiException {
+    public void testAdd() throws ApiException {
         InventoryMasterForm invForm = new InventoryMasterForm();
         invForm.setId(productId);
         invForm.setQuantity(10);
@@ -58,18 +58,18 @@ public class inventoryDtoTest extends AbstractUnitTest {
         assertEquals(Integer.valueOf(productId),invData.getId());
     }
     @Test(expected = ApiException.class)
-    public void test_add_negative() throws ApiException {
+    public void testAddNegative() throws ApiException {
         InventoryMasterForm invForm = new InventoryMasterForm();
         invForm.setQuantity(-10);
         int id =invDto.add(invForm);
     }
     @Test(expected = ApiException.class)
-    public void test_add_null() throws ApiException {
+    public void testaddnull() throws ApiException {
         InventoryMasterForm invForm = new InventoryMasterForm();
         int id =invDto.add(invForm);
     }
     @Test
-    public void test_update() throws ApiException{
+    public void testUpdate() throws ApiException{
         InventoryMasterForm invForm = new InventoryMasterForm();
         invForm.setQuantity(10);
         invForm.setId(productId);
@@ -83,12 +83,12 @@ public class inventoryDtoTest extends AbstractUnitTest {
         assertEquals(Integer.valueOf(productId),invData.getId());
     }
     @Test(expected = ApiException.class)
-    public void test_doesProductExists() throws ApiException {
+    public void testdoesProductExists() throws ApiException {
         invDto.doesProductExists(0);
     }
 
     @Test
-    public void test_convertFormtoPojo(){
+    public void testConvertFormtoPojo(){
         InventoryMasterForm invForm = new InventoryMasterForm();
         invForm.setId(productId);
         invForm.setQuantity(10);
@@ -97,7 +97,7 @@ public class inventoryDtoTest extends AbstractUnitTest {
         assertEquals(Integer.valueOf(productId),invPojo.getId());
     }
     @Test
-    public void test_convertPojotoData(){
+    public void testConvertPojotoData(){
         InventoryMasterPojo invPojo = new InventoryMasterPojo();
         invPojo.setId(productId);
         invPojo.setQuantity(10);

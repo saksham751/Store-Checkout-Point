@@ -23,7 +23,7 @@ public class brandDtoTest extends AbstractUnitTest {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     @Test
-    public void test_add() throws ApiException {
+    public void testAdd() throws ApiException {
         BrandMasterForm brandForm = new BrandMasterForm();
         brandForm.setBrand("Puma");
         brandForm.setCategory("Sports");

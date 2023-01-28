@@ -48,7 +48,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void test_add() throws ApiException{
+    public void testAdd() throws ApiException{
         OrderItemMasterForm orderItemForm= new OrderItemMasterForm();
         orderItemForm.setOrderId(orderId);
         orderItemForm.setBarcode("testb@rc0de");
@@ -61,7 +61,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         assertEquals(Integer.valueOf(orderId),orderItemData.getOrderId());
     }
     @Test(expected = ApiException.class)
-    public void test_delete() throws ApiException{
+    public void testDelete() throws ApiException{
         OrderItemMasterForm orderItemForm= new OrderItemMasterForm();
         orderItemForm.setOrderId(orderId);
         orderItemForm.setBarcode("testb@rc0de");
@@ -71,7 +71,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemDto.get(orderItemid);
     }
     @Test(expected = ApiException.class)
-    public void test_isOrderItemValid_qty() throws ApiException{
+    public void testIsOrderItemValid_qty() throws ApiException{
         OrderItemMasterForm orderItemForm= new OrderItemMasterForm();
         orderItemForm.setOrderId(orderId);
         orderItemForm.setBarcode("testb@rc0de");
@@ -79,7 +79,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemDto.isOrderItemValid(orderItemForm);
     }
     @Test(expected = ApiException.class)
-    public void test_isOrderItemValid_orderId() throws ApiException{
+    public void testIsOrderItemValid_orderId() throws ApiException{
         OrderItemMasterForm orderItemForm= new OrderItemMasterForm();
         orderItemForm.setOrderId(-1);
         orderItemForm.setBarcode("testb@rc0de");
@@ -87,7 +87,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemDto.isOrderItemValid(orderItemForm);
     }
     @Test(expected = ApiException.class)
-    public void test_isOrderItemPojoValid_orderId() throws ApiException{
+    public void testIsOrderItemPojoValid_orderId() throws ApiException{
         OrderItemMasterPojo orderItemPojo= new OrderItemMasterPojo();
         orderItemPojo.setOrderId(0);
         orderItemPojo.setProductId(productId);
@@ -95,7 +95,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemDto.isOrderItemPojoValid(orderItemPojo);
     }
     @Test(expected = ApiException.class)
-    public void test_isOrderItemPojoValid_qty() throws ApiException{
+    public void testIsOrderItemPojoValid_qty() throws ApiException{
         OrderItemMasterPojo orderItemPojo= new OrderItemMasterPojo();
         orderItemPojo.setOrderId(orderId);
         orderItemPojo.setProductId(productId);
@@ -112,7 +112,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
     }
 
     @Test
-    public void test_update() throws ApiException{
+    public void testUpdate() throws ApiException{
         OrderItemMasterForm orderItemForm= new OrderItemMasterForm();
         orderItemForm.setOrderId(orderId);
         orderItemForm.setBarcode("testb@rc0de");

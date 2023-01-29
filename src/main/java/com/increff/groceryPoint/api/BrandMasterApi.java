@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,12 +19,12 @@ public class BrandMasterApi {
 
     public int add(BrandMasterPojo brandPojo) throws ApiException {
         checkUnique(brandPojo);
-        return brandDao.insertBrandDao(brandPojo);
+        return brandDao.add(brandPojo);
     }
 
     public int delete(int id) throws ApiException{
         getCheck(id);
-        brandDao.deleteBrandDao(id);
+        brandDao.delete(id);
         return id;
     }
     public BrandMasterPojo get(int id) throws ApiException {
@@ -33,7 +32,7 @@ public class BrandMasterApi {
     }
 
     public List<BrandMasterPojo> getAll() {
-        return brandDao.selectAllBrandDao();
+        return brandDao.getAll();
     }
 
     @Transactional(rollbackFor = ApiException.class)
@@ -45,7 +44,7 @@ public class BrandMasterApi {
     }
 
     public BrandMasterPojo getCheck(int id) throws ApiException {
-        BrandMasterPojo p = brandDao.selectBrandDao(id);
+        BrandMasterPojo p = brandDao.get(id);
         if (p == null) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);
         }

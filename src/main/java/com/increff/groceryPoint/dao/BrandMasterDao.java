@@ -25,24 +25,24 @@ public class BrandMasterDao extends AbstractDao {
     private EntityManager em;
 
     @Transactional(rollbackFor = ApiException.class)
-    public int insertBrandDao(BrandMasterPojo p) {
+    public int add(BrandMasterPojo p) {
         em.persist(p);
         return p.getId();
     }
     @Transactional(rollbackFor = ApiException.class)
-    public int deleteBrandDao(int id) {
+    public int delete(int id) {
         Query query = em.createQuery(delete_id);
         query.setParameter("id", id);
         return query.executeUpdate();
     }
     @Transactional(readOnly = true)
-    public BrandMasterPojo selectBrandDao(int id) {
+    public BrandMasterPojo get(int id) {
         TypedQuery<BrandMasterPojo> query = getQuery(select_id, BrandMasterPojo.class);
         query.setParameter("id", id);
         return getSingle(query);
     }
     @Transactional(readOnly = true)
-    public List<BrandMasterPojo> selectAllBrandDao() {
+    public List<BrandMasterPojo> getAll() {
         TypedQuery<BrandMasterPojo> query = getQuery(select_all, BrandMasterPojo.class);
         return query.getResultList();
     }

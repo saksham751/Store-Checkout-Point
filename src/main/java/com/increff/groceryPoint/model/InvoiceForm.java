@@ -11,4 +11,5 @@ public class InvoiceForm {
     private Integer orderId;
     private Date time;
     private List<OrderItemMasterData> orderItemList;
+    private List<String> productName;
 }

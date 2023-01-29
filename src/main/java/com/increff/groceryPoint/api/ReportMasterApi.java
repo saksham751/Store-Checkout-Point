@@ -71,8 +71,7 @@ public class ReportMasterApi {
         return brandList;
     }
 
-    public List<SalesReportData> getSalesReportData(List<BrandMasterPojo> brandCategoryPojos,
-                                                     List<OrderItemMasterPojo> orderItemPojos) throws ApiException {
+    public List<SalesReportData> getSalesReportData(List<BrandMasterPojo> brandCategoryPojos, List<OrderItemMasterPojo> orderItemPojos) throws ApiException {
         List<SalesReportData> salesReportDataList = new ArrayList<SalesReportData>();
         for(BrandMasterPojo brandCategoryPojo:brandCategoryPojos){
             SalesReportData salesReportData = new SalesReportData();

@@ -3,6 +3,7 @@ package com.increff.groceryPoint.dto;
 import com.increff.groceryPoint.api.InventoryMasterApi;
 import com.increff.groceryPoint.api.OrderItemMasterApi;
 import com.increff.groceryPoint.api.OrderMasterApi;
+import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.model.InvoiceForm;
 import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderMasterData;
@@ -40,6 +41,8 @@ public class OrderMasterdto {
     @Autowired
     private InventoryMasterApi invApi;
     @Autowired
+    private ProductMasterApi productApi;
+    @Autowired
     private HelperOrder helpOrder;
     public int add() throws ApiException{
         OrderMasterPojo omp= new OrderMasterPojo();
@@ -62,13 +65,16 @@ public class OrderMasterdto {
         OrderMasterPojo order= orderApi.get(id);
         List<OrderItemMasterPojo> orderItemList = orderItemApi.getAllfromOrderId(id);
         List<OrderItemMasterData> orderItemData = new ArrayList<OrderItemMasterData>();
-        for(OrderItemMasterPojo p: orderItemList){
-            orderItemData.add(helpOrder.convert(p));
-        }
+        List<String> productList= new ArrayList<String>();
         InvoiceForm invoice = new InvoiceForm();
+        for(OrderItemMasterPojo orderItems: orderItemList){
+            orderItemData.add(helpOrder.convert(orderItems));
+            productList.add(productApi.get(orderItems.getProductId()).getName());
+        }
         invoice.setOrderItemList(orderItemData);
         invoice.setTime(order.getUpdated_At());
         invoice.setOrderId(order.getId());
+        invoice.setProductName(productList);
         return invoice;
     }
     public void reduceInventory(int id,OrderItemMasterPojo orderItem) throws ApiException{
@@ -88,19 +94,6 @@ public class OrderMasterdto {
         orderApi.update(id, orderPojo);
         InvoiceForm invoiceData=getInvoiceData(id);
         String path= generatePDF(invoiceData);
-
-//        String invoicePath = generatePDF(getInvoiceData(id));
-//        InvoiceForm invoiceForm = invoiceGenerator.generateInvoiceForOrder(orderId);
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        String url = "http://localhost:8080/invoice/api/get-invoice";
-//
-//        byte[] contents = restTemplate.postForEntity(url, invoiceForm, byte[].class).getBody();
-//
-////        saving pdf;
-//        Path pdfPath = Paths.get("./src/main/resources/pdf/" + id + "_invoice.pdf");
-//
-//        Files.write(pdfPath, contents);
     }
 
     public ResponseEntity<byte[]>  getInvoice(int id) throws ApiException, IOException {
@@ -120,15 +113,6 @@ public class OrderMasterdto {
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
         return response;
     }
-//    public Resource getInvoice(Integer orderId) throws ApiException, IOException {
-//        OrderMasterPojo orderPojo = orderApi.get(orderId);
-//        String billDirPath =  "/home/sakshamyadav/repos/pos/grocery-point/src/main/resources/pdf/"+orderId+"_invoice.pdf";   //"D:\\IncreffProjectPOS BILLS\\bills\\" + orderId + ".pdf";
-//        File file = new File(billDirPath);
-//        Path path = Paths.get(file.getAbsolutePath());
-//        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
-//        System.out.println(resource.toString());
-//        return resource;
-//    }
     public static String generatePDF(InvoiceForm invoiceData) throws IOException {
         String encodedPdf = getEncodedPdf(invoiceData);
         BASE64Decoder decoder = new BASE64Decoder();

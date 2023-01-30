@@ -146,8 +146,8 @@ function displayBrandList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteBrand(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button class="btn-disable btn btn-primary" onclick="displayEditBrand(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteBrand(' + e.id + ')">Delete</button>'
+		buttonHtml += ' <button class="btn-disable btn btn-primary" onclick="displayEditBrand(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brand + '</td>'
@@ -156,6 +156,7 @@ function displayBrandList(data){
 		+ '</tr>';
         $tbody.append(row);
 	}
+	pagination();
 }
 
 function displayEditBrand(id){
@@ -218,7 +219,11 @@ function init(){
 	$('#download-errors').click(downloadErrors);
     $('#brandFile').on('change', updateFileName)
 }
-
+function pagination()
+{
+   $('#sales-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getBrandList);
 

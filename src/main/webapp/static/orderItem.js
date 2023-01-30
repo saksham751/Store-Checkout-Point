@@ -36,7 +36,7 @@ function displayOrderItemList(data){
 	for(var i in data){
 		var e = data[i];
 		var buttonHtml = ' <button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteOrderItem('
-		+ e.id + ')">delete</button>'
+		+ e.id + ')">Delete</button>'
 		+ ' <button onclick="fillFields(' + e.id + ','
 		+ e.orderId + ',' + e.productId + ',' + e.quantity + ','
 		+ e.sellingPrice + ')" class="btn-disable btn btn-primary" data-toggle="modal"'
@@ -51,6 +51,7 @@ function displayOrderItemList(data){
 		+ '</tr>';
         $tbody.append(row);
 	}
+	pagination();
 	if(status === "Placed")
 	    disableEditing();
 	if(data.length == 0)
@@ -187,6 +188,10 @@ function init()
     $('#place-order').click(placeOrder);
     $('#update-orderItem').click(updateOrderItem);
 }
-
+function pagination()
+{
+   $('#orderItem-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getOrderItemList);

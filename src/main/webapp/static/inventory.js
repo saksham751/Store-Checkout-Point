@@ -144,7 +144,7 @@ function displayInventoryList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = ' <button class="btn-disable btn btn-primary" onclick="displayEditInventory(' + e.id + ')">edit</button>'
+		var buttonHtml = ' <button class="btn-disable btn btn-primary" onclick="displayEditInventory(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.quantity + '</td>'
@@ -152,6 +152,7 @@ function displayInventoryList(data){
 		+ '</tr>';
         $tbody.append(row);
 	}
+	pagination();
 }
 
 function displayEditInventory(id){
@@ -213,7 +214,11 @@ function init(){
 	$('#download-errors').click(downloadErrors);
     $('#inventoryFile').on('change', updateFileName)
 }
-
+function pagination()
+{
+   $('#inventory-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getInventoryList);
 

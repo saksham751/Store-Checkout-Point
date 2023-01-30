@@ -52,6 +52,7 @@ function displayOrderItemList(data){
 		+ '</tr>';
         $tbody.append(row);
 	}
+	pagination();
 }
 
 
@@ -101,6 +102,10 @@ function init()
     status = $("meta[name=status]").attr("content");
     $('#download-invoice').click(downloadInvoice).disabled = true;
 }
-
+function pagination()
+{
+   $('#orderItem-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getOrderItemList);

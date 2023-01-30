@@ -143,8 +143,8 @@ function displayProductList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteProduct(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button class="btn-disable btn btn-primary" onclick="displayEditProduct(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteProduct(' + e.id + ')">Delete</button>'
+		buttonHtml += ' <button class="btn-disable btn btn-primary" onclick="displayEditProduct(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.productName + '</td>'

@@ -9,6 +9,6 @@ import java.util.Date;
 @Getter@Setter
 public class OrderMasterData{
     private Integer id;
-    private Date time;
+    private String time;
     private String status;
 }

@@ -177,6 +177,7 @@ function downloadTSV(response){
 }
 //INITIALIZATION CODE
 function init(){
+
    $('#filter-sales-report').click(filterSalesReport);
    $('#inputBrand').change(displayCategoryList);
    $('#download-sales-report').click(downloadSalesReport);

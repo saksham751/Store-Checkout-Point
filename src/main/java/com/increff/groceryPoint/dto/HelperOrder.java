@@ -13,6 +13,8 @@ import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+
 
 @Service
 public class HelperOrder {
@@ -20,7 +22,8 @@ public class HelperOrder {
     private ProductMasterApi productpApi;
     public OrderMasterData convert(OrderMasterPojo p) {
         OrderMasterData d = new OrderMasterData();
-        d.setTime(p.getTime());
+        SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+        d.setTime(formatter.format(p.getTime()));
         d.setId(p.getId());
         d.setStatus(p.getStatus());
         return d;

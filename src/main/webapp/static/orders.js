@@ -111,16 +111,17 @@ function disableEditing()
      document.getElementById("status").innerHTML = "status: " + message;
  }
 
- function init()
- {
-    $('#create-order').click(createOrder);
-    $('#apply-date-filter').click(getOrderListByDateFilter);
- }
  function pagination()
  {
     $('#order-table').DataTable();
     $('.dataTables_length').addClass('bs-select');
  }
+ function init()
+ {
+    $('#create-order').click(createOrder);
+    $('#apply-date-filter').click(getOrderListByDateFilter);
+ }
+
 
  $(document).ready(init);
  $(document).ready(getOrderList);

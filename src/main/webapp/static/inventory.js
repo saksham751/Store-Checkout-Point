@@ -22,6 +22,12 @@ function addInventory(event){
        },
 	   success: function(response) {
 	   		getInventoryList();
+	   		document.getElementById("inventory-form").reset();
+                                    $('#inventory-create-modal').modal('hide');
+                                    document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                                    document.getElementById('toast-container').classList.add('bg-success');
+                                    document.getElementById('my-message').innerHTML="The items were updated successfully in the inventory";
+                                    $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -48,6 +54,12 @@ function updateInventory(event){
        },
 	   success: function(response) {
 	   		getInventoryList();
+	   			document.getElementById("inventory-edit-form").reset();
+                        $('#inventory-create-modal').modal('hide');
+                        document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                        document.getElementById('toast-container').classList.add('bg-success');
+                        document.getElementById('my-message').innerHTML="The items were updated successfully in the inventory";
+                        $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});

@@ -22,6 +22,11 @@ function addBrand(event){
        },
 	   success: function(response) {
 	   		getBrandList();
+	   		document.getElementById("brand-form").reset();
+	   		document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+            document.getElementById('toast-container').classList.add('bg-success');
+            document.getElementById('my-message').innerHTML="The brand was added successfully";
+            $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -221,7 +226,7 @@ function init(){
 }
 function pagination()
 {
-   $('#sales-table').DataTable();
+   $('#brand-table').DataTable();
    $('.dataTables_length').addClass('bs-select');
 }
 $(document).ready(init);

@@ -75,6 +75,11 @@ function addOrderItem(event)
            },
     	   success: function(response) {
     	   		getOrderItemList();
+    	   		document.getElementById("orderItem-form").reset();
+    	   		document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                                       document.getElementById('toast-container').classList.add('bg-success');
+                                       document.getElementById('my-message').innerHTML="The order was placed successfully";
+                                       $(".toast").toast('show');
     	   },
 //    	   error: handleAjaxError
 //            error: setStatus(response)

@@ -22,6 +22,12 @@ function addProduct(event){
        },
 	   success: function(response) {
 	   		getProductList();
+	   		document.getElementById("product-form").reset();
+                        	   		$('#create-product-modal').modal('hide');
+                                    document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                                    document.getElementById('toast-container').classList.add('bg-success');
+                                    document.getElementById('my-message').innerHTML="The product was added successfully";
+                                    $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -48,6 +54,12 @@ function updateProduct(event){
        },
 	   success: function(response) {
 	   		getProductList();
+	   		document.getElementById("product-edit-form").reset();
+            	   		$('#create-product-modal').modal('hide');
+                        document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                        document.getElementById('toast-container').classList.add('bg-success');
+                        document.getElementById('my-message').innerHTML="The product was added successfully";
+                        $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});

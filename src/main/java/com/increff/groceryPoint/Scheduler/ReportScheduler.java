@@ -13,7 +13,7 @@ public class ReportScheduler {
     ReportMasterdto reportDto;
 
     @Async
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 0 12 * * *")
     public void createDailyReport() throws ApiException
     {
         reportDto.generate_pos_day_sales();

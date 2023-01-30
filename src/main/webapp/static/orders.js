@@ -12,7 +12,6 @@ function getOrderList(){
 	   console.log(data);
 	   		displayOrderList(data);
 	   },
-//	   error: handleAjaxError
 	});
 }
 
@@ -68,14 +67,10 @@ function displayOrderList(data){
 
 function redirect(id)
 {
-//    console.log(status);
-//    if(status==="placed") return;
     window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/orderItem/" + id;
 }
 function redirect2(id)
 {
-//    console.log(status);
-//    if(status==="placed") return;
     window.location.href = $("meta[name=baseUrl]").attr("content") + "/ui/orderItemView/" + id;
 }
 
@@ -94,12 +89,8 @@ function redirect2(id)
             },
      	   success: function(response) {
      	   		getOrderList();
-
-     	   		//setStatus(response);
+                redirect(response);
      	   },
- //    	   error: handleAjaxError
- //            error: setStatus(response)
-
      	});
      	return false;
  }

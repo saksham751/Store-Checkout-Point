@@ -107,6 +107,8 @@ public class ReportMasterdto {
         } else {
             reportApi.update(date, salesreport);
         }
+    }
+    public List<pos_day_sales_Data> getpos_day_sales() throws ApiException{
 
     }
 }

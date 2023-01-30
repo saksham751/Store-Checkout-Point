@@ -35,26 +35,11 @@ public class ReportMasterController {
         public List<BrandMasterData> getBrandReport() throws ApiException{
                 return reportDto.getBrandReport();
         }
-//        @ApiOperation(value = "Get Revenue on product items with date as filter")
-//        @RequestMapping(path = "/api/sales-report-brand", method = RequestMethod.POST)
-//        public List<BrandSalesReport> getRevenueBrand(@RequestBody DateFilterForm form) throws ApiException
-//        {
-//                return reportDto.getBrandReport(form);
-//        }
-//
-//        @ApiOperation(value = "Get Revenue on product items with date as filter")
-//        @RequestMapping(path = "/api/sales-report-category", method = RequestMethod.POST)
-//        public List<CategorySalesReport> getRevenueCategory(@RequestBody DateFilterForm form) throws ApiException
-//        {
-//                return reportDto.getCategoryReport(form);
-//        }
-//
-//        @ApiOperation(value = "Get Inventory Report")
-//        @RequestMapping(path = "/api/inventory-report", method = RequestMethod.GET)
-//        public List<InventoryReportModel> getInventoryReport() throws ApiException
-//        {
-//                return dto.getInventoryReport();
-//        }
 
+        @ApiOperation(value="Gets pos_day_sales")
+        @RequestMapping(path="/api/pos_day_sales_report",method = RequestMethod.GET)
+        public List<pos_day_sales_Data> getpos_day_sales() throws ApiException{
+                return reportDto.getpos_day_sales();
+        }
 
 }

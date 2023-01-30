@@ -37,7 +37,6 @@ function filterSalesReport() {
        },
        success: function(response) {
 //            console.log(response);
-            downloadTSV(response);
             displaySalesReport(response);
        },
        error: handleAjaxError
@@ -185,8 +184,8 @@ function init(){
 }
 function pagination()
 {
-$('#sales-table').DataTable();
-  $('.dataTables_length').addClass('bs-select');
+   $('#sales-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
 }
 //$(document).ready(function () {
 //  $('#sales-table').DataTable();

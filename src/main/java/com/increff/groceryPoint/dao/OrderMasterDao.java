@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-@Transactional
 public class OrderMasterDao extends AbstractDao{
     private static String select_All="select order from OrderMasterPojo order";
     private static String select ="select order from OrderMasterPojo order where id =: id";

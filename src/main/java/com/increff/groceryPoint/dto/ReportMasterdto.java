@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.increff.groceryPoint.dto.HelperBrand.convert;
+
 import static com.increff.groceryPoint.dto.HelperReport.*;
 
 
@@ -108,7 +109,13 @@ public class ReportMasterdto {
             reportApi.update(date, salesreport);
         }
     }
-    public List<pos_day_sales_Data> getpos_day_sales() throws ApiException{
-
+    public List<pos_day_sales_Data> getpos_day_sales(pos_day_sales_Form posFilterForm) throws ApiException{
+        validateFilterForm(posFilterForm);
+        List<DaySalesPojo> daySales = reportApi.getpos_day_sales(posFilterForm.getStart(),posFilterForm.getEnd());
+        List<pos_day_sales_Data> posData = new ArrayList<pos_day_sales_Data>();
+        for(DaySalesPojo it:daySales){
+            posData.add(helper.convertDaySalesPojotoData(it));
+        }
+        return posData;
     }
 }

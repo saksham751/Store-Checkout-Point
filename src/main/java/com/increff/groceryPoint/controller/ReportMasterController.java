@@ -22,7 +22,6 @@ public class ReportMasterController {
         @ApiOperation(value = "Get Sales report")
         @RequestMapping(path = "/api/sales-report", method = RequestMethod.POST)
         public List<SalesReportData> getSalesReport(@RequestBody SalesReportForm form) throws ApiException{
-                System.out.println(form.getStart()+" "+form.getEnd());
                 return reportDto.getSalesReport(form);
         }
         @ApiOperation(value = "Get inventory Report")
@@ -37,9 +36,9 @@ public class ReportMasterController {
         }
 
         @ApiOperation(value="Gets pos_day_sales")
-        @RequestMapping(path="/api/pos_day_sales_report",method = RequestMethod.GET)
-        public List<pos_day_sales_Data> getpos_day_sales() throws ApiException{
-                return reportDto.getpos_day_sales();
+        @RequestMapping(path="/api/pos_day_sales_report",method = RequestMethod.POST)
+        public List<pos_day_sales_Data> getpos_day_sales(@RequestBody pos_day_sales_Form posFilterForm) throws ApiException{
+                return reportDto.getpos_day_sales(posFilterForm);
         }
 
 }

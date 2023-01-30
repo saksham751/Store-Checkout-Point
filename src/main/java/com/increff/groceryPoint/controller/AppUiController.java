@@ -62,7 +62,7 @@ public class AppUiController extends AbstractUiController {
 	public ModelAndView orderItemView(@PathVariable Integer id) throws ApiException {
 		OrderMasterData data= orderDto.get(id);
 		return mav("orderItemView.html",data);}
-	@RequestMapping(value = "/ui/sales-report")
+	@RequestMapping(value = "/ui/pos_day_sales_report")
 	public ModelAndView pos_day_sales(){
 		return mav("pos_day_sales_report.html");
 	}

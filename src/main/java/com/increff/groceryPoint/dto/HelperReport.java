@@ -1,9 +1,7 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
-import com.increff.groceryPoint.model.DaySalesData;
-import com.increff.groceryPoint.model.SalesReportForm;
-import com.increff.groceryPoint.model.SalesReportData;
+import com.increff.groceryPoint.model.*;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.DaySalesPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
@@ -11,6 +9,7 @@ import com.increff.groceryPoint.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -77,6 +76,14 @@ public class HelperReport {
         salesReportForm.setStart(getStartOfDay(salesReportForm.getStart(),Calendar.getInstance()));
         salesReportForm.setEnd(getEndOfDay(salesReportForm.getEnd(),Calendar.getInstance()));
     }
+    public static void validateFilterForm(pos_day_sales_Form daySalesForm){
+        if(daySalesForm.getEnd()==null) {
+            daySalesForm.setEnd(new Date());
+        }
+        if(daySalesForm.getStart()==null) {
+            daySalesForm.setStart(new GregorianCalendar(2023, Calendar.JANUARY, 1).getTime());
+        }
+    }
     public SalesReportData convertProductToReport(ProductMasterPojo p) throws ApiException
     {
         SalesReportData salesReport = new SalesReportData();
@@ -92,28 +99,23 @@ public class HelperReport {
         salesReport.setCategory(brandPojo.getCategory());
         return salesReport;
     }
-    protected static DaySalesData convertPojotoData(DaySalesPojo pojo)
-    {
-        DaySalesData dailyReportData = new DaySalesData();
-        dailyReportData.setDate(pojo.getDate());
-        dailyReportData.setTotalRevenue(pojo.getTotalRevenue());
-        dailyReportData.setInvoicedItemsCount(pojo.getInvoicedItemsCount());
-        dailyReportData.setInvoicedOrderCount(pojo.getInvoicedOrderCount());
-        return dailyReportData;
-    }
-//    public static ReportForm convertToDatatime(DateFilterForm form){
-////        String st=form.getStart().replace('-','/');
-//        ReportForm reportfilter = new ReportForm();
-////        System.out.println(form.getStart());
-//        String startDate = form.getStart()+ " 00:00:00";
-////        System.out.println(startDate+ " "+ Date.now());
-//
-//        Date strt = Date.parse(startDate, formatter);
-//        reportfilter.setStart(strt);
-//        String endDate = form.getEnd()+ " 23:59:59";
-//        Date end = Date.parse(endDate, formatter);
-//        reportfilter.setStart(end);
-//        return reportfilter;
+//    protected static DaySalesData convertPojotoData(DaySalesPojo pojo)
+//    {
+//        DaySalesData dailyReportData = new DaySalesData();
+//        dailyReportData.setDate(pojo.getDate());
+//        dailyReportData.setTotalRevenue(pojo.getTotalRevenue());
+//        dailyReportData.setInvoicedItemsCount(pojo.getInvoicedItemsCount());
+//        dailyReportData.setInvoicedOrderCount(pojo.getInvoicedOrderCount());
+//        return dailyReportData;
 //    }
+    public static pos_day_sales_Data convertDaySalesPojotoData(DaySalesPojo salesPojo){
+        pos_day_sales_Data daySales = new pos_day_sales_Data();
+        SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
+        daySales.setDate(formatter.format(salesPojo.getDate()));
+        daySales.setTotalRevenue(salesPojo.getTotalRevenue());
+        daySales.setInvoicedItemsCount(salesPojo.getInvoicedItemsCount());
+        daySales.setInvoicedOrderCount(salesPojo.getInvoicedOrderCount());
+        return daySales;
+    }
 
 }

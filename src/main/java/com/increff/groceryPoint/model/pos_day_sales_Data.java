@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter@Setter
 public class pos_day_sales_Data {
-    private Date date;
+    private String date;
     private Integer invoicedOrderCount;
     private Integer invoicedItemsCount;
     private Double totalRevenue;

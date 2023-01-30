@@ -2,7 +2,6 @@ package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.ReportMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.model.InventoryReportForm;
 import com.increff.groceryPoint.model.SalesReportData;
 import com.increff.groceryPoint.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,10 @@ public class ReportMasterApi {
         pojo.setTotalRevenue(newPojo.getTotalRevenue());
         pojo.setInvoicedItemsCount(newPojo.getInvoicedItemsCount());
     }
-
+    @Transactional(readOnly = true)
+    public List<DaySalesPojo> getpos_day_sales(Date start, Date end) throws ApiException{
+        return reportDao.getByDateFilter(start,end);
+    }
     public List<BrandMasterPojo> getBrandList(String brand, String category){
         List<BrandMasterPojo> brandList = new ArrayList<BrandMasterPojo>();
         if(brand.equals("")&&category.equals("")){

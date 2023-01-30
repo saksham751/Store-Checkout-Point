@@ -58,11 +58,15 @@ function displayOrderList(data){
             + '<td>' + e.time + '</td>'
             + '<td>' + e.status + '</td>'
             + '<td>' + buttonHtml + '</td>'
+            + '<td>'+ ""+ '</td>'
             + '</tr>';
              $tbody.append(row);
          }
  	}
-    pagination();
+ 	window.setTimeout(() => {
+              pagination();
+            }, 1000);
+
  }
 
 function redirect(id)

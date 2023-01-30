@@ -9,6 +9,7 @@ import com.increff.groceryPoint.model.OrderItemMasterForm;
 import com.increff.groceryPoint.model.OrderItemUpdateForm;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
+import com.increff.groceryPoint.pojo.OrderMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,9 +74,16 @@ public class OrderItemMasterdto {
     @Transactional(rollbackFor = ApiException.class)
     public void update(int id, OrderItemUpdateForm form) throws ApiException {
         helpOrder.isOrderItemUpdateValid(form);
-        OrderItemMasterPojo p=helpOrder.convert(form);
-        p.setId(id);
-        isOrderItemPojoValid(p);
+        OrderItemMasterPojo prevOrderItem = orderItemApi.checkOrderItemExists(id);
+        OrderItemMasterPojo orderItemPojo=helpOrder.convert(form);
+        orderItemPojo.setId(id);
+
+        Integer qtyNeeded=orderItemPojo.getQuantity()-prevOrderItem.getQuantity();
+        orderItemPojo.setQuantity(qtyNeeded);
+        orderItemPojo.setSellingPrice(productApi.get(orderItemPojo.getProductId()).getMrp()*qtyNeeded);
+        if(qtyNeeded>0) {
+            isOrderItemPojoValid(orderItemPojo);
+        }
 //        OrderItemMasterPojo ex = orderItemApi.checkOrderItemExists(id);
 //        Integer prevQty=ex.getQuantity();
 //        OrderItemMasterPojo  checkInv= p;
@@ -84,11 +92,10 @@ public class OrderItemMasterdto {
 //        p.setQuantity(p.getQuantity()+ex.getQuantity());
 
         InventoryMasterPojo inv= new InventoryMasterPojo();
-        inv.setId(p.getProductId());
-        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity());
-        invApi.update(p.getProductId(),inv);
-
-        orderItemApi.update(p.getId(),p);
+        inv.setId(orderItemPojo.getProductId());
+        inv.setQuantity(invApi.get(orderItemPojo.getProductId()).getQuantity()-orderItemPojo.getQuantity());
+        invApi.update(orderItemPojo.getProductId(),inv);
+        orderItemApi.update(orderItemPojo.getId(),orderItemPojo);
     }
 
     public List<OrderItemMasterData> getAllfromOrderId(Integer orderId) throws ApiException{
@@ -110,6 +117,15 @@ public class OrderItemMasterdto {
 
     }
     public void isOrderItemPojoValid(OrderItemMasterPojo p) throws ApiException{
+        int productId=p.getProductId();
+        productApi.get(productId);
+        orderApi.get(p.getOrderId());
+        if(invApi.get(productId).getQuantity()<p.getQuantity()){
+            throw new ApiException("Not enough Quantity Available");
+        }
+
+    }
+    public void isOrderUpdatePojoValid(OrderItemMasterPojo p) throws ApiException{
         int productId=p.getProductId();
         productApi.get(productId);
         orderApi.get(p.getOrderId());

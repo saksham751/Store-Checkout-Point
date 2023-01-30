@@ -106,24 +106,6 @@ function displayCategoryList()
     }
 }
 
-//function applyBrandCategoryFilter()
-//{
-////console.log("this is it");
-//    var brandFilter = getBrandOption();
-//    var categoryFilter = getCategoryOption();
-//    console.log(brandFilter);
-//    console.log(categoryFilter);
-//    var data = [];
-//
-//    for(var i = 0; i<productRevenueData.length; i++){
-//        if(check(productRevenueData[i].brand, brandFilter) && check(productRevenueData[i].category, categoryFilter))
-//            data.push(productRevenueData[i]);
-//    }
-//    displaySalesReport(data);
-//}
-
-// helpers
-
 function check(a, b)
 {
     if(b=="" || a==b)

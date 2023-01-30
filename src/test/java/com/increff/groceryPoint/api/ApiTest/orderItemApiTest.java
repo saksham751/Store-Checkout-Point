@@ -77,11 +77,11 @@ public class orderItemApiTest extends AbstractUnitTest {
         orderItemUpdate.setProductId(productId);
         orderItemUpdate.setQuantity(4);
         orderItemUpdate.setSellingPrice(80.0);
-        orderItemApi.update(orderItemPojo,orderItemUpdate);
+        orderItemApi.update(orderItemId,orderItemUpdate);
         OrderItemMasterPojo orderItemData = orderItemApi.get(orderItemId);
         assertEquals(Integer.valueOf(productId),orderItemData.getProductId());
-        assertEquals(Integer.valueOf(2),orderItemData.getQuantity());
-        assertEquals(Double.valueOf(40.0),orderItemData.getSellingPrice());
+        assertEquals(Integer.valueOf(6),orderItemData.getQuantity());
+        assertEquals(Double.valueOf(120.0),orderItemData.getSellingPrice());
         assertEquals(Integer.valueOf(orderId),orderItemData.getOrderId());
     }
 

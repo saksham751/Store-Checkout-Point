@@ -41,7 +41,7 @@ function displayOrderItemList(data){
 		buttonHtml+= ' <button onclick="fillFields(' + e.id + ','
 		+ e.orderId + ',' + e.productId + ',' + e.quantity + ','
 		+ e.sellingPrice + ')" class="btn-disable btn btn-primary" data-toggle="modal"'
-		+ 'data-target="#exampleModalCenter">edit</button>';
+		+ 'data-target="#exampleModalCenter">Edit</button>';
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.orderId + '</td>'

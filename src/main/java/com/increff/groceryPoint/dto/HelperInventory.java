@@ -20,6 +20,9 @@ public class HelperInventory {
         {
             throw new ApiException("Quantity cannot be less than 0 or Null!");
         }
+        if(isNull(form.getId()) || form.getId()==null){
+            throw new ApiException("Enter a Valid Product ID");
+        }
     }
 
 

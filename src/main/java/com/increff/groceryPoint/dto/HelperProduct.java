@@ -41,9 +41,6 @@ public class HelperProduct {
         {
             throw new ApiException("Product Name cannot be Empty!");
         }
-        if(!(form.getMrp()>=0)){
-            throw new ApiException("Enter a valid MRP");
-        }
         if(isNull(form.getMrp()) || form.getMrp()<0)
         {
             throw new ApiException("MRP cannot be Empty! or Less than 0");
@@ -52,9 +49,9 @@ public class HelperProduct {
         {
             throw new ApiException("Barcode cannot be Empty!");
         }
-        if(isNull(form.getBrand_category()))
+        if(isNull(form.getBrand_category())|| form.getBrand_category()==null || !(form.getBrand_category()>=0))
         {
-            throw new ApiException("Brand Category cannot be Empty!");
+            throw new ApiException("Please enter a Valid Brand Category!");
         }
 
 

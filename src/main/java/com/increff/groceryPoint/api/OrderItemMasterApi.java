@@ -28,11 +28,15 @@ public class OrderItemMasterApi {
         return orderItemDao.getAll();
     }
 
-    @Transactional
-    public void update(OrderItemMasterPojo p,OrderItemMasterPojo ex) throws ApiException {
-        ex.setQuantity(p.getQuantity());
-        ex.setSellingPrice(p.getSellingPrice());
-        ex.setProductId(p.getProductId());
+    @Transactional(rollbackFor = ApiException.class)
+    public void update(int id,OrderItemMasterPojo ex) throws ApiException {
+        OrderItemMasterPojo orderItemPojo =orderItemDao.get(id);
+        Double price=ex.getSellingPrice()/ex.getQuantity();
+        System.out.println(ex.getQuantity());
+        orderItemPojo.setQuantity(ex.getQuantity()+orderItemPojo.getQuantity());
+        orderItemPojo.setSellingPrice(ex.getSellingPrice()+orderItemPojo.getQuantity()*price);
+        orderItemPojo.setProductId(ex.getProductId());
+
         orderItemDao.update(ex);
 
     }

@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
@@ -78,8 +79,9 @@ public class orderDtoTest extends AbstractUnitTest {
         orderPojo.setTime(time);
         orderPojo.setId(0);
         OrderMasterData orderData = orderHelp.convert(orderPojo);
+        SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
         assertEquals(Integer.valueOf(0),orderData.getId());
-        assertEquals(time,orderData.getTime());
+        assertEquals(formatter.format(time),orderData.getTime());
         assertEquals("Placed",orderData.getStatus());
     }
 }

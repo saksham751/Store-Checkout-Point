@@ -28,6 +28,7 @@ function getOrderItemList(){
 	   },
 //	   error: handleAjaxError
 	});
+	pagination()
 }
 
 function displayOrderItemList(data){
@@ -37,7 +38,7 @@ function displayOrderItemList(data){
 		var e = data[i];
 		var buttonHtml = ' <button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteOrderItem('
 		+ e.id + ')">Delete</button>'
-		+ ' <button onclick="fillFields(' + e.id + ','
+		buttonHtml+= ' <button onclick="fillFields(' + e.id + ','
 		+ e.orderId + ',' + e.productId + ',' + e.quantity + ','
 		+ e.sellingPrice + ')" class="btn-disable btn btn-primary" data-toggle="modal"'
 		+ 'data-target="#exampleModalCenter">edit</button>';
@@ -75,20 +76,19 @@ function addOrderItem(event)
            },
     	   success: function(response) {
     	   		getOrderItemList();
-    	   		document.getElementById("orderItem-form").reset();
     	   		document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
                                        document.getElementById('toast-container').classList.add('bg-success');
-                                       document.getElementById('my-message').innerHTML="The order was placed successfully";
+                                       document.getElementById('my-message').innerHTML="Item Added";
                                        $(".toast").toast('show');
     	   },
-//    	   error: handleAjaxError
+   	   error: handleAjaxError
 //            error: setStatus(response)
 
     	});
     	return false;
 }
 
-function placeOrder()
+async function placeOrder()
 {
     var url = getOrderUrl() + "/" + orderId;
     $.ajax({
@@ -99,8 +99,7 @@ function placeOrder()
                },
         	   success: function(response) {
         	   console.log("order placed");
-        	   		//alert(response);
-        	   		window.location= $("meta[name=baseUrl]").attr("content") + "/ui/orders";
+        	   		downloadInvoice();
         	   },
     //    	   error: handleAjaxError
 //                error: setStatus(response)
@@ -175,8 +174,19 @@ function setStatus(message)
 {
     document.getElementById("status").innerHTML = "status: " + message;
 }
+async function downloadInvoice()
+{
+    var url = getInvoiceUrl() + "/" + orderId;
+    console.log(url);
+    window.location.href = url;
+    window.setTimeout(() => {
+      redirect();
+    }, 2000);
 
-
+}
+async function redirect(){
+    window.location= $("meta[name=baseUrl]").attr("content") + "/ui/orders";
+}
 function init()
 {
     const str = document.URL;

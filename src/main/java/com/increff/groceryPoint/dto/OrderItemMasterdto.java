@@ -11,6 +11,7 @@ import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,21 +70,25 @@ public class OrderItemMasterdto {
         return list2;
     }
 
+    @Transactional(rollbackFor = ApiException.class)
     public void update(int id, OrderItemUpdateForm form) throws ApiException {
         helpOrder.isOrderItemUpdateValid(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
         p.setId(id);
-        OrderItemMasterPojo ex = orderItemApi.checkOrderItemExists(id);
-        Integer prevQty=ex.getQuantity();
-        OrderItemMasterPojo  checkInv= p;
-        checkInv.setQuantity(p.getQuantity()-ex.getQuantity());
-        isOrderItemPojoValid(checkInv);
-        p.setQuantity(p.getQuantity()+ex.getQuantity());
+        isOrderItemPojoValid(p);
+//        OrderItemMasterPojo ex = orderItemApi.checkOrderItemExists(id);
+//        Integer prevQty=ex.getQuantity();
+//        OrderItemMasterPojo  checkInv= p;
+//        checkInv.setQuantity(p.getQuantity()-ex.getQuantity());
+//        isOrderItemPojoValid(checkInv);
+//        p.setQuantity(p.getQuantity()+ex.getQuantity());
+
         InventoryMasterPojo inv= new InventoryMasterPojo();
         inv.setId(p.getProductId());
-        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity()+prevQty);
+        inv.setQuantity(invApi.get(p.getProductId()).getQuantity()-p.getQuantity());
         invApi.update(p.getProductId(),inv);
-        orderItemApi.update(p,ex);
+
+        orderItemApi.update(p.getId(),p);
     }
 
     public List<OrderItemMasterData> getAllfromOrderId(Integer orderId) throws ApiException{

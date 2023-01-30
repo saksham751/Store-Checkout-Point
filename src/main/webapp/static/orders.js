@@ -62,7 +62,7 @@ function displayOrderList(data){
              $tbody.append(row);
          }
  	}
- 	pagination();
+    pagination();
  }
 
 function redirect(id)
@@ -120,8 +120,10 @@ function disableEditing()
  {
     $('#create-order').click(createOrder);
     $('#apply-date-filter').click(getOrderListByDateFilter);
+
  }
 
 
  $(document).ready(init);
+
  $(document).ready(getOrderList);

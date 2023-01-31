@@ -18,6 +18,7 @@ public class UserMasterApi {
         if (existing != null) {
             throw new ApiException("User with given email already exists");
         }
+
         return userDao.insert(p);
     }
     public UserPojo get(String email) throws ApiException {

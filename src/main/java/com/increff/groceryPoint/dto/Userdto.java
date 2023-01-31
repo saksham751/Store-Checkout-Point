@@ -17,12 +17,11 @@ public class Userdto {
 	private UserMasterApi userApi;
 
 	public UserData add(AddUserForm userForm) throws ApiException {
+		if(!userForm.getPassword().equals(userForm.getConfirmPassword())){
+			throw new ApiException("Passwords are not same.");
+		}
 		normalize(userForm);
 		UserPojo userPojo = convertFormtoPojo(userForm);
-		UserPojo existing = userApi.get(userPojo.getEmail());
-		if (existing != null) {
-			throw new ApiException("User with given email already exists");
-		}
 		return convertPojotoData(userApi.add(userPojo));
 	}
 //	public UserData add(UserPojo userPojo) throws ApiException {

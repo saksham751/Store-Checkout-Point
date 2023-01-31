@@ -1,6 +1,7 @@
 package com.increff.groceryPoint.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,8 @@ public class LoginController {
 	private Userdto userDto;
 	@Autowired
 	private InfoData info;
-	@Value("${supervisor.email}")
+	@Value("#{'${supervisor.email}'.split(',')}")
+	private List<String> supervisorList;
 	private String supervisorEmail;
 	@ApiOperation(value = "Logs in a user")
 	@RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -64,11 +66,16 @@ public class LoginController {
 	@ApiOperation(value = "Signs up a user")
 	@RequestMapping(path = "/site/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView signUp(HttpServletRequest req, AddUserForm userForm) throws ApiException {
-		UserData userData = userDto.add(userForm);
-		if(userData==null){
-			ModelAndView mav = new ModelAndView("signup.html");
-			mav.addObject("info", info);
-			return mav;
+		try {
+			UserData userData = userDto.add(userForm);
+			if(userData==null){
+				ModelAndView mav = new ModelAndView("signup.html");
+				mav.addObject("info", info);
+				return mav;
+			}
+		}catch(Exception e){
+			info.setMessage(e.getMessage());
+			return new ModelAndView("redirect:/site/signup	");
 		}
 
 		return new ModelAndView("redirect:/site/login");
@@ -89,9 +96,10 @@ public class LoginController {
 		// Create Authorities
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		String role = "operator";
-		if (Objects.equals(supervisorEmail, p.getEmail()))
-			role = "supervisor";
-
+		for(String s:supervisorList) {
+			if (Objects.equals(s, p.getEmail()))
+				role = "supervisor";
+		}
 		principal.setRole(role);
 
 		authorities.add(new SimpleGrantedAuthority(role));

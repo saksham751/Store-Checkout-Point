@@ -17,16 +17,9 @@ public class SiteUiController extends AbstractUiController {
 	public ModelAndView index() {
 		return mav("index.html");
 	}
-	@RequestMapping(path = "/site/signup", method = RequestMethod.GET)
-	public ModelAndView showSignUpPage() {
-		infoData.setMessage("");
-		return mav("signup.html");
-	}
 	@RequestMapping(value = "/site/signup")
 	public ModelAndView signup() {
-		if(!infoData.getEmail().equals("")){
-			return new ModelAndView("redirect:/ui/home");
-		}
+		//infoData.setMessage("");
 		return mav("signup.html");
 	}
 	@RequestMapping(value = "/site/login")

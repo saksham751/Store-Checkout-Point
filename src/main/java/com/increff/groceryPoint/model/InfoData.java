@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter@Setter
 @Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
-public class InfoData implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class InfoData  {
 
 	private String message;
 	private String email;

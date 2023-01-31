@@ -20,8 +20,9 @@ public class UserDao extends AbstractDao {
 
 	
 	@Transactional
-	public void insert(UserPojo p) {
-		em().persist(p);
+	public UserPojo insert(UserPojo userPojo) {
+		em().persist(userPojo);
+		return userPojo;
 	}
 
 	public int delete(int id) {

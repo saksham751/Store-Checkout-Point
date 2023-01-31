@@ -1,6 +1,4 @@
 package com.increff.groceryPoint.controller;
-
-import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderMasterData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,11 +23,13 @@ public abstract class AbstractUiController {
 		UserPrincipal principal = SecurityUtil.getPrincipal();
 
 		info.setEmail(principal == null ? "" : principal.getEmail());
-
+		info.setRole(principal == null ? "" :principal.getRole());
+		//System.out.println(principal.getEmail() + " "+principal.getRole());
 		// Set info
 		ModelAndView mav = new ModelAndView(page);
 		mav.addObject("info", info);
 		mav.addObject("baseUrl", baseUrl);
+		//mav.addObject("role",principal.getRole());
 		return mav;
 	}
 	protected ModelAndView mav (String page, OrderMasterData orderData)
@@ -38,7 +38,9 @@ public abstract class AbstractUiController {
 //        UserPrincipal principal = SecurityUtil.getPrincipal();
 
 //        info.setEmail(principal == null ? "" : principal.getEmail());
-
+		UserPrincipal principal = SecurityUtil.getPrincipal();
+		info.setEmail(principal == null ? "" : principal.getEmail());
+		info.setRole(principal == null ? "" :principal.getRole());
 		ModelAndView mav = new ModelAndView(page);
 
 		mav.addObject("info", info);

@@ -44,7 +44,8 @@ public class AppUiController extends AbstractUiController {
 	@RequestMapping(value = "/ui/orderItem/{id}")
 	public ModelAndView orderItem(@PathVariable Integer id) throws ApiException {
 		OrderMasterData data= orderDto.get(id);
-		return mav("orderItem.html",data);}
+		return mav("orderItem.html",data);
+	}
 
 	@RequestMapping(value = "/ui/sales-report")
 	public ModelAndView salesReport(){

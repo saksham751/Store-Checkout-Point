@@ -122,7 +122,9 @@ function disableEditing()
  {
     $('#create-order').click(createOrder);
     $('#apply-date-filter').click(getOrderListByDateFilter);
-
+    if($("meta[name=role]").attr("content") == "operator"){
+            document.getElementById('supervisor-view').style.display= 'none';
+        }
  }
 
 

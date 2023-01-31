@@ -231,6 +231,9 @@ function init(){
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
     $('#inventoryFile').on('change', updateFileName)
+    if($("meta[name=role]").attr("content") == "operator"){
+            document.getElementById('supervisor-view').style.display= 'none';
+        }
 }
 function pagination()
 {

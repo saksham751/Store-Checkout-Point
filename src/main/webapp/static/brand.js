@@ -1,9 +1,13 @@
-
+console.log($("meta[name=role]").attr("content"))
 function getBrandUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/brand";
 }
 
+function getRole(){
+    var role = $("meta[name=role]").attr("content")
+    return role;
+}
 //BUTTON ACTIONS
 function addBrand(event){
 	//Set the values to update
@@ -239,6 +243,10 @@ function init(){
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
     $('#brandFile').on('change', updateFileName)
+    if($("meta[name=role]").attr("content") == "operator"){
+        document.getElementById('supervisor-view').style.display= 'none';
+    }
+
 }
 function pagination()
 {

@@ -202,6 +202,9 @@ function init()
     $('#add-Item').click(addOrderItem);
     $('#place-order').click(placeOrder);
     $('#update-orderItem').click(updateOrderItem);
+    if($("meta[name=role]").attr("content") == "operator"){
+            document.getElementById('supervisor-view').style.display= 'none';
+        }
 }
 function pagination()
 {

@@ -1,4 +1,4 @@
-
+console.log($("meta[name=role]").attr("content"))
 //HELPER METHOD
 function toJson($form){
     var serialized = $form.serializeArray();

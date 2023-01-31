@@ -98,10 +98,15 @@ function processData(){
 
 	readFileData(file, readFileDataCallback);
 }
-
 function readFileDataCallback(results){
 	fileData = results.data;
-	console.log(fileData);
+	if(fileData.length > 5000)
+    	{
+    	    document.getElementById('status-message').innerHTML = "Data length cannot be grater than 500";
+                document.getElementById('status').style.backgroundColor = "red";
+               	$('.toast').toast('show');
+            return false;
+    	}
 	uploadRows();
 }
 
@@ -143,7 +148,18 @@ function uploadRows(){
 function downloadErrors(){
 	writeFileData(errorData);
 }
-
+function resetUploadDialog(){
+	//Reset file name
+	var $file = $('#brandFile');
+	$file.val('');
+	$('#brandFileName').html("Choose File");
+	//Reset various counts
+	processCount = 0;
+	fileData = [];
+	errorData = [];
+	//Update counts
+	updateUploadDialog();
+}
 //UI DISPLAY METHODS
 
 function displayBrandList(data){

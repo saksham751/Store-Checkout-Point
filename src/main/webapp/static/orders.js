@@ -49,7 +49,6 @@ function displayOrderList(data){
              		+ '<td>' + e.time + '</td>'
              		+ '<td>' + e.status + '</td>'
              		+ '<td>' + viewButtonHtml + '</td>'
-             		+ '<td>'+ ""+ '</td>'
              		+ '</tr>';
             $tbody.append(row);
  		}else{
@@ -58,7 +57,6 @@ function displayOrderList(data){
             + '<td>' + e.time + '</td>'
             + '<td>' + e.status + '</td>'
             + '<td>' + buttonHtml + '</td>'
-            + '<td>'+ ""+ '</td>'
             + '</tr>';
              $tbody.append(row);
          }

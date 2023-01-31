@@ -113,6 +113,7 @@ public class OrderMasterdto {
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
         return response;
     }
+    //todo move to diffenrt module string upar define karo.
     public static String generatePDF(InvoiceForm invoiceData) throws IOException {
         String encodedPdf = getEncodedPdf(invoiceData);
         BASE64Decoder decoder = new BASE64Decoder();

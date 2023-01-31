@@ -84,12 +84,6 @@ public class OrderItemMasterdto {
         if(qtyNeeded>0) {
             isOrderItemPojoValid(orderItemPojo);
         }
-//        OrderItemMasterPojo ex = orderItemApi.checkOrderItemExists(id);
-//        Integer prevQty=ex.getQuantity();
-//        OrderItemMasterPojo  checkInv= p;
-//        checkInv.setQuantity(p.getQuantity()-ex.getQuantity());
-//        isOrderItemPojoValid(checkInv);
-//        p.setQuantity(p.getQuantity()+ex.getQuantity());
 
         InventoryMasterPojo inv= new InventoryMasterPojo();
         inv.setId(orderItemPojo.getProductId());
@@ -107,8 +101,11 @@ public class OrderItemMasterdto {
         return list2;
     }
     public void isOrderItemValid(OrderItemMasterForm form) throws ApiException{
-        if(form.getQuantity()<1){
-            throw new ApiException("Quantity cannot be less than 1");
+        if(form.getQuantity()==null){
+            throw new ApiException("Quantity cannot be empty");
+        }
+        if(form.getQuantity()<1 ){
+            throw new ApiException("Quantity cannot be less than 1 or empty");
         }
         if(form.getOrderId()<0){
             throw new ApiException("Enter a Valid OrderId");
@@ -117,15 +114,6 @@ public class OrderItemMasterdto {
 
     }
     public void isOrderItemPojoValid(OrderItemMasterPojo p) throws ApiException{
-        int productId=p.getProductId();
-        productApi.get(productId);
-        orderApi.get(p.getOrderId());
-        if(invApi.get(productId).getQuantity()<p.getQuantity()){
-            throw new ApiException("Not enough Quantity Available");
-        }
-
-    }
-    public void isOrderUpdatePojoValid(OrderItemMasterPojo p) throws ApiException{
         int productId=p.getProductId();
         productApi.get(productId);
         orderApi.get(p.getOrderId());

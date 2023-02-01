@@ -39,8 +39,7 @@ public class OrderMasterController {
 
     @ApiOperation(value = "Mark order placed")
     @RequestMapping(path = "api/order/place/{id}", method = RequestMethod.PUT)
-    public void markOrderPlaced(@PathVariable int id) throws ApiException, IOException
-    {
+    public void markOrderPlaced(@PathVariable int id) throws ApiException, IOException {
         orderDto.placeOrder(id);
     }
     @ApiOperation(value = "Download Invoice")

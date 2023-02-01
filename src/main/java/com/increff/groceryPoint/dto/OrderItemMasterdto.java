@@ -41,7 +41,7 @@ public class OrderItemMasterdto {
         try{
             prevOrderItem=orderItemApi.get(p.getOrderId(), p.getProductId());
         }catch(Exception e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         if(!isNull(prevOrderItem)){
             OrderItemUpdateForm updateForm = new OrderItemUpdateForm();
@@ -78,17 +78,17 @@ public class OrderItemMasterdto {
         OrderItemMasterPojo orderItemPojo=helpOrder.convert(form);
         orderItemPojo.setId(id);
 
-        Integer qtyNeeded=orderItemPojo.getQuantity()-prevOrderItem.getQuantity();
-        orderItemPojo.setQuantity(qtyNeeded);
-        orderItemPojo.setSellingPrice(productApi.get(orderItemPojo.getProductId()).getMrp()*qtyNeeded);
-        if(qtyNeeded>0) {
-            isOrderItemPojoValid(orderItemPojo);
-        }
+//        Integer qtyNeeded=orderItemPojo.getQuantity()-prevOrderItem.getQuantity();
+       // orderItemPojo.setQuantity(form.getQuantity());
+//        orderItemPojo.setSellingPrice(productApi.get(orderItemPojo.getProductId()).getMrp()*qtyNeeded);
 
-        InventoryMasterPojo inv= new InventoryMasterPojo();
-        inv.setId(orderItemPojo.getProductId());
-        inv.setQuantity(invApi.get(orderItemPojo.getProductId()).getQuantity()-orderItemPojo.getQuantity());
-        invApi.update(orderItemPojo.getProductId(),inv);
+        isOrderItemPojoValid(orderItemPojo);
+
+//
+//        InventoryMasterPojo inv= new InventoryMasterPojo();
+//        inv.setId(orderItemPojo.getProductId());
+//        inv.setQuantity(invApi.get(orderItemPojo.getProductId()).getQuantity()-orderItemPojo.getQuantity());
+//        invApi.update(orderItemPojo.getProductId(),inv);
         orderItemApi.update(orderItemPojo.getId(),orderItemPojo);
     }
 

@@ -80,23 +80,35 @@ public class ReportMasterApi {
             SalesReportData salesReportData = new SalesReportData();
             salesReportData.setCategory(brandCategoryPojo.getCategory());
             salesReportData.setBrand(brandCategoryPojo.getBrand());
-            Integer qty = 0;Double revenue = 0.0;
+            Integer qty = 0;Double total = 0.0;
+
             for(OrderItemMasterPojo orderItemPojo:orderItemPojos){
                 ProductMasterPojo productPojo = new ProductMasterPojo();
+//                if (!map.containsKey(brandCategoryId)) {
+//                    BrandPojo brandPojo = brandService.getByBrandId(brandCategoryId);
+//                    ProductRevenueData productRevenueData = convertBrandPojoToProductRevenueData(brandPojo);
+//                    map.put(brandCategoryId, productRevenueData);
+//                }
+//
                 try {
                     productPojo = productApi.get(orderItemPojo.getProductId());
                 }catch(Exception e){
                     continue;
                 }
                 if(productPojo.getBrand_category()==brandCategoryPojo.getId()){
+                    ////                updating quantity and total
+//                  Integer quantity = map.get(brandCategoryId).getQuantity();
+//                double total = map.get(brandCategoryId).getTotal();
                     qty += orderItemPojo.getQuantity();
-                    revenue += (orderItemPojo.getQuantity())*(orderItemPojo.getSellingPrice());
+                    total += (orderItemPojo.getQuantity())*(orderItemPojo.getSellingPrice());
                 }
             }
+
             salesReportData.setQuantity(qty);
-            salesReportData.setTotal(revenue);
+            salesReportData.setTotal(total);
             salesReportDataList.add(salesReportData);
         }
+
         return salesReportDataList;
     }
 }

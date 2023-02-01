@@ -43,7 +43,23 @@ public class ReportMasterdto {
         List<SalesReportData> salesReportDataList = reportApi.getSalesReportData(brandList,orderItemList);
         return salesReportDataList;
     }
-
+    public List<posDaySalesData> getpos_day_sales(posDaySalesForm posFilterForm) throws ApiException{
+        validateFilterForm(posFilterForm);
+        List<DaySalesPojo> daySales = reportApi.getpos_day_sales(posFilterForm.getStart(),posFilterForm.getEnd());
+        List<posDaySalesData> posData = new ArrayList<posDaySalesData>();
+        for(DaySalesPojo it:daySales){
+            posData.add(helper.convertDaySalesPojotoData(it));
+        }
+        return posData;
+    }
+    public List<BrandMasterData> getBrandReport() throws ApiException{
+        List<BrandMasterPojo> brandPojoList= brandApi.getAll();
+        List<BrandMasterData> brandDataList= new ArrayList<BrandMasterData>();
+        for(BrandMasterPojo b: brandPojoList){
+            brandDataList.add(convert(b));
+        }
+        return brandDataList;
+    }
     public List<InventoryReportForm> getInventoryReport() throws ApiException {
         List<ProductMasterPojo> productList = productApi.getAll();
         Map<Integer,InventoryReportForm> invMap = new HashMap<Integer,InventoryReportForm>();
@@ -53,9 +69,9 @@ public class ReportMasterdto {
             InventoryReportForm invReportData = new InventoryReportForm();
             if(invMap.containsKey( productPojo.getBrand_category())){
                 invReportData = invMap.get( productPojo.getBrand_category());
-                Integer qty = invReportData.getQuantity();
-                qty+=inventoryPojo.getQuantity();
-                invReportData.setQuantity(qty);
+                Integer temp = invReportData.getQuantity();
+                temp+=inventoryPojo.getQuantity();
+                invReportData.setQuantity(temp);
             }else {
                 invReportData.setBrand(brandPojo.getBrand());
                 invReportData.setCategory(brandPojo.getCategory());
@@ -70,16 +86,9 @@ public class ReportMasterdto {
         return inventoryReportDataList;
     }
 
-    public List<BrandMasterData> getBrandReport() throws ApiException{
-        List<BrandMasterPojo> brandPojoList= brandApi.getAll();
-        List<BrandMasterData> brandDataList= new ArrayList<BrandMasterData>();
-        for(BrandMasterPojo b: brandPojoList){
-            brandDataList.add(convert(b));
-        }
-        return brandDataList;
-    }
 
-    public void generate_pos_day_sales() throws ApiException{
+
+    public void get_pos_day_sales() throws ApiException{
         DaySalesPojo salesreport= new DaySalesPojo();
         Date start = helper.getStart();
         Date end =helper.getEnd();
@@ -109,13 +118,5 @@ public class ReportMasterdto {
             reportApi.update(date, salesreport);
         }
     }
-    public List<pos_day_sales_Data> getpos_day_sales(pos_day_sales_Form posFilterForm) throws ApiException{
-        validateFilterForm(posFilterForm);
-        List<DaySalesPojo> daySales = reportApi.getpos_day_sales(posFilterForm.getStart(),posFilterForm.getEnd());
-        List<pos_day_sales_Data> posData = new ArrayList<pos_day_sales_Data>();
-        for(DaySalesPojo it:daySales){
-            posData.add(helper.convertDaySalesPojotoData(it));
-        }
-        return posData;
-    }
+
 }

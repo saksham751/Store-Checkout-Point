@@ -16,6 +16,6 @@ public class ReportScheduler {
     @Scheduled(cron = "0 1 * * * *")
     public void createDailyReport() throws ApiException
     {
-        reportDto.generate_pos_day_sales();
+        reportDto.get_pos_day_sales();
     }
 }

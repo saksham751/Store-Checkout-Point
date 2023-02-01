@@ -46,10 +46,6 @@ public class ProductMasterDao extends AbstractDao {
         return query.getResultList();
     }
 
-    public void update(ProductMasterPojo ex) {
-        //Symbolic
-    }
-
     @Transactional(readOnly = true)
     public ProductMasterPojo getfromBarcode(String barcode){
         TypedQuery<ProductMasterPojo> query = getQuery(select_barcode, ProductMasterPojo.class);

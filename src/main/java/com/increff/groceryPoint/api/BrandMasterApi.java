@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-//todo upload kaise hota hai
+
 @Service
 public class BrandMasterApi {
     @Autowired

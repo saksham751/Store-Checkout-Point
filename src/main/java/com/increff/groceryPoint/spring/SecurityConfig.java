@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//todo remove admin
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -34,11 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/brand-report/**").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers(HttpMethod.POST, "/api/pos_day_sales_report/**").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers("/api/**").hasAuthority("supervisor")//
-//				.antMatchers("/ui/admin/**").hasAuthority("operator")//
-//				.antMatchers("/ui/orders").hasAnyAuthority("supervisor")//
-//				.antMatchers("/ui/inventory").hasAnyAuthority("supervisor")//
-//				.antMatchers("/ui/**").hasAnyAuthority("supervisor", "operator")//
-
 				// Ignore CSRF and CORS
 				.and().csrf().disable().cors().disable();
 		logger.info("Configuration complete");

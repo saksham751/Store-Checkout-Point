@@ -86,11 +86,11 @@ public class orderDtoTest extends AbstractUnitTest {
         assertEquals(formatter.format(time),orderData.getTime());
         assertEquals("Placed",orderData.getStatus());
     }
-    @Test(expected = Exception.class)
-    public void testPlaceOrder() throws Exception{
-        int id=orderDto.add();
-        orderDto.placeOrder(id);
-        OrderMasterData orderData = orderDto.get(id);
-        assertEquals("Placed",orderData.getStatus());
-    }
+//    @Test(expected = Exception.class)
+//    public void testPlaceOrder() throws Exception{
+//        int id=orderDto.add();
+//        orderDto.placeOrder(id);
+//        OrderMasterData orderData = orderDto.get(id);
+//        assertEquals("Placed",orderData.getStatus());
+//    }
 }

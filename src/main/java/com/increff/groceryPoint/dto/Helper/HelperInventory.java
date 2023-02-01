@@ -12,7 +12,6 @@ import static java.util.Objects.isNull;
 
 public class HelperInventory {
     public static void isInventoryValid(InventoryMasterForm form) throws ApiException {
-        Integer qty=form.getQuantity();
         if(isNull(form.getQuantity()))
         {
             throw new ApiException("Quantity cannot be Empty!");

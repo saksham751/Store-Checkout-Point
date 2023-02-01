@@ -37,7 +37,7 @@ public class ReportMasterController {
 
         @ApiOperation(value="Gets pos_day_sales")
         @RequestMapping(path="/api/pos_day_sales_report",method = RequestMethod.POST)
-        public List<pos_day_sales_Data> getpos_day_sales(@RequestBody pos_day_sales_Form posFilterForm) throws ApiException{
+        public List<posDaySalesData> getpos_day_sales(@RequestBody posDaySalesForm posFilterForm) throws ApiException{
                 return reportDto.getpos_day_sales(posFilterForm);
         }
 

@@ -66,7 +66,7 @@ public class HelperReport {
         salesReportForm.setStart(getStartOfDay(salesReportForm.getStart(),Calendar.getInstance()));
         salesReportForm.setEnd(getEndOfDay(salesReportForm.getEnd(),Calendar.getInstance()));
     }
-    public static void validateFilterForm(pos_day_sales_Form daySalesForm){
+    public static void validateFilterForm(posDaySalesForm daySalesForm){
         if(daySalesForm.getEnd()==null) {
             daySalesForm.setEnd(new Date());
         }
@@ -90,8 +90,8 @@ public class HelperReport {
         return salesReport;
     }
 
-    public static pos_day_sales_Data convertDaySalesPojotoData(DaySalesPojo salesPojo){
-        pos_day_sales_Data daySales = new pos_day_sales_Data();
+    public static posDaySalesData convertDaySalesPojotoData(DaySalesPojo salesPojo){
+        posDaySalesData daySales = new posDaySalesData();
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
         daySales.setDate(formatter.format(salesPojo.getDate()));
         daySales.setTotalRevenue(salesPojo.getTotalRevenue());

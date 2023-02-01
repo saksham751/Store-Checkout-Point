@@ -26,7 +26,7 @@ public class ProductMasterdto {
     private BrandMasterApi brandApi;
     @Autowired
     private InventoryMasterApi invApi;
-//removed Transactional
+
     public int add(ProductMasterForm form) throws ApiException {
         isProductValid(form);
         ProductMasterPojo p=convert(form);

@@ -28,22 +28,11 @@ public class Userdto {
 		return userApi.get(email);
 	}
 
-//	public List<UserPojo> getAll() {
-//		return userApi.getAll();
-//	}
-//
-//	public void delete(int id) {
-//		userApi.delete(id);
-//	}
-
 	protected static void normalize(AddUserForm form) {
 		form.setEmail(form.getEmail().toLowerCase().trim());
 		form.setPassword(form.getPassword());
 	}
-//	protected static void normalize2(UserPojo form) {
-//		form.setEmail(form.getEmail().toLowerCase().trim());
-//		form.setRole(form.getRole());
-//	}
+
 	protected static UserPojo convertFormtoPojo(AddUserForm form) {
 		UserPojo userPojo = new UserPojo();
 		userPojo.setEmail(form.getEmail());

@@ -31,8 +31,8 @@ public class OrderItemMasterApi {
     @Transactional(rollbackFor = ApiException.class)
     public void update(int id,OrderItemMasterPojo ex) throws ApiException {
         OrderItemMasterPojo orderItemPojo =orderItemDao.get(id);
-        orderItemPojo.setQuantity(ex.getQuantity()+orderItemPojo.getQuantity());
-        orderItemPojo.setSellingPrice(ex.getSellingPrice()+orderItemPojo.getSellingPrice());
+        orderItemPojo.setQuantity(ex.getQuantity());
+        orderItemPojo.setSellingPrice(ex.getSellingPrice());
         orderItemPojo.setProductId(ex.getProductId());
 
         orderItemDao.update(ex);

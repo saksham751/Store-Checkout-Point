@@ -46,8 +46,6 @@ public class ProductMasterApi {
         ex.setMrp(p.getMrp());
         ex.setBarcode(p.getBarcode());
         ex.setBrand_category(p.getBrand_category());
-        productDao.update(ex);
-
     }
 
     public ProductMasterPojo getCheckApi(int id) throws ApiException {

@@ -146,6 +146,7 @@ function uploadRows(){
 	   		row.error=response.responseText
 	   		errorData.push(row);
 	   		uploadRows();
+	   		document.getElementById('download-errors').disabled=false;
 	   }
 	});
 
@@ -166,10 +167,12 @@ function displayInventoryList(data){
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.quantity + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
+	if($("meta[name=role]").attr("content") == "operator")
+                hideSupervisorView();
 	pagination();
 }
 

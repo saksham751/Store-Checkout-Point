@@ -33,10 +33,6 @@
                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                 </svg>Add</button>
                 &nbsp;
-                <button  type="button" class="btn btn-primary" id="refresh-data"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-                </svg>Refresh</button>
                 &nbsp;
                 <button  type="button" class="btn btn-warning"  id="upload-data"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
@@ -61,7 +57,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" class ="supervisor-view">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,9 +79,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="inventory-edit-form">
+                    <form class="form" id="inventory-edit-form">
                         <div class="form-group">
-                            <label for="inputId" class="col-sm-2 col-form-label">Id</label>
+                            <label for="inputId" class="col-sm-2 col-form-label">ID</label>
                             <div class="col-sm-10">
                                 <input type="number" class="form-control" name="id" placeholder="enter Id" readonly>
                             </div>
@@ -135,7 +131,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary" id="process-data">Upload</button>
-                    <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
+                    <button type="button" class="btn btn-warning" id="download-errors" disabled>Download Errors</button>
                 </div>
             </div>
         </div>

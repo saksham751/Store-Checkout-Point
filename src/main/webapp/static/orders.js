@@ -48,7 +48,7 @@ function displayOrderList(data){
              		+ '<td>' + e.id + '</td>'
              		+ '<td>' + e.time + '</td>'
              		+ '<td>' + e.status + '</td>'
-             		+ '<td>' + viewButtonHtml + '</td>'
+             		+ '<td class ="supervisor-view">' + viewButtonHtml + '</td>'
              		+ '</tr>';
             $tbody.append(row);
  		}else{
@@ -56,11 +56,13 @@ function displayOrderList(data){
             + '<td>' + e.id + '</td>'
             + '<td>' + e.time + '</td>'
             + '<td>' + e.status + '</td>'
-            + '<td>' + buttonHtml + '</td>'
+            + '<td class ="supervisor-view">' + buttonHtml + '</td>'
             + '</tr>';
              $tbody.append(row);
          }
  	}
+ 	if($("meta[name=role]").attr("content") == "operator")
+                hideSupervisorView();
  	window.setTimeout(() => {
               pagination();
             }, 1000);

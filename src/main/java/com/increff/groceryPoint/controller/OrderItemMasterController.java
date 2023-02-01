@@ -16,8 +16,6 @@ import java.util.List;
 public class OrderItemMasterController {
     @Autowired
     private OrderItemMasterdto orderItemdto;
-    //TODO ADD should update if product already exits
-    //todo handle nonexistent barcode
     @ApiOperation(value = "Adds a OrderItem")
     @RequestMapping(path = "/api/orderItem", method = RequestMethod.POST)
     public void add(@RequestBody OrderItemMasterForm form) throws ApiException {

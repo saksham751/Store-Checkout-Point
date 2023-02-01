@@ -55,3 +55,25 @@ function writeFileData(arr){
     tempLink.setAttribute('download', 'download.tsv');
     tempLink.click(); 
 }
+function hideSupervisorView()
+{
+//    var appBanners = document.getElementsByClassName('supervisor-view');
+//
+//    for (var i = 0; i < appBanners.length; i ++) {
+//        appBanners[i].style.display = 'none';
+//    }
+//    if($("meta[name=role]").attr("content") == "operator"){
+            const collection=document.getElementsByClassName('supervisor-view');
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].style.display= 'none';
+            }
+//        }
+}
+
+function init(){
+    if($("meta[name=role]").attr("content") == "operator"){
+            hideSupervisorView();
+            }
+}
+
+$(document).ready(init);

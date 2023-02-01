@@ -139,11 +139,13 @@ function uploadRows(){
        },
 	   success: function(response) {
 	   		uploadRows();
+
 	   },
 	   error: function(response){
 	   		row.error=response.responseText
 	   		errorData.push(row);
 	   		uploadRows();
+	   		document.getElementById('download-errors').disabled=false;
 	   }
 	});
 
@@ -171,16 +173,17 @@ function displayBrandList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteBrand(' + e.id + ')">Delete</button>'
-		buttonHtml += ' <button class="btn-disable btn btn-primary" onclick="displayEditBrand(' + e.id + ')">Edit</button>'
+		var buttonHtml = ' <button class="btn-disable btn btn-primary supervisor-view" onclick="displayEditBrand(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brand + '</td>'
 		+ '<td>'  + e.category + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
+	if($("meta[name=role]").attr("content") == "operator")
+            hideSupervisorView();
 	pagination();
 }
 
@@ -223,7 +226,7 @@ function updateFileName(){
 
 function displayUploadData(){
  	resetUploadDialog();
-        $('#upload-brand-modal').modal('toggle');
+    $('#upload-brand-modal').modal('toggle');
 }
 
 function displayBrand(data){
@@ -236,6 +239,7 @@ function displayBrand(data){
 
 //INITIALIZATION CODE
 function init(){
+
 	$('#add-brand').click(addBrand);
 	$('#update-brand').click(updateBrand);
 	$('#refresh-data').click(getBrandList);

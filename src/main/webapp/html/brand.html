@@ -14,7 +14,7 @@
 
     <!-- Top row with form-->
     <div class="row">
-        <div class="col-12" id="supervisor-view">
+        <div class="col-12 supervisor-view" id="supervisor-view">
             <form class="form-inline" id="brand-form" >
                 <div class="form-group">
                     <label for="inputName" class="col-sm-2 col-form-label">Brand</label>
@@ -28,14 +28,14 @@
                         <input type="text" class="form-control" name="category" id="inputCategory" placeholder="enter category">
                     </div>
                 </div>
-                <button type="button" class="btn btn-success role" id="add-brand">
+                <button type="button" class="btn btn-success role supervisor-view" id="add-brand">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                     </svg>Add
                 </button>
                 &nbsp;
                 &nbsp;
-                <button type="button" class="btn btn-warning"  id="upload-data">
+                <button type="button" class="btn btn-warning supervisor-view"  id="upload-data">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
                     </svg>Upload
@@ -59,7 +59,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Category</th>
-                    <th scope="col">Actions</th>
+                    <th class = "supervisor-view" scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -81,15 +81,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-inline" id="brand-edit-form">
+                    <form class="form" id="brand-edit-form">
                         <div class="form-group">
                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="brand" placeholder="enter name">
+                                <input type="text" class="form-control" name="brand" placeholder="enter brand">
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="inputCategory" class="col-sm-2 col-form-label">Age</label>
+                            <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="category" placeholder="enter category">
                             </div>
@@ -133,7 +134,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary" id="process-data">Upload</button>
-                    <button type="button" class="btn btn-warning" id="download-errors">Download Errors</button>
+                    <button type="button" class="btn btn-warning" id="download-errors" disabled>Download Errors</button>
                 </div>
             </div>
         </div>

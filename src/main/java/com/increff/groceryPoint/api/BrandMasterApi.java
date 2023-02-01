@@ -11,11 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 //todo upload kaise hota hai
-// todo disbale download errors if no errors
-//todo remove add/upload/ for operator
-//todo remove refresh completely
-//todo operator should be able to view but not add
-
 @Service
 public class BrandMasterApi {
     @Autowired

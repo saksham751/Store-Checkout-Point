@@ -2,6 +2,7 @@ package com.increff.groceryPoint.spring;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -32,6 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/api/inventory").hasAuthority("operator")//
 //				.antMatchers("/api/order").hasAuthority("operator")//
 //				.antMatchers("/api/orderItem").hasAuthority("operator")//
+				.antMatchers(HttpMethod.GET, "/api/brand/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/product/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/inventory/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/order/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.POST, "/api/sales-report/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/inventory-report/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.GET, "/api/brand-report/**").hasAnyAuthority("supervisor", "operator")//
+				.antMatchers(HttpMethod.POST, "/api/pos_day_sales_report/**").hasAnyAuthority("supervisor", "operator")//
 				.antMatchers("/api/**").hasAuthority("supervisor")//
 //				.antMatchers("/ui/admin/**").hasAuthority("operator")//
 //				.antMatchers("/ui/orders").hasAnyAuthority("supervisor")//

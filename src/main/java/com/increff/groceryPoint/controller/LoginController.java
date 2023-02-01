@@ -33,7 +33,6 @@ import io.swagger.annotations.ApiOperation;
 
 @Controller
 public class LoginController {
-	//todo add signup
 	@Autowired
 	private Userdto userDto;
 	@Autowired

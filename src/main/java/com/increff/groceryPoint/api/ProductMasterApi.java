@@ -2,7 +2,6 @@ package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.ProductMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,22 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static java.util.Objects.isNull;
-
 @Service
 public class ProductMasterApi {
     @Autowired
-    private ProductMasterDao pdao;
+    private ProductMasterDao productDao;
 
     public int add(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
         checkBarcodeExists(p.getBarcode());
-        return pdao.add(p);
+        return productDao.add(p);
     }
 
     public void delete(int id) throws ApiException {
         getCheckApi(id);
-        pdao.delete(id);
+        productDao.delete(id);
     }
 
     public ProductMasterPojo get(int id) throws ApiException {
@@ -34,7 +31,7 @@ public class ProductMasterApi {
     }
 
     public List<ProductMasterPojo> getAll() {
-        return pdao.getAll();
+        return productDao.getAll();
     }
 
 
@@ -49,19 +46,19 @@ public class ProductMasterApi {
         ex.setMrp(p.getMrp());
         ex.setBarcode(p.getBarcode());
         ex.setBrand_category(p.getBrand_category());
-        pdao.update(ex);
+        productDao.update(ex);
 
     }
 
     public ProductMasterPojo getCheckApi(int id) throws ApiException {
-        ProductMasterPojo p = pdao.get(id);
+        ProductMasterPojo p = productDao.get(id);
         if (p == null) {
             throw new ApiException("Product with given ID does not exist, id: " + id);
         }
         return p;
     }
     public ProductMasterPojo getfromBarcode(String barcode) throws ApiException{
-        ProductMasterPojo ex= pdao.getfromBarcode(barcode);
+        ProductMasterPojo ex= productDao.getfromBarcode(barcode);
         if (ex == null) {
             throw new ApiException("Product with given barcode does not exist");
         }
@@ -69,7 +66,7 @@ public class ProductMasterApi {
     }
 
     public void checkBarcodeExists(String barcode) throws ApiException{
-        ProductMasterPojo ex=  pdao.getfromBarcode(barcode);
+        ProductMasterPojo ex=  productDao.getfromBarcode(barcode);
         if(ex!=null){
             throw new ApiException("Barcode already exists");
         }

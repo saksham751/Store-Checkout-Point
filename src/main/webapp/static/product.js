@@ -146,6 +146,7 @@ function uploadRows(){
 	   		row.error=response.responseText
 	   		errorData.push(row);
 	   		uploadRows();
+	   		document.getElementById('download-errors').disabled=false;
 	   }
 	});
 
@@ -170,10 +171,12 @@ function displayProductList(data){
 		+ '<td>'  + e.brand_category + '</td>'
 		+ '<td>'  + e.barcode + '</td>'
 		+ '<td>'  + e.mrp + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
+	if($("meta[name=role]").attr("content") == "operator")
+                hideSupervisorView();
 	pagination();
 }
 

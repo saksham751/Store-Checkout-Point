@@ -1,6 +1,7 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
+import com.increff.groceryPoint.api.InventoryMasterApi;
 import com.increff.groceryPoint.dao.ProductMasterDao;
 
 import com.increff.groceryPoint.model.ProductMasterData;
@@ -23,11 +24,11 @@ import static java.util.Objects.isNull;
 @Service
 public class ProductMasterdto {
     @Autowired
-    private ProductMasterDao dao;
-    @Autowired
     private ProductMasterApi productApi;
     @Autowired
     private BrandMasterApi brandApi;
+    @Autowired
+    private InventoryMasterApi invApi;
 //removed Transactional
     public int add(ProductMasterForm form) throws ApiException {
         isProductValid(form);
@@ -38,6 +39,9 @@ public class ProductMasterdto {
     }
 
     public void delete(int id) throws ApiException {
+        if(invApi.get(id)!=null) {
+            invApi.delete(id);
+        }
         productApi.delete(id);
     }
 

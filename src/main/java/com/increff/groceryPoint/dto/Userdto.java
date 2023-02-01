@@ -24,25 +24,17 @@ public class Userdto {
 		UserPojo userPojo = convertFormtoPojo(userForm);
 		return convertPojotoData(userApi.add(userPojo));
 	}
-//	public UserData add(UserPojo userPojo) throws ApiException {
-//		normalize2(userPojo);
-//		UserPojo existing = userApi.get(userPojo.getEmail());
-//		if (existing != null) {
-//			throw new ApiException("User with given email already exists");
-//		}
-//		return convertPojotoData(userApi.add(userPojo));
-//	}
 	public UserPojo get(String email) throws ApiException {
 		return userApi.get(email);
 	}
 
-	public List<UserPojo> getAll() {
-		return userApi.getAll();
-	}
-
-	public void delete(int id) {
-		userApi.delete(id);
-	}
+//	public List<UserPojo> getAll() {
+//		return userApi.getAll();
+//	}
+//
+//	public void delete(int id) {
+//		userApi.delete(id);
+//	}
 
 	protected static void normalize(AddUserForm form) {
 		form.setEmail(form.getEmail().toLowerCase().trim());

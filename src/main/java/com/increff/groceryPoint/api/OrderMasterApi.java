@@ -19,8 +19,6 @@ public class OrderMasterApi {
         omp.setStatus("Pending");
         return orderDao.add(omp);
     }
-
-
     public OrderMasterPojo get(int id) throws ApiException {
         OrderMasterPojo omp= orderDao.get(id);
         if (omp == null) {
@@ -28,11 +26,9 @@ public class OrderMasterApi {
         }
         return omp;
     }
-
     public List<OrderMasterPojo> getAll() {
         return orderDao.getAll();
     }
-
     @Transactional(rollbackFor = ApiException.class)
     public void update(int id, OrderMasterPojo p) throws ApiException {
         OrderMasterPojo ex = orderDao.get(id);
@@ -41,13 +37,9 @@ public class OrderMasterApi {
         }
         ex.setStatus(p.getStatus());
         ex.setTime(p.getTime());
-  //      orderDao.update(p,ex);
     }
-
     public List<OrderMasterPojo> getByDateFilter(Date start, Date end) throws ApiException{
         List<OrderMasterPojo> orderList= orderDao.getByDateFilter(start,end);
         return orderList;
     }
-
-
 }

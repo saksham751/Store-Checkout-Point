@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperBrand.convert;
-import static com.increff.groceryPoint.dto.HelperBrand.validateBrandForm;
-import static com.increff.groceryPoint.dto.HelperBrand.normalize;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.convert;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.validateBrandForm;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.normalize;
 
 @Service
 public class BrandMasterdto {

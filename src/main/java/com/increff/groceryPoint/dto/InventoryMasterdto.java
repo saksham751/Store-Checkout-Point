@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperInventory.*;
+import static com.increff.groceryPoint.dto.Helper.HelperInventory.*;
 
 
 @Service

@@ -4,6 +4,8 @@ import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.dto.ProductMasterdto;
+import com.increff.groceryPoint.model.BrandMasterData;
+import com.increff.groceryPoint.model.BrandMasterForm;
 import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.model.ProductMasterForm;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
@@ -12,8 +14,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.increff.groceryPoint.dto.HelperProduct.convert;
-import static com.increff.groceryPoint.dto.HelperProduct.normalize;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.increff.groceryPoint.dto.Helper.HelperProduct.convert;
+import static com.increff.groceryPoint.dto.Helper.HelperProduct.normalize;
 import static org.junit.Assert.assertEquals;
 
 public class productDtoTest extends AbstractUnitTest {
@@ -141,5 +146,31 @@ public class productDtoTest extends AbstractUnitTest {
         assertEquals("testb@rc0de",productData.getBarcode());
         assertEquals(brandCategory,productData.getBrand_category());
         assertEquals(Double.valueOf(20.0),productData.getMrp());
+    }
+    @Test
+    public void getAllTest() throws ApiException{
+        List<ProductMasterForm> productList= Arrays.asList(
+                new ProductMasterForm(),
+                new ProductMasterForm()
+        );
+        productList.get(0).setProductName("producttest");
+        productList.get(0).setMrp(10.0);
+        productList.get(0).setBarcode("testb@rc0de");
+        productList.get(0).setBrand_category(brandCategory);
+        productList.get(1).setProductName("producttest2");
+        productList.get(1).setMrp(20.0);
+        productList.get(1).setBarcode("testb@rc0de2");
+        productList.get(1).setBrand_category(brandCategory);
+        productDto.add(productList.get(0));
+        productDto.add(productList.get(1));
+        List<ProductMasterData> productData=productDto.getAll();
+        assertEquals(productList.get(0).getProductName(),productData.get(0).getProductName());
+        assertEquals(productList.get(0).getBrand_category(),productData.get(0).getBrand_category());
+        assertEquals(Double.valueOf(productList.get(0).getMrp()),Double.valueOf(productData.get(0).getMrp()));
+        assertEquals(productList.get(0).getBarcode(),productData.get(0).getBarcode());
+        assertEquals(productList.get(1).getProductName(),productData.get(1).getProductName());
+        assertEquals(productList.get(1).getBrand_category(),productData.get(1).getBrand_category());
+        assertEquals(Double.valueOf(productList.get(1).getMrp()),Double.valueOf(productData.get(1).getMrp()));
+        assertEquals(productList.get(1).getBarcode(),productData.get(1).getBarcode());
     }
 }

@@ -1,6 +1,7 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.dto.Helper;
 
 import com.increff.groceryPoint.api.ProductMasterApi;
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static java.util.Objects.isNull;
 
 public class HelperInventory {
-    public static void isInventoryValid(InventoryMasterForm form) throws ApiException{
+    public static void isInventoryValid(InventoryMasterForm form) throws ApiException {
         Integer qty=form.getQuantity();
         if(isNull(form.getQuantity()))
         {

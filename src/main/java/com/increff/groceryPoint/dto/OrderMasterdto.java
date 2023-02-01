@@ -4,6 +4,7 @@ import com.increff.groceryPoint.api.InventoryMasterApi;
 import com.increff.groceryPoint.api.OrderItemMasterApi;
 import com.increff.groceryPoint.api.OrderMasterApi;
 import com.increff.groceryPoint.api.ProductMasterApi;
+import com.increff.groceryPoint.dto.Helper.HelperOrder;
 import com.increff.groceryPoint.model.InvoiceForm;
 import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderMasterData;
@@ -11,8 +12,6 @@ import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import com.increff.groceryPoint.pojo.OrderMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -93,7 +92,7 @@ public class OrderMasterdto {
         orderPojo.setStatus("Placed");
         orderApi.update(id, orderPojo);
         InvoiceForm invoiceData=getInvoiceData(id);
-        String path= generatePDF(invoiceData);
+        String path= helpOrder.generatePDF(invoiceData);
     }
 
     public ResponseEntity<byte[]>  getInvoice(int id) throws ApiException, IOException {
@@ -111,26 +110,6 @@ public class OrderMasterdto {
 
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-        return response;
-    }
-    //todo move to diffenrt module string upar define karo.
-    public static String generatePDF(InvoiceForm invoiceData) throws IOException {
-        String encodedPdf = getEncodedPdf(invoiceData);
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] decodedBytes = decoder.decodeBuffer(encodedPdf);
-        String filePath = "/home/sakshamyadav/repos/pos/grocery-point/src/main/resources/pdf/"  + invoiceData.getOrderId().toString() + "_invoice.pdf";
-        File file = new File(filePath);
-        FileOutputStream fop = new FileOutputStream(file);
-        fop.write(decodedBytes);
-        fop.flush();
-        fop.close();
-        return filePath;
-    }
-
-    private static String getEncodedPdf(InvoiceForm invoiceData){
-        RestTemplate restTemplate = new RestTemplate();
-        String invoiceAppUrl = "http://localhost:8000/invoice";
-        String response = restTemplate.postForObject(invoiceAppUrl + "/api/get-invoice",invoiceData, String.class);
         return response;
     }
 }

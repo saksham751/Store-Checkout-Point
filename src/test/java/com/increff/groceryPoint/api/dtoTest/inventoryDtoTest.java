@@ -2,27 +2,21 @@ package com.increff.groceryPoint.api.dtoTest;
 
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
-import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.dto.InventoryMasterdto;
-import com.increff.groceryPoint.dto.HelperBrand;
 import com.increff.groceryPoint.dto.ProductMasterdto;
-import com.increff.groceryPoint.model.BrandMasterForm;
-import com.increff.groceryPoint.model.InventoryMasterData;
-import com.increff.groceryPoint.model.InventoryMasterForm;
-import com.increff.groceryPoint.model.ProductMasterForm;
+import com.increff.groceryPoint.model.*;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.increff.groceryPoint.dto.HelperBrand.normalize;
-import static com.increff.groceryPoint.dto.HelperBrand.validateBrandForm;
-import static com.increff.groceryPoint.dto.HelperInventory.convertFormtoPojo;
-import static com.increff.groceryPoint.dto.HelperInventory.convertPojotoData;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.increff.groceryPoint.dto.Helper.HelperInventory.convertFormtoPojo;
+import static com.increff.groceryPoint.dto.Helper.HelperInventory.convertPojotoData;
 import static org.junit.Assert.assertEquals;
 
 public class inventoryDtoTest extends AbstractUnitTest {
@@ -33,7 +27,7 @@ public class inventoryDtoTest extends AbstractUnitTest {
     @Autowired
     private BrandMasterApi brandApi;
     private Integer brandCategory;
-    private Integer productId;
+    private Integer productId,productId2;
     @Before
     public void addBrandandProduct() throws ApiException {
         BrandMasterPojo brandCategoryPojo = new BrandMasterPojo();
@@ -46,6 +40,12 @@ public class inventoryDtoTest extends AbstractUnitTest {
         productForm.setBrand_category(brandCategory);
         productForm.setMrp(20.0);
         productId=productDto.add(productForm);
+        ProductMasterForm productForm2 = new ProductMasterForm();
+        productForm2.setProductName("testproduct2");
+        productForm2.setBarcode("testb@rc0de2");
+        productForm2.setBrand_category(brandCategory);
+        productForm2.setMrp(40.0);
+        productId2=productDto.add(productForm2);
     }
     @Test
     public void testAdd() throws ApiException {
@@ -104,5 +104,24 @@ public class inventoryDtoTest extends AbstractUnitTest {
         InventoryMasterData invData= convertPojotoData(invPojo);
         assertEquals(Integer.valueOf(10),invData.getQuantity());
         assertEquals(Integer.valueOf(productId),invData.getId());
+    }
+
+    @Test
+    public void testgetAll() throws ApiException{
+        List<InventoryMasterForm> invList= Arrays.asList(
+                new InventoryMasterForm(),
+                new InventoryMasterForm()
+        );
+        invList.get(0).setId(productId);
+        invList.get(0).setQuantity(10);
+        invList.get(1).setId(productId2);
+        invList.get(1).setQuantity(20);
+        invDto.add(invList.get(0));
+        invDto.add(invList.get(1));
+        List<InventoryMasterData> invData=invDto.getAll();
+        assertEquals(invList.get(0).getId(),invData.get(0).getId());
+        assertEquals(invList.get(0).getQuantity(),invData.get(0).getQuantity());
+        assertEquals(invList.get(1).getId(),invData.get(1).getId());
+        assertEquals(invList.get(1).getQuantity(),invData.get(1).getQuantity());
     }
 }

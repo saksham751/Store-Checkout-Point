@@ -15,7 +15,6 @@ import java.util.Objects;
 public class BrandMasterApi {
     @Autowired
     private BrandMasterDao brandDao;
-    //private Helper help;
 
     public int add(BrandMasterPojo brandPojo) throws ApiException {
         checkUnique(brandPojo);

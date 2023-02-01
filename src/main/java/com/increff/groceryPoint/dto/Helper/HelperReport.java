@@ -1,6 +1,7 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.dto.Helper;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.model.*;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.DaySalesPojo;
@@ -17,17 +18,6 @@ import java.util.GregorianCalendar;
 public class HelperReport {
     @Autowired
     private BrandMasterApi brandApi;
-//    public static InventoryReportForm convertToReport(BrandMasterPojo p)
-//    {
-//        InventoryReportForm inventoryReportModel = new InventoryReportForm();
-//
-//        inventoryReportModel.setBrand(p.getBrand());
-//        inventoryReportModel.setCategory(p.getCategory());
-//        inventoryReportModel.setCategory(p.getId());
-//        inventoryReportModel.setQuantity(0);
-//
-//        return inventoryReportModel;
-//    }
     public static Date getStart(){
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY,00);
@@ -99,15 +89,7 @@ public class HelperReport {
         salesReport.setCategory(brandPojo.getCategory());
         return salesReport;
     }
-//    protected static DaySalesData convertPojotoData(DaySalesPojo pojo)
-//    {
-//        DaySalesData dailyReportData = new DaySalesData();
-//        dailyReportData.setDate(pojo.getDate());
-//        dailyReportData.setTotalRevenue(pojo.getTotalRevenue());
-//        dailyReportData.setInvoicedItemsCount(pojo.getInvoicedItemsCount());
-//        dailyReportData.setInvoicedOrderCount(pojo.getInvoicedOrderCount());
-//        return dailyReportData;
-//    }
+
     public static pos_day_sales_Data convertDaySalesPojotoData(DaySalesPojo salesPojo){
         pos_day_sales_Data daySales = new pos_day_sales_Data();
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");

@@ -26,7 +26,6 @@ public class AppRestControllerAdvice {
 	@ResponseBody
 	public MessageData handleHttpMessageNotReadableException(HttpMessageNotReadableException ex)
 	{
-
 		MessageData data = new MessageData();
 		data.setMessage("Please Enter a Valid Input");
 		return data;

@@ -46,8 +46,4 @@ public class InventoryMasterDao extends AbstractDao{
         return query.getResultList();
     }
 
-    public void update(InventoryMasterPojo p, InventoryMasterPojo ex) {
-
-    }
-
 }

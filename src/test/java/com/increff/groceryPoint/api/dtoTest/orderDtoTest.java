@@ -3,6 +3,7 @@ package com.increff.groceryPoint.api.dtoTest;
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dto.*;
+import com.increff.groceryPoint.dto.Helper.HelperOrder;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.model.OrderMasterData;
@@ -10,10 +11,11 @@ import com.increff.groceryPoint.model.ProductMasterForm;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import com.increff.groceryPoint.pojo.OrderMasterPojo;
-import lombok.experimental.Helper;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -82,6 +84,13 @@ public class orderDtoTest extends AbstractUnitTest {
         SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
         assertEquals(Integer.valueOf(0),orderData.getId());
         assertEquals(formatter.format(time),orderData.getTime());
+        assertEquals("Placed",orderData.getStatus());
+    }
+    @Test(expected = ResourceAccessException.class)
+    public void testPlaceOrder() throws Exception{
+        int id=orderDto.add();
+        orderDto.placeOrder(id);
+        OrderMasterData orderData = orderDto.get(id);
         assertEquals("Placed",orderData.getStatus());
     }
 }

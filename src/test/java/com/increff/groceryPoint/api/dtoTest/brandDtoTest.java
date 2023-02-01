@@ -3,7 +3,7 @@ package com.increff.groceryPoint.api.dtoTest;
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.dto.BrandMasterdto;
-import com.increff.groceryPoint.dto.HelperBrand;
+import com.increff.groceryPoint.dto.Helper.HelperBrand;
 import com.increff.groceryPoint.model.BrandMasterData;
 import com.increff.groceryPoint.model.BrandMasterForm;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
@@ -12,8 +12,11 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.increff.groceryPoint.dto.HelperBrand.normalize;
-import static com.increff.groceryPoint.dto.HelperBrand.validateBrandForm;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.normalize;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.validateBrandForm;
 import static org.junit.Assert.assertEquals;
 
 public class brandDtoTest extends AbstractUnitTest {
@@ -110,5 +113,23 @@ public class brandDtoTest extends AbstractUnitTest {
         assertEquals("testbrand",brandData.getBrand());
         assertEquals("testcategory",brandData.getCategory());
         assertEquals(Integer.valueOf(0),brandData.getId());
+    }
+    @Test
+    public void getAllTest() throws ApiException{
+        List<BrandMasterForm> brandList= Arrays.asList(
+                new BrandMasterForm(),
+                new BrandMasterForm()
+        );
+        brandList.get(0).setBrand("brandTest");
+        brandList.get(0).setCategory("testCategory");
+        brandList.get(1).setBrand("brandTest");
+        brandList.get(1).setCategory("testCategory2");
+        brandDto.add(brandList.get(0));
+        brandDto.add(brandList.get(1));
+        List<BrandMasterData> brandData=brandDto.getAll();
+        assertEquals(brandList.get(0).getBrand(),brandData.get(0).getBrand());
+        assertEquals(brandList.get(0).getCategory(),brandData.get(0).getCategory());
+        assertEquals(brandList.get(1).getBrand(),brandData.get(1).getBrand());
+        assertEquals(brandList.get(1).getCategory(),brandData.get(1).getCategory());
     }
 }

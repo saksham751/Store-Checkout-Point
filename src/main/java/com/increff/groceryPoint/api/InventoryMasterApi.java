@@ -37,7 +37,6 @@ public class InventoryMasterApi {
     public void update(int id, InventoryMasterPojo p) throws ApiException {
         InventoryMasterPojo ex = checkInvExists(id);
         ex.setQuantity(p.getQuantity());
-       // invDao.update(p,ex);
     }
 
     public InventoryMasterPojo checkInvExists(int id) throws ApiException{

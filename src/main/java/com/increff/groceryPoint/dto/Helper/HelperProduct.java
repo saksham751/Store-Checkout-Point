@@ -1,7 +1,8 @@
-package com.increff.groceryPoint.dto;
+package com.increff.groceryPoint.dto.Helper;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dao.ProductMasterDao;
+import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.model.ProductMasterForm;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
@@ -36,7 +37,7 @@ public class HelperProduct {
         return p;
     }
 
-    public static void isProductValid(ProductMasterForm form) throws ApiException{
+    public static void isProductValid(ProductMasterForm form) throws ApiException {
         if(isNull(form.getProductName()) || form.getProductName().isEmpty())
         {
             throw new ApiException("Product Name cannot be Empty!");

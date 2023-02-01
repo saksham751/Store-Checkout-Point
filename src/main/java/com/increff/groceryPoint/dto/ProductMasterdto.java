@@ -2,11 +2,9 @@ package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.api.InventoryMasterApi;
-import com.increff.groceryPoint.dao.ProductMasterDao;
 
 import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.model.ProductMasterForm;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import com.increff.groceryPoint.api.ProductMasterApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static com.increff.groceryPoint.dto.HelperBrand.convert;
-import static com.increff.groceryPoint.dto.HelperProduct.isProductValid;
+//import static com.increff.groceryPoint.dto.Helper.HelperBrand.convert;
+import static com.increff.groceryPoint.dto.Helper.HelperProduct.isProductValid;
 
-import static com.increff.groceryPoint.dto.HelperProduct.*;
-import static java.util.Objects.isNull;
+import static com.increff.groceryPoint.dto.Helper.HelperProduct.*;
 
 @Service
 public class ProductMasterdto {

@@ -25,11 +25,4 @@ public class UserMasterApi {
         return userDao.select(email);
     }
 
-    public List<UserPojo> getAll() {
-        return userDao.selectAll();
-    }
-
-    public void delete(int id) {
-        userDao.delete(id);
-    }
 }

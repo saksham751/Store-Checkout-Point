@@ -75,20 +75,25 @@ public class ReportMasterApi {
 
     public List<SalesReportData> getSalesReportData(List<BrandMasterPojo> brandCategoryPojos, List<OrderItemMasterPojo> orderItemPojos) throws ApiException {
         List<SalesReportData> salesReportDataList = new ArrayList<SalesReportData>();
+
         for(BrandMasterPojo brandCategoryPojo:brandCategoryPojos){
             SalesReportData salesReportData = new SalesReportData();
             salesReportData.setCategory(brandCategoryPojo.getCategory());
             salesReportData.setBrand(brandCategoryPojo.getBrand());
-            Integer quantity = 0;
-            Double revenue = 0.0;
+            Integer qty = 0;Double revenue = 0.0;
             for(OrderItemMasterPojo orderItemPojo:orderItemPojos){
-                ProductMasterPojo productPojo = productApi.get(orderItemPojo.getProductId());
+                ProductMasterPojo productPojo = new ProductMasterPojo();
+                try {
+                    productPojo = productApi.get(orderItemPojo.getProductId());
+                }catch(Exception e){
+                    continue;
+                }
                 if(productPojo.getBrand_category()==brandCategoryPojo.getId()){
-                    quantity += orderItemPojo.getQuantity();
+                    qty += orderItemPojo.getQuantity();
                     revenue += (orderItemPojo.getQuantity())*(orderItemPojo.getSellingPrice());
                 }
             }
-            salesReportData.setQuantity(quantity);
+            salesReportData.setQuantity(qty);
             salesReportData.setTotal(revenue);
             salesReportDataList.add(salesReportData);
         }

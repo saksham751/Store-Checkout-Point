@@ -4,11 +4,10 @@ import com.increff.groceryPoint.api.InventoryMasterApi;
 import com.increff.groceryPoint.api.OrderItemMasterApi;
 import com.increff.groceryPoint.api.OrderMasterApi;
 import com.increff.groceryPoint.api.ProductMasterApi;
-import com.increff.groceryPoint.dto.Helper.HelperOrder;
+import com.increff.groceryPoint.dto.Helper.OrderHelper;
 import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderItemMasterForm;
 import com.increff.groceryPoint.model.OrderItemUpdateForm;
-import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,27 +20,28 @@ import static java.util.Objects.isNull;
 
 
 @Service
-public class OrderItemMasterdto {
+public class OrderItemMasterDto {
     @Autowired
     private OrderItemMasterApi orderItemApi;
     @Autowired
     private InventoryMasterApi invApi;
     @Autowired
-    private HelperOrder helpOrder;
+    private OrderHelper helpOrder;
     @Autowired
     private ProductMasterApi productApi;
     @Autowired
     private OrderMasterApi orderApi;
 
     public int add(OrderItemMasterForm form) throws ApiException {
-        isOrderItemValid(form);
+        validateOrderItemsForm(form);
         OrderItemMasterPojo p=helpOrder.convert(form);
-        isOrderItemPojoValid(p);
+        validateOrderItemsPojo(p);
         OrderItemMasterPojo prevOrderItem=new OrderItemMasterPojo();
         try{
             prevOrderItem=orderItemApi.get(p.getOrderId(), p.getProductId());
         }catch(Exception e){
             //e.printStackTrace();
+            //do somehting witht the exception
         }
         if(!isNull(prevOrderItem)){
             OrderItemUpdateForm updateForm = new OrderItemUpdateForm();
@@ -63,44 +63,33 @@ public class OrderItemMasterdto {
     }
 
     public List<OrderItemMasterData> getAll() throws ApiException{
-        List<OrderItemMasterPojo> list = orderItemApi.getAll();
-        List<OrderItemMasterData> list2 = new ArrayList<OrderItemMasterData>();
-        for (OrderItemMasterPojo p : list) {
-            list2.add(helpOrder.convert(p));
+        List<OrderItemMasterPojo> orderItemList = orderItemApi.getAll();
+        List<OrderItemMasterData> orderItemData = new ArrayList<OrderItemMasterData>();
+        for (OrderItemMasterPojo p : orderItemList) {
+            orderItemData.add(helpOrder.convert(p));
         }
-        return list2;
+        return orderItemData;
     }
 
     @Transactional(rollbackFor = ApiException.class)
     public void update(int id, OrderItemUpdateForm form) throws ApiException {
-        helpOrder.isOrderItemUpdateValid(form);
+        helpOrder.validateOrderItemUpdateForm(form);
         OrderItemMasterPojo prevOrderItem = orderItemApi.checkOrderItemExists(id);
         OrderItemMasterPojo orderItemPojo=helpOrder.convert(form);
         orderItemPojo.setId(id);
-
-//        Integer qtyNeeded=orderItemPojo.getQuantity()-prevOrderItem.getQuantity();
-       // orderItemPojo.setQuantity(form.getQuantity());
-//        orderItemPojo.setSellingPrice(productApi.get(orderItemPojo.getProductId()).getMrp()*qtyNeeded);
-
-        isOrderItemPojoValid(orderItemPojo);
-
-//
-//        InventoryMasterPojo inv= new InventoryMasterPojo();
-//        inv.setId(orderItemPojo.getProductId());
-//        inv.setQuantity(invApi.get(orderItemPojo.getProductId()).getQuantity()-orderItemPojo.getQuantity());
-//        invApi.update(orderItemPojo.getProductId(),inv);
+        validateOrderItemsPojo(orderItemPojo);
         orderItemApi.update(orderItemPojo.getId(),orderItemPojo);
     }
 
     public List<OrderItemMasterData> getAllfromOrderId(Integer orderId) throws ApiException{
-        List<OrderItemMasterPojo> list = orderItemApi.getAllfromOrderId(orderId);
-        List<OrderItemMasterData> list2 = new ArrayList<OrderItemMasterData>();
-        for (OrderItemMasterPojo p : list) {
-            list2.add(helpOrder.convert(p));
+        List<OrderItemMasterPojo> orderItemList = orderItemApi.getAllfromOrderId(orderId);
+        List<OrderItemMasterData> orderItemData = new ArrayList<OrderItemMasterData>();
+        for (OrderItemMasterPojo orderItemPojo : orderItemList) {
+            orderItemData.add(helpOrder.convert(orderItemPojo));
         }
-        return list2;
+        return orderItemData;
     }
-    public void isOrderItemValid(OrderItemMasterForm form) throws ApiException{
+    public void validateOrderItemsForm(OrderItemMasterForm form) throws ApiException{
         if(form.getQuantity()==null){
             throw new ApiException("Quantity cannot be empty");
         }
@@ -112,7 +101,7 @@ public class OrderItemMasterdto {
         }
         productApi.getfromBarcode(form.getBarcode());
     }
-    public void isOrderItemPojoValid(OrderItemMasterPojo p) throws ApiException{
+    public void validateOrderItemsPojo(OrderItemMasterPojo p) throws ApiException{
         int productId=p.getProductId();
         productApi.get(productId);
         orderApi.get(p.getOrderId());

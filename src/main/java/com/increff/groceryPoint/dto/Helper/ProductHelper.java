@@ -1,18 +1,14 @@
 package com.increff.groceryPoint.dto.Helper;
 
-import com.increff.groceryPoint.api.BrandMasterApi;
-import com.increff.groceryPoint.dao.ProductMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.model.ProductMasterForm;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import com.increff.groceryPoint.util.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static java.util.Objects.isNull;
 
-public class HelperProduct {
+public class ProductHelper {
     public static ProductMasterPojo normalize(ProductMasterPojo p) {
         p.setName(StringUtil.toLowerCase(p.getName().trim()));
         p.setBarcode(p.getBarcode().trim().toLowerCase());
@@ -37,8 +33,8 @@ public class HelperProduct {
         return p;
     }
 
-    public static void isProductValid(ProductMasterForm form) throws ApiException {
-        if(isNull(form.getProductName()) || form.getProductName().isEmpty())
+    public static void validateProductForm(ProductMasterForm form) throws ApiException {
+        if(isNull(form.getProductName()) || form.getProductName().trim().isEmpty())
         {
             throw new ApiException("Product Name cannot be Empty!");
         }
@@ -46,7 +42,7 @@ public class HelperProduct {
         {
             throw new ApiException("MRP cannot be Empty! or Less than 0");
         }
-        if(isNull(form.getBarcode()) || form.getBarcode().isEmpty())
+        if(isNull(form.getBarcode()) || form.getBarcode().trim().isEmpty())
         {
             throw new ApiException("Barcode cannot be Empty!");
         }

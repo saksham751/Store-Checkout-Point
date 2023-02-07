@@ -1,7 +1,7 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.*;
-import com.increff.groceryPoint.dto.Helper.HelperReport;
+import com.increff.groceryPoint.dto.Helper.ReportHelper;
 import com.increff.groceryPoint.model.*;
 import com.increff.groceryPoint.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static com.increff.groceryPoint.dto.Helper.HelperBrand.convert;
+import static com.increff.groceryPoint.dto.Helper.BrandHelper.convertFormtoPojo;
 
-import static com.increff.groceryPoint.dto.Helper.HelperReport.*;
+import static com.increff.groceryPoint.dto.Helper.ReportHelper.*;
 
 
 @Service
-public class ReportMasterdto {
+public class ReportMasterDto {
     @Autowired
     private OrderItemMasterApi orderItemApi;
     @Autowired
@@ -27,7 +27,7 @@ public class ReportMasterdto {
     @Autowired
     private InventoryMasterApi invApi;
     @Autowired
-    private HelperReport helper;
+    private ReportHelper helper;
     @Autowired
     private ReportMasterApi reportApi;
     public List<SalesReportData> getSalesReport(SalesReportForm form) throws ApiException{
@@ -56,7 +56,7 @@ public class ReportMasterdto {
         List<BrandMasterPojo> brandPojoList= brandApi.getAll();
         List<BrandMasterData> brandDataList= new ArrayList<BrandMasterData>();
         for(BrandMasterPojo b: brandPojoList){
-            brandDataList.add(convert(b));
+            brandDataList.add(convertFormtoPojo(b));
         }
         return brandDataList;
     }

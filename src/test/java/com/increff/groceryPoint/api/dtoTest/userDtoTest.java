@@ -2,7 +2,7 @@ package com.increff.groceryPoint.api.dtoTest;
 
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.Userdto;
+import com.increff.groceryPoint.dto.UserDto;
 import com.increff.groceryPoint.model.AddUserForm;
 import com.increff.groceryPoint.model.UserData;
 import com.increff.groceryPoint.pojo.UserPojo;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class userDtoTest extends AbstractUnitTest {
     @Autowired
-    private Userdto userDto;
+    private UserDto userDto;
 
     @Test
     public void testAdd() throws ApiException {

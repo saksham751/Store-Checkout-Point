@@ -1,6 +1,6 @@
 package com.increff.groceryPoint.spring;
 
-import com.increff.groceryPoint.Scheduler.ReportScheduler;
+import com.increff.groceryPoint.scheduler.ReportScheduler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

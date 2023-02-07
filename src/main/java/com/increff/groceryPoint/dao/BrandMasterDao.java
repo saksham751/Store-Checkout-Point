@@ -13,28 +13,24 @@ import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BrandMasterDao extends AbstractDao {
+public class BrandMasterDao extends AbstractDao<Integer> {
 
-    private static String delete_id = "delete from BrandMasterPojo p where id=:id";
-    private static String select_id = "select p from BrandMasterPojo p where id=:id";
-    private static String select_all = "select p from BrandMasterPojo p";
-    private static String select_brand_category = "select p from BrandMasterPojo p where brand=:brand and category=:category";
-    private static String select_brand = "select b from BrandMasterPojo b where b.brand =: brand";
-    private static String select_category = "select b from BrandMasterPojo b where b.category =: category";
+    private static String delete_id = "delete from BrandMasterPojo brandTable where id=:id";
+    private static String select_id = "select brandTable from BrandMasterPojo brandTable where id=:id";
+    private static String select_all = "select brandTable from BrandMasterPojo brandTable";
+    private static String select_brand_category = "select brandTable from BrandMasterPojo brandTable where brand=:brand and category=:category";
+    private static String select_brand = "select brandTable from BrandMasterPojo brandTable where brandTable.brand =: brand";
+    private static String select_category = "select brandTable from BrandMasterPojo brandTable where brandTable.category =: category";
     @PersistenceContext
     private EntityManager em;
+    //todo aadd common funtions to super class
 
-    @Transactional(rollbackFor = ApiException.class)
-    public int add(BrandMasterPojo p) {
-        em.persist(p);
-        return p.getId();
-    }
-    @Transactional(rollbackFor = ApiException.class)
-    public int delete(int id) {
-        Query query = em.createQuery(delete_id);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
+//    @Transactional(rollbackFor = ApiException.class)
+//    public int delete(int id) {
+//        Query query = em.createQuery(delete_id);
+//        query.setParameter("id", id);
+//        return query.executeUpdate();
+//    }
     @Transactional(readOnly = true)
     public BrandMasterPojo get(int id) {
         TypedQuery<BrandMasterPojo> query = getQuery(select_id, BrandMasterPojo.class);

@@ -4,8 +4,6 @@ import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.ProductMasterdto;
-import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
 import org.junit.Before;

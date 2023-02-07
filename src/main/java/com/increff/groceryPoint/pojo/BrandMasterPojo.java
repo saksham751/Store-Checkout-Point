@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table( uniqueConstraints = {
@@ -21,4 +22,7 @@ public class BrandMasterPojo extends AbstractPojo{
     private String brand;
     @Column(nullable = false)
     private String category;
+    public Integer getId() {
+        return id;
+    }
 }

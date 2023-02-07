@@ -21,8 +21,8 @@ public class ProductMasterApi {
     }
 
     public void delete(int id) throws ApiException {
-        getCheckApi(id);
-        productDao.delete(id);
+        ProductMasterPojo productPojo=getCheckApi(id);
+        productDao.delete(productPojo);
     }
 
     public ProductMasterPojo get(int id) throws ApiException {

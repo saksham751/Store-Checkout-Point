@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 @Service
-public class HelperReport {
+public class ReportHelper {
     @Autowired
     private BrandMasterApi brandApi;
     public static Date getStart(){

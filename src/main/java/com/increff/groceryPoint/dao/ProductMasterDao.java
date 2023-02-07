@@ -13,27 +13,27 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ProductMasterDao extends AbstractDao {
+public class ProductMasterDao extends AbstractDao<Integer> {
 
-    private static String delete_id = "delete from ProductMasterPojo p where id=:id";
-    private static String select_id = "select p from ProductMasterPojo p where id=:id";
-    private static String select_all = "select p from ProductMasterPojo p";
-    private static String select_barcode = "select p from ProductMasterPojo p where barcode=:barcode";
+    private static String delete_id = "delete from ProductMasterPojo productTable where id=:id";
+    private static String select_id = "select productTable from ProductMasterPojo productTable where id=:id";
+    private static String select_all = "select productTable from ProductMasterPojo productTable";
+    private static String select_barcode = "select productTable from ProductMasterPojo productTable where barcode=:barcode";
 
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional(rollbackFor = ApiException.class)
-    public int add(ProductMasterPojo p) {
-        em.persist(p);
-        return p.getId();
-    }
-    @Transactional(rollbackFor = ApiException.class)
-    public int delete(int id) {
-        Query query = em.createQuery(delete_id);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
+//    @Transactional(rollbackFor = ApiException.class)
+//    public int add(ProductMasterPojo p) {
+//        em.persist(p);
+//        return p.getId();
+//    }
+//    @Transactional(rollbackFor = ApiException.class)
+//    public int delete(int id) {
+//        Query query = em.createQuery(delete_id);
+//        query.setParameter("id", id);
+//        return query.executeUpdate();
+//    }
     @Transactional(readOnly = true)
     public ProductMasterPojo get(int id) {
         TypedQuery<ProductMasterPojo> query = getQuery(select_id, ProductMasterPojo.class);

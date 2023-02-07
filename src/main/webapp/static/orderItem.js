@@ -14,7 +14,7 @@ function getOrderUrl(){
 }
  function getInvoiceUrl(){
   	var baseUrl = $("meta[name=baseUrl]").attr("content")
-  	return baseUrl + "/api/invoice";
+  	return baseUrl + "/api/order/invoice";
   }
 function getOrderItemList(){
 	var url = getStoreUrl();
@@ -154,7 +154,7 @@ function updateOrderItem()
         	   success: function(response) {
         	   		getOrderItemList();
         	   },
-    //    	   error: handleAjaxError
+        	   error: handleAjaxError
 
         	});
 }

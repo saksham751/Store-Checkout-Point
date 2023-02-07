@@ -12,20 +12,20 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class OrderItemMasterDao extends AbstractDao{
+public class OrderItemMasterDao extends AbstractDao<Integer>{
     private static String select_All="select orderitem from OrderItemMasterPojo orderitem";
     private static String select ="select orderitem from OrderItemMasterPojo orderitem where id =: id";
-    private static String delete_OrderItem="delete from OrderItemMasterPojo o where id =: id";
+    private static String delete_OrderItem="delete from OrderItemMasterPojo orderitem where id =: id";
     private static String select_orderId="select orderitem from OrderItemMasterPojo orderitem where orderId =: orderId";
     private static String select_orderproduct="select orderitem from OrderItemMasterPojo orderitem where orderId =: orderId and productId =: productId";
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional(rollbackFor = ApiException.class)
-    public int add(OrderItemMasterPojo orderItem){
-        em.persist(orderItem);
-        return orderItem.getId();
-    }
+//    @Transactional(rollbackFor = ApiException.class)
+//    public int add(OrderItemMasterPojo orderItem){
+//        em.persist(orderItem);
+//        return orderItem.getId();
+//    }
     @Transactional(readOnly = true)
     public OrderItemMasterPojo get(int id){
         TypedQuery<OrderItemMasterPojo> query = getQuery(select, OrderItemMasterPojo.class);
@@ -39,12 +39,12 @@ public class OrderItemMasterDao extends AbstractDao{
         return query.getResultList();
     }
 
-    @Transactional(rollbackFor = ApiException.class)
-    public int delete(int id){
-        Query query = em.createQuery(delete_OrderItem);
-        query.setParameter("id", id);
-        return query.executeUpdate();
-    }
+//    @Transactional(rollbackFor = ApiException.class)
+//    public int delete(int id){
+//        Query query = em.createQuery(delete_OrderItem);
+//        query.setParameter("id", id);
+//        return query.executeUpdate();
+//    }
 
     public void update(OrderItemMasterPojo ex){
 

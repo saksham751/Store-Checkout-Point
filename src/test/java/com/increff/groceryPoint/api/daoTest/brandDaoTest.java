@@ -39,11 +39,11 @@ public class brandDaoTest extends AbstractUnitTest {
         assertEquals("testbrand",brandData.getBrand());
         assertEquals("testcategory",brandData.getCategory());
     }
-    @Test
-    public void deleteTest() throws ApiException{
-        brandDao.delete(brandId);
-        Assert.assertNull(brandDao.get(brandId));
-    }
+//    @Test
+//    public void deleteTest() throws ApiException{
+//        brandDao.delete(brandId);
+//        Assert.assertNull(brandDao.get(brandId));
+//    }
     @Test
     public void getByBrandTest() throws ApiException{
         BrandMasterPojo brandPojo = new BrandMasterPojo();

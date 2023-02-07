@@ -17,4 +17,8 @@ public class InventoryMasterPojo extends AbstractPojo{
     @Column(nullable = false)
     @Pattern(regexp = "[\\s]*[0-9]*[1-9]+",message="Enter a valid Number")
     private Integer quantity;
+
+    public Integer getId() {
+        return id;
+    }
 }

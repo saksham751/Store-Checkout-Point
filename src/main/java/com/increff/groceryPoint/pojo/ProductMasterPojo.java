@@ -13,10 +13,10 @@ import javax.persistence.*;
         @Index(name="barcodeIndex",columnList = "barcode")
 })
 public class ProductMasterPojo extends AbstractPojo{
-
+    //todo change to INeteger
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(unique=true, nullable = false)
     private String barcode;
     private String name;
@@ -24,5 +24,9 @@ public class ProductMasterPojo extends AbstractPojo{
     private Integer brand_category;
     @Column(nullable = false)
     private Double mrp;
+
+    public Integer getId() {
+        return id;
+    }
 
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "pos_day_sales")
-public class DaySalesPojo extends AbstractPojo{
+public class DaySalesPojo extends AbstractPojo<Date> {
     @Id
     @Column(nullable = false, name = "date")
     private Date date;
@@ -23,4 +23,9 @@ public class DaySalesPojo extends AbstractPojo{
     private Integer invoicedItemsCount;
     @Column(nullable = false, name = "total_revenue")
     private Double totalRevenue;
+
+    @Override
+    public Date getId() {
+        return date;
+    }
 }

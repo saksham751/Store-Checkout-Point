@@ -3,8 +3,8 @@ package com.increff.groceryPoint.api.daoTest;
 import com.increff.groceryPoint.api.*;
 import com.increff.groceryPoint.dao.*;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.Helper.HelperOrder;
-import com.increff.groceryPoint.dto.OrderMasterdto;
+import com.increff.groceryPoint.dto.Helper.OrderHelper;
+import com.increff.groceryPoint.dto.OrderMasterDto;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderMasterPojo;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 public class orderDaoTest extends AbstractUnitTest {
     @Autowired
-    private OrderMasterdto orderDto;
+    private OrderMasterDto orderDto;
     @Autowired
     private ProductMasterDao productDao;
     @Autowired
@@ -33,7 +33,7 @@ public class orderDaoTest extends AbstractUnitTest {
     @Autowired
     private OrderItemMasterDao orderItemDao;
     @Autowired
-    private HelperOrder orderHelp;
+    private OrderHelper orderHelp;
     private Integer brandCategory,productId,invId,orderId;
     @Before
     public void addProduct() throws ApiException {

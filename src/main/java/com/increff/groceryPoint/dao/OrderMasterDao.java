@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class OrderMasterDao extends AbstractDao{
+public class OrderMasterDao extends AbstractDao<Integer>{
     private static String select_All="select order from OrderMasterPojo order";
     private static String select ="select order from OrderMasterPojo order where id =: id";
     private static String select_between="select order from OrderMasterPojo order where time between :start and :end";
@@ -21,11 +21,11 @@ public class OrderMasterDao extends AbstractDao{
     @PersistenceContext
     private EntityManager em;
 
-    @Transactional(rollbackFor = ApiException.class)
-    public int add(OrderMasterPojo order){
-        em.persist(order);
-        return order.getId();
-    }
+//    @Transactional(rollbackFor = ApiException.class)
+//    public int add(OrderMasterPojo order){
+//        em.persist(order);
+//        return order.getId();
+//    }
 
     @Transactional(readOnly = true)
     public OrderMasterPojo get(int id){

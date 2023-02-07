@@ -6,7 +6,8 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.List;
 
-@Getter@Setter
+@Getter
+@Setter
 public class InvoiceForm {
     private Integer orderId;
     private Date time;

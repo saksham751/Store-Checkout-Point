@@ -10,12 +10,13 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class ReportMasterDao extends AbstractDao{
-    private static String SELECT_BY_ID = "select p from DaySalesPojo p where date=:date";
+public class ReportMasterDao extends AbstractDao<Void>{
+    private static String SELECT_BY_ID = "select reportTable from DaySalesPojo reportTable where date=:date";
 
-    private static String SELECT_ALL = "select p from DaySalesPojo p";
+    private static String SELECT_ALL = "select reportTable from DaySalesPojo reportTable";
 
     private static String select_between="select daysales from DaySalesPojo daysales where date between :start and :end";
+
 
     @Transactional(rollbackFor = ApiException.class)
     public void insert(DaySalesPojo p) {

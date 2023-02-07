@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 //import static com.increff.groceryPoint.dto.Helper.HelperBrand.convert;
-import static com.increff.groceryPoint.dto.Helper.HelperProduct.isProductValid;
+import static com.increff.groceryPoint.dto.Helper.ProductHelper.validateProductForm;
 
-import static com.increff.groceryPoint.dto.Helper.HelperProduct.*;
+import static com.increff.groceryPoint.dto.Helper.ProductHelper.*;
 
 @Service
-public class ProductMasterdto {
+public class ProductMasterDto {
     @Autowired
     private ProductMasterApi productApi;
     @Autowired
@@ -28,7 +28,7 @@ public class ProductMasterdto {
     private InventoryMasterApi invApi;
 
     public int add(ProductMasterForm form) throws ApiException {
-        isProductValid(form);
+        validateProductForm(form);
         ProductMasterPojo p=convert(form);
         checkBrandExistApi(form.getBrand_category());
         p=normalize(p);
@@ -47,16 +47,16 @@ public class ProductMasterdto {
     }
 
     public List<ProductMasterData> getAll() throws ApiException{
-        List<ProductMasterPojo> list = productApi.getAll();
-        List<ProductMasterData> list2 = new ArrayList<ProductMasterData>();
-        for (ProductMasterPojo p : list) {
-            list2.add(convert(p));
+        List<ProductMasterPojo> productList = productApi.getAll();
+        List<ProductMasterData> productData = new ArrayList<ProductMasterData>();
+        for (ProductMasterPojo p : productList) {
+            productData.add(convert(p));
         }
-        return list2;
+        return productData;
     }
 
     public void update(int id, ProductMasterForm form) throws ApiException {
-        isProductValid(form);
+        validateProductForm(form);
         ProductMasterPojo p=convert(form);
         normalize(p);
         checkBrandExistApi(p.getBrand_category());

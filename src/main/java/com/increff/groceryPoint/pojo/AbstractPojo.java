@@ -11,13 +11,14 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractPojo {
+public abstract class AbstractPojo<ID> {
     @CreationTimestamp
     private Timestamp Created_At;
     @UpdateTimestamp
     private Timestamp Updated_At;
     @Version
-    private Long Version;
+    private Integer Version;
 
+    public abstract ID getId();
 
 }

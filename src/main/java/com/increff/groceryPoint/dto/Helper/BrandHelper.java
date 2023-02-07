@@ -7,8 +7,8 @@ import com.increff.groceryPoint.pojo.BrandMasterPojo;
 
 import static java.util.Objects.isNull;
 
-public class HelperBrand {
-    public static BrandMasterData convert(BrandMasterPojo p) {
+public class BrandHelper {
+    public static BrandMasterData convertFormtoPojo(BrandMasterPojo p) {
         BrandMasterData d = new BrandMasterData();
         d.setCategory(p.getCategory());
         d.setBrand(p.getBrand());
@@ -16,10 +16,10 @@ public class HelperBrand {
         return d;
     }
 
-    public static BrandMasterPojo convert(BrandMasterForm f) {
+    public static BrandMasterPojo convertFormtoPojo(BrandMasterForm brandForm) {
         BrandMasterPojo p = new BrandMasterPojo();
-        p.setCategory(f.getCategory());
-        p.setBrand(f.getBrand());
+        p.setCategory(brandForm.getCategory());
+        p.setBrand(brandForm.getBrand());
         return p;
     }
     public static void validateBrandForm(BrandMasterForm brandMasterForm)throws ApiException

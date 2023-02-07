@@ -1,7 +1,5 @@
 package com.increff.groceryPoint.dto.Helper;
 
-import com.increff.groceryPoint.api.InventoryMasterApi;
-import com.increff.groceryPoint.api.OrderMasterApi;
 import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.dto.ApiException;
 import com.increff.groceryPoint.model.*;
@@ -20,7 +18,7 @@ import java.text.SimpleDateFormat;
 
 
 @Service
-public class HelperOrder {
+public class OrderHelper {
     @Autowired
     private ProductMasterApi productpApi;
     public OrderMasterData convert(OrderMasterPojo p) {
@@ -59,7 +57,7 @@ public class HelperOrder {
         data.setSellingPrice(form.getQuantity()*product.getMrp());
         return data;
     }
-    public void isOrderItemUpdateValid(OrderItemUpdateForm form) throws ApiException{
+    public void validateOrderItemUpdateForm(OrderItemUpdateForm form) throws ApiException{
         if(form.getQuantity()==null){
             throw new ApiException("Quantity cannot be empty");
         }

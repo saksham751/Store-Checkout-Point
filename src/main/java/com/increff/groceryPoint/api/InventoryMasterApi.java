@@ -22,8 +22,8 @@ public class InventoryMasterApi {
         return invDao.add(p);
     }
 
-    public Integer delete(Integer id) throws ApiException{
-        return invDao.delete(id);
+    public void delete(Integer id) throws ApiException{
+        invDao.delete(checkInvExists(id));
     }
     public InventoryMasterPojo get(int id) throws ApiException {
         return checkInvExists(id);

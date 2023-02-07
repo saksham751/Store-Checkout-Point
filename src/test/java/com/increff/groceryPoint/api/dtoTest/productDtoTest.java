@@ -3,9 +3,7 @@ package com.increff.groceryPoint.api.dtoTest;
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.ProductMasterdto;
-import com.increff.groceryPoint.model.BrandMasterData;
-import com.increff.groceryPoint.model.BrandMasterForm;
+import com.increff.groceryPoint.dto.ProductMasterDto;
 import com.increff.groceryPoint.model.ProductMasterData;
 import com.increff.groceryPoint.model.ProductMasterForm;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
@@ -17,13 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.Helper.HelperProduct.convert;
-import static com.increff.groceryPoint.dto.Helper.HelperProduct.normalize;
+import static com.increff.groceryPoint.dto.Helper.ProductHelper.convert;
+import static com.increff.groceryPoint.dto.Helper.ProductHelper.normalize;
 import static org.junit.Assert.assertEquals;
 
 public class productDtoTest extends AbstractUnitTest {
     @Autowired
-    private ProductMasterdto productDto;
+    private ProductMasterDto productDto;
     @Autowired
     private BrandMasterApi brandApi;
     private Integer brandCategory;

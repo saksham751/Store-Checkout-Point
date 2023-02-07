@@ -3,7 +3,7 @@ package com.increff.groceryPoint.api.dtoTest;
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dto.*;
-import com.increff.groceryPoint.dto.Helper.HelperOrder;
+import com.increff.groceryPoint.dto.Helper.OrderHelper;
 import com.increff.groceryPoint.model.*;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
@@ -15,17 +15,17 @@ import static org.junit.Assert.assertEquals;
 
 public class orderItemDtoTest extends AbstractUnitTest {
     @Autowired
-    private OrderMasterdto orderDto;
+    private OrderMasterDto orderDto;
     @Autowired
-    private ProductMasterdto productDto;
+    private ProductMasterDto productDto;
     @Autowired
     private BrandMasterApi brandApi;
     @Autowired
-    private InventoryMasterdto invDto;
+    private InventoryMasterDto invDto;
     @Autowired
-    private OrderItemMasterdto orderItemDto;
+    private OrderItemMasterDto orderItemDto;
     @Autowired
-    private HelperOrder orderHelp;
+    private OrderHelper orderHelp;
     private Integer brandCategory,productId,invId,orderId;
     @Before
     public void addProduct() throws ApiException {
@@ -75,7 +75,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemForm.setOrderId(orderId);
         orderItemForm.setBarcode("testb@rc0de");
         orderItemForm.setQuantity(-2);
-        orderItemDto.isOrderItemValid(orderItemForm);
+        orderItemDto.validateOrderItemsForm(orderItemForm);
     }
     @Test(expected = ApiException.class)
     public void testIsOrderItemValid_orderId() throws ApiException{
@@ -83,7 +83,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemForm.setOrderId(-1);
         orderItemForm.setBarcode("testb@rc0de");
         orderItemForm.setQuantity(2);
-        orderItemDto.isOrderItemValid(orderItemForm);
+        orderItemDto.validateOrderItemsForm(orderItemForm);
     }
     @Test(expected = ApiException.class)
     public void testIsOrderItemPojoValid_orderId() throws ApiException{
@@ -91,7 +91,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemPojo.setOrderId(0);
         orderItemPojo.setProductId(productId);
         orderItemPojo.setQuantity(2);
-        orderItemDto.isOrderItemPojoValid(orderItemPojo);
+        orderItemDto.validateOrderItemsPojo(orderItemPojo);
     }
     @Test(expected = ApiException.class)
     public void testIsOrderItemPojoValid_qty() throws ApiException{
@@ -99,7 +99,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemPojo.setOrderId(orderId);
         orderItemPojo.setProductId(productId);
         orderItemPojo.setQuantity(30);
-        orderItemDto.isOrderItemPojoValid(orderItemPojo);
+        orderItemDto.validateOrderItemsPojo(orderItemPojo);
     }
     @Test(expected = ApiException.class)
     public void test_isOrderItemPojoValid_productId() throws ApiException{
@@ -107,7 +107,7 @@ public class orderItemDtoTest extends AbstractUnitTest {
         orderItemPojo.setOrderId(orderId);
         orderItemPojo.setProductId(0);
         orderItemPojo.setQuantity(2);
-        orderItemDto.isOrderItemPojoValid(orderItemPojo);
+        orderItemDto.validateOrderItemsPojo(orderItemPojo);
     }
 
     @Test

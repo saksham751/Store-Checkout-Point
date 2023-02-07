@@ -1,7 +1,5 @@
 package com.increff.groceryPoint.dto;
 
-import java.util.List;
-
 import com.increff.groceryPoint.api.UserMasterApi;
 import com.increff.groceryPoint.model.AddUserForm;
 import com.increff.groceryPoint.model.UserData;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.increff.groceryPoint.pojo.UserPojo;
 
 @Service
-public class Userdto {
+public class UserDto {
 
 	@Autowired
 	private UserMasterApi userApi;

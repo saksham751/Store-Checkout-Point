@@ -13,8 +13,12 @@ import javax.persistence.Id;
 public class UserPojo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String email;
 	private String password;
 	private String role;
+	public Integer getId() {
+		return id;
+	}
+
 }

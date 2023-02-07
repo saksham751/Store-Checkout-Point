@@ -14,7 +14,7 @@ function getOrderUrl(){
 }
 function getInvoiceUrl(){
   	var baseUrl = $("meta[name=baseUrl]").attr("content")
-  	return baseUrl + "/api/invoice";
+  	return baseUrl + "/api/order/invoice";
  }
 function getOrderItemList(){
 

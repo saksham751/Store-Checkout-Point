@@ -13,7 +13,7 @@ import com.increff.groceryPoint.pojo.UserPojo;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class UserDao extends AbstractDao {
+public class UserDao extends AbstractDao<UserPojo> {
 
 	private static String delete_id = "delete from UserPojo p where id=:id";
 	private static String select_id = "select p from UserPojo p where id=:id";

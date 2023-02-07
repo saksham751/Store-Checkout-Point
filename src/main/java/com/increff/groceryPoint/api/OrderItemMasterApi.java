@@ -39,8 +39,7 @@ public class OrderItemMasterApi {
 
     }
     public void delete(int id) throws ApiException{
-        checkOrderItemExists(id);
-        orderItemDao.delete(id);
+        orderItemDao.delete(checkOrderItemExists(id));
     }
 
     public OrderItemMasterPojo get(Integer id, Integer productId) throws ApiException{

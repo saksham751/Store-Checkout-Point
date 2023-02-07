@@ -22,8 +22,7 @@ public class BrandMasterApi {
     }
 
     public int delete(int id) throws ApiException{
-        getCheck(id);
-        brandDao.delete(id);
+        brandDao.delete(getCheck(id));
         return id;
     }
     public BrandMasterPojo get(int id) throws ApiException {

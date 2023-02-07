@@ -2,8 +2,8 @@ package com.increff.groceryPoint.api.dtoTest;
 
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.BrandMasterdto;
-import com.increff.groceryPoint.dto.Helper.HelperBrand;
+import com.increff.groceryPoint.dto.BrandMasterDto;
+import com.increff.groceryPoint.dto.Helper.BrandHelper;
 import com.increff.groceryPoint.model.BrandMasterData;
 import com.increff.groceryPoint.model.BrandMasterForm;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
@@ -15,13 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.Helper.HelperBrand.normalize;
-import static com.increff.groceryPoint.dto.Helper.HelperBrand.validateBrandForm;
+import static com.increff.groceryPoint.dto.Helper.BrandHelper.normalize;
+import static com.increff.groceryPoint.dto.Helper.BrandHelper.validateBrandForm;
 import static org.junit.Assert.assertEquals;
 
 public class brandDtoTest extends AbstractUnitTest {
     @Autowired
-    private BrandMasterdto brandDto;
+    private BrandMasterDto brandDto;
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
@@ -99,7 +99,7 @@ public class brandDtoTest extends AbstractUnitTest {
         BrandMasterForm brandForm = new BrandMasterForm();
         brandForm.setBrand("testbrand");
         brandForm.setCategory("testcategory");
-        BrandMasterPojo brandPojo=HelperBrand.convert(brandForm);
+        BrandMasterPojo brandPojo= BrandHelper.convertFormtoPojo(brandForm);
         assertEquals("testbrand",brandPojo.getBrand());
         assertEquals("testcategory",brandPojo.getCategory());
     }
@@ -109,7 +109,7 @@ public class brandDtoTest extends AbstractUnitTest {
         brandPojo.setBrand("testbrand");
         brandPojo.setCategory("testcategory");
         brandPojo.setId(Integer.valueOf(0));
-        BrandMasterData brandData=HelperBrand.convert(brandPojo);
+        BrandMasterData brandData= BrandHelper.convertFormtoPojo(brandPojo);
         assertEquals("testbrand",brandData.getBrand());
         assertEquals("testcategory",brandData.getCategory());
         assertEquals(Integer.valueOf(0),brandData.getId());

@@ -24,4 +24,8 @@ public class OrderItemMasterPojo extends AbstractPojo{
     @Column(nullable = false)
     private Double sellingPrice;
 
+    public Integer getId() {
+        return id;
+    }
+
 }

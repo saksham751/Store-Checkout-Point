@@ -45,8 +45,8 @@ public abstract class AbstractUiController {
 
 		mav.addObject("info", info);
 		mav.addObject("orderId", orderData.getId());
-		mav.addObject("Time", orderData.getTime());
-		mav.addObject("Status", orderData.getStatus());
+//		mav.addObject("Time", orderData.getTime());
+//		mav.addObject("Status", orderData.getStatus());
 		//mav.addObject("CustomerName",);
 		mav.addObject("baseUrl", baseUrl);
 		return mav;

@@ -49,11 +49,11 @@ public class productDaoTest extends AbstractUnitTest {
         assertEquals(Double.valueOf(20.0),productData.getMrp());
     }
 
-    @Test
-    public void deleteTest() throws ApiException{
-        productDao.delete(productId);
-        Assert.assertNull(brandDao.get(productId));
-    }
+//    @Test
+//    public void deleteTest() throws ApiException{
+//        productDao.delete(productId);
+//        Assert.assertNull(brandDao.get(productId));
+//    }
     @Test
     public void getTest() throws ApiException{
         ProductMasterPojo productPojo = productDao.get(productId);

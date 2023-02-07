@@ -3,8 +3,8 @@ package com.increff.groceryPoint.api.dtoTest;
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.InventoryMasterdto;
-import com.increff.groceryPoint.dto.ProductMasterdto;
+import com.increff.groceryPoint.dto.InventoryMasterDto;
+import com.increff.groceryPoint.dto.ProductMasterDto;
 import com.increff.groceryPoint.model.*;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
@@ -15,15 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.Helper.HelperInventory.convertFormtoPojo;
-import static com.increff.groceryPoint.dto.Helper.HelperInventory.convertPojotoData;
+import static com.increff.groceryPoint.dto.Helper.InventoryHelper.convertFormtoPojo;
+import static com.increff.groceryPoint.dto.Helper.InventoryHelper.convertPojotoData;
 import static org.junit.Assert.assertEquals;
 
 public class inventoryDtoTest extends AbstractUnitTest {
     @Autowired
-    private InventoryMasterdto invDto;
+    private InventoryMasterDto invDto;
     @Autowired
-    private ProductMasterdto productDto;
+    private ProductMasterDto productDto;
     @Autowired
     private BrandMasterApi brandApi;
     private Integer brandCategory;
@@ -84,7 +84,7 @@ public class inventoryDtoTest extends AbstractUnitTest {
     }
     @Test(expected = ApiException.class)
     public void testdoesProductExists() throws ApiException {
-        invDto.doesProductExists(0);
+        invDto.checkProductExists(0);
     }
 
     @Test

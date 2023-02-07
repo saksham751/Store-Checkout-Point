@@ -25,7 +25,7 @@ import com.increff.groceryPoint.model.InfoData;
 import com.increff.groceryPoint.model.LoginForm;
 import com.increff.groceryPoint.pojo.UserPojo;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.Userdto;
+import com.increff.groceryPoint.dto.UserDto;
 import com.increff.groceryPoint.util.SecurityUtil;
 import com.increff.groceryPoint.util.UserPrincipal;
 
@@ -34,12 +34,11 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 public class LoginController {
 	@Autowired
-	private Userdto userDto;
+	private UserDto userDto;
 	@Autowired
 	private InfoData info;
 	@Value("#{'${supervisor.email}'.split(',')}")
 	private List<String> supervisorList;
-	private String supervisorEmail;
 	@ApiOperation(value = "Logs in a user")
 	@RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {

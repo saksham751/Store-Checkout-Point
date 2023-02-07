@@ -3,7 +3,7 @@ package com.increff.groceryPoint.api.dtoTest;
 import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.dto.*;
-import com.increff.groceryPoint.dto.Helper.HelperOrder;
+import com.increff.groceryPoint.dto.Helper.OrderHelper;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.model.OrderMasterData;
@@ -14,8 +14,6 @@ import com.increff.groceryPoint.pojo.OrderMasterPojo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -25,15 +23,15 @@ import static org.junit.Assert.assertEquals;
 
 public class orderDtoTest extends AbstractUnitTest {
     @Autowired
-    private OrderMasterdto orderDto;
+    private OrderMasterDto orderDto;
     @Autowired
-    private ProductMasterdto productDto;
+    private ProductMasterDto productDto;
     @Autowired
     private BrandMasterApi brandApi;
     @Autowired
-    private InventoryMasterdto invDto;
+    private InventoryMasterDto invDto;
     @Autowired
-    private HelperOrder orderHelp;
+    private OrderHelper orderHelp;
     private Integer brandCategory,productId,invId;
     @Before
     public void addProduct() throws ApiException {

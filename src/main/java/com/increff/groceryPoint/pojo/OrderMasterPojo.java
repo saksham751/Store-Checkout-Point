@@ -13,4 +13,8 @@ public class OrderMasterPojo extends AbstractPojo{
     private Date time;
     @Column(nullable = false)
     private String status;
+
+    public Integer getId() {
+        return id;
+    }
 }

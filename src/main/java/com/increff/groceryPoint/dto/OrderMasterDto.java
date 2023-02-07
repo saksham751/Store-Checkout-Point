@@ -4,7 +4,7 @@ import com.increff.groceryPoint.api.InventoryMasterApi;
 import com.increff.groceryPoint.api.OrderItemMasterApi;
 import com.increff.groceryPoint.api.OrderMasterApi;
 import com.increff.groceryPoint.api.ProductMasterApi;
-import com.increff.groceryPoint.dto.Helper.HelperOrder;
+import com.increff.groceryPoint.dto.Helper.OrderHelper;
 import com.increff.groceryPoint.model.InvoiceForm;
 import com.increff.groceryPoint.model.OrderItemMasterData;
 import com.increff.groceryPoint.model.OrderMasterData;
@@ -17,11 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import sun.misc.BASE64Decoder;
 import org.springframework.transaction.annotation.Transactional;
-import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,7 +29,7 @@ import java.util.List;
 
 
 @Service
-public class OrderMasterdto {
+public class OrderMasterDto {
     @Autowired
     private OrderMasterApi orderApi;
     @Autowired
@@ -42,7 +39,7 @@ public class OrderMasterdto {
     @Autowired
     private ProductMasterApi productApi;
     @Autowired
-    private HelperOrder helpOrder;
+    private OrderHelper helpOrder;
     public int add() throws ApiException{
         OrderMasterPojo omp= new OrderMasterPojo();
         return orderApi.add(omp);
@@ -52,12 +49,12 @@ public class OrderMasterdto {
     }
 
     public List<OrderMasterData> getAll() throws ApiException{
-        List<OrderMasterPojo> list = orderApi.getAll();
-        List<OrderMasterData> list2 = new ArrayList<OrderMasterData>();
-        for (OrderMasterPojo p : list) {
-            list2.add(helpOrder.convert(p));
+        List<OrderMasterPojo> orderList = orderApi.getAll();
+        List<OrderMasterData> orderDataList = new ArrayList<OrderMasterData>();
+        for (OrderMasterPojo p : orderList) {
+            orderDataList.add(helpOrder.convert(p));
         }
-        return list2;
+        return orderDataList;
     }
 
     public InvoiceForm getInvoiceData(Integer id) throws ApiException{

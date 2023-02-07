@@ -4,8 +4,8 @@ import com.increff.groceryPoint.api.AbstractUnitTest;
 import com.increff.groceryPoint.api.BrandMasterApi;
 import com.increff.groceryPoint.api.*;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.Helper.HelperOrder;
-import com.increff.groceryPoint.dto.OrderMasterdto;
+import com.increff.groceryPoint.dto.Helper.OrderHelper;
+import com.increff.groceryPoint.dto.OrderMasterDto;
 import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 public class orderItemApiTest extends AbstractUnitTest {
     @Autowired
-    private OrderMasterdto orderDto;
+    private OrderMasterDto orderDto;
     @Autowired
     private ProductMasterApi productApi;
     @Autowired
@@ -28,7 +28,7 @@ public class orderItemApiTest extends AbstractUnitTest {
     @Autowired
     private OrderItemMasterApi orderItemApi;
     @Autowired
-    private HelperOrder orderHelp;
+    private OrderHelper orderHelp;
     private Integer brandCategory,productId,invId,orderId;
     @Before
     public void addProduct() throws ApiException {

@@ -170,7 +170,7 @@ function displayProductList(data){
 		+ '<td>' + e.productName + '</td>'
 		+ '<td>'  + e.brand_category + '</td>'
 		+ '<td>'  + e.barcode + '</td>'
-		+ '<td>'  + e.mrp + '</td>'
+		+ '<td>'  + e.mrp.toFixed(2) + '</td>'
 		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);

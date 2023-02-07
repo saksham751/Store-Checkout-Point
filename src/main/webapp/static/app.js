@@ -1,4 +1,4 @@
-
+console.log($("meta[name=role]").attr("content"))
 //HELPER METHOD
 function toJson($form){
     var serialized = $form.serializeArray();
@@ -14,8 +14,11 @@ function toJson($form){
 
 
 function handleAjaxError(response){
-	var response = JSON.parse(response.responseText);
-	alert(response.message);
+	document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+    document.getElementById('toast-container').classList.add('bg-danger');
+    var myResponse = JSON.parse(response.responseText);
+   	document.getElementById('my-message').innerHTML=myResponse.message;
+    $(".toast").toast('show');
 }
 
 function readFileData(file, callback){
@@ -52,3 +55,25 @@ function writeFileData(arr){
     tempLink.setAttribute('download', 'download.tsv');
     tempLink.click(); 
 }
+function hideSupervisorView()
+{
+//    var appBanners = document.getElementsByClassName('supervisor-view');
+//
+//    for (var i = 0; i < appBanners.length; i ++) {
+//        appBanners[i].style.display = 'none';
+//    }
+//    if($("meta[name=role]").attr("content") == "operator"){
+            const collection=document.getElementsByClassName('supervisor-view');
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].style.display= 'none';
+            }
+//        }
+}
+
+function init(){
+    if($("meta[name=role]").attr("content") == "operator"){
+            hideSupervisorView();
+            }
+}
+
+$(document).ready(init);

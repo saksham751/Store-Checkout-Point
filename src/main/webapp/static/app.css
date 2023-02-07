@@ -17,6 +17,19 @@ body {
 	background-color: #f5f5f5;
 }
 
+.carousel .item {
+  height: 100px;
+}
+.300-px-wide {
+    width: 300px;
+}
+
+.item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 300px;
+}
 
 .fas{
     font-size: 4rem;

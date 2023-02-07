@@ -1,6 +1,7 @@
 package com.increff.groceryPoint.dto;
 
 import com.increff.groceryPoint.api.InventoryMasterApi;
+import com.increff.groceryPoint.api.ProductMasterApi;
 import com.increff.groceryPoint.model.InventoryMasterData;
 import com.increff.groceryPoint.model.InventoryMasterForm;
 import com.increff.groceryPoint.pojo.InventoryMasterPojo;
@@ -10,24 +11,28 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperInventory.*;
+import static com.increff.groceryPoint.dto.Helper.HelperInventory.*;
 
 
 @Service
 public class InventoryMasterdto {
     @Autowired
     private InventoryMasterApi invApi;
+    @Autowired
+    private ProductMasterApi productApi;
 
-    public void addInventoryDto(InventoryMasterForm form)throws ApiException{
+    public int add(InventoryMasterForm form)throws ApiException{
         isInventoryValid(form);
-        invApi.addInventoryApi(convertFormtoPojo(form));
+        doesProductExists(form.getId());
+        return invApi.add(convertFormtoPojo(form));
     }
-    public InventoryMasterData getInventoryDto(int id) throws ApiException {
-        return convertPojotoData(invApi.getInventoryApi(id));
+    public InventoryMasterData get(int id) throws ApiException {
+        doesProductExists(id);
+        return convertPojotoData(invApi.get(id));
     }
 
-    public List<InventoryMasterData> getAllInventoryDto() throws ApiException{
-        List<InventoryMasterPojo> list = invApi.getAllInventoryApi();
+    public List<InventoryMasterData> getAll() throws ApiException{
+        List<InventoryMasterPojo> list = invApi.getAll();
         List<InventoryMasterData> list2 = new ArrayList<InventoryMasterData>();
         for (InventoryMasterPojo p : list) {
             list2.add(convertPojotoData(p));
@@ -35,10 +40,13 @@ public class InventoryMasterdto {
         return list2;
     }
 
-    public void updateInventoryDto(int id, InventoryMasterForm form) throws ApiException {
+    public void update(int id, InventoryMasterForm form) throws ApiException {
         isInventoryValid(form);
         InventoryMasterPojo p=convertFormtoPojo(form);
-        invApi.updateInventoryApi(id,p);
+        invApi.update(id,p);
+    }
+    public void doesProductExists(int id) throws ApiException{
+        productApi.get(id);
     }
 
 

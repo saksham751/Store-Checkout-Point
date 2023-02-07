@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="snippets.html :: name_head">
+</head>
+<body>
+<nav th:replace="snippets.html :: name_app_navbar"></nav>
+
+<div class="container">
+    <div class="p-3 mb-2 bg-primary text-white"><h3>Order Items</h3></div>
+    <div th:replace="snippets.html :: name_toast"></div>
+<!--    <h3 id="customer-name"></h3>-->
+    <div class="row" id="supervisor-view">
+        <form class="form-inline" id="orderItem-form">
+            <div class="form-group">
+                <label for="inputOrderId" class="col-sm-2 col-form-label">OrderId</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" name="orderId" id="inputOrderId" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="barcode">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                <div class="col-sm-10">
+                    <input type="number" min="0" class="form-control" name="quantity" id="inputQuantity"
+                           placeholder="quantity">
+                </div>
+            </div>
+            <button type="button" class="btn btn-success" id="add-Item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>Add
+            </button>
+            &nbsp;
+            <!--      <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>-->
+            &nbsp;
+            <!--      <button type="button" class="btn btn-primary" id="upload-data">Upload</button>-->
+        </form>
+
+
+    </div>
+    <div class="row" style="padding-top: 10px;"></div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped" id="orderItem-table">
+                <thead>
+                <tr>
+                    <th scope="col">Id#</th>
+                    <th scope="col">OrderId</th>
+                    <th scope="col">ProductId</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Selling Price</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Update OrderItem</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" id="editOrderItemForm">
+                            <div class="form-group">
+                                <label for="inputUpdateOrderId" class="col-sm-2 col-form-label">OrderID</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="orderId" id="inputUpdateOrderId" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputUpdateProductId" class="col-sm-2 col-form-label">ProductID</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="productId" id="inputUpdateProductId" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputUpdateQuantity" class="col-sm-2 col-form-label">Quantity</label>
+                                <div class="col-sm-10">
+                                    <input type="number" min="0" class="form-control" name="quantity"
+                                           id="inputUpdateQuantity">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="update-orderItem">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-primary" id="place-order">Place Order</button>
+<!--        <button type="button" class="btn btn-secondary" id="download-invoice">Download Invoice</button>-->
+    </div>
+</div>
+</body>
+
+<footer th:replace="snippets.html :: name_footer"></footer>
+<script th:src="@{/static/orderItem.js}"/></script>
+
+</html>

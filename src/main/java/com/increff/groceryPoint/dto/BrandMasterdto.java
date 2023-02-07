@@ -13,36 +13,32 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperBrand.convert;
-import static com.increff.groceryPoint.dto.HelperBrand.validateBrandForm;
-import static com.increff.groceryPoint.dto.HelperBrand.normalize;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.convert;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.validateBrandForm;
+import static com.increff.groceryPoint.dto.Helper.HelperBrand.normalize;
 
 @Service
 public class BrandMasterdto {
     @Autowired
     private BrandMasterApi brandApi;
-    //todo brandapi.add
-    //todo rename everyone with master
-    public void addBrandDto(BrandMasterForm form) throws ApiException {
+    public int add(BrandMasterForm form) throws ApiException {
         validateBrandForm(form);
-        BrandMasterPojo p = convert(normalize(form));
-        brandApi.addBrandApi(p);
+        BrandMasterPojo brandPojo = convert(normalize(form));
+        return brandApi.add(brandPojo);
     }
 
-
-    public void deleteBrandDto(@PathVariable int id) throws ApiException{
-        brandApi.deleteBrandApi(id);
+    public int delete(@PathVariable int id) throws ApiException{
+        return brandApi.delete(id);
     }
 
-    public BrandMasterData getBrandDto(int id) throws ApiException {
-        BrandMasterPojo p = brandApi.getBrandApi(id);
+    public BrandMasterData get(int id) throws ApiException {
+        BrandMasterPojo p = brandApi.get(id);
         return convert(p);
     }
 
+    public List<BrandMasterData> getAll() throws ApiException {
 
-    public List<BrandMasterData> getAllBrandDto() throws ApiException {
-
-        List<BrandMasterPojo> list = brandApi.getAllBrandApi();
+        List<BrandMasterPojo> list = brandApi.getAll();
         List<BrandMasterData> list2 = new ArrayList<BrandMasterData>();
         for (BrandMasterPojo p : list) {
             list2.add(convert(p));
@@ -50,11 +46,11 @@ public class BrandMasterdto {
         return list2;
     }
 
-    public void updateBrandDto(int id, BrandMasterForm f) throws ApiException {
+    public void update(int id, BrandMasterForm form) throws ApiException {
 
-        validateBrandForm(f);
-        f=normalize(f);
-        BrandMasterPojo p = convert(f);
-        brandApi.updateBrandApi(id, p);
+        validateBrandForm(form);
+        form=normalize(form);
+        BrandMasterPojo p = convert(form);
+        brandApi.update(id, p);
     }
 }

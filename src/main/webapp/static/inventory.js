@@ -22,6 +22,12 @@ function addInventory(event){
        },
 	   success: function(response) {
 	   		getInventoryList();
+	   		document.getElementById("inventory-form").reset();
+                                    $('#inventory-create-modal').modal('hide');
+                                    document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                                    document.getElementById('toast-container').classList.add('bg-success');
+                                    document.getElementById('my-message').innerHTML="The items were updated successfully in the inventory";
+                                    $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -48,6 +54,12 @@ function updateInventory(event){
        },
 	   success: function(response) {
 	   		getInventoryList();
+	   			document.getElementById("inventory-edit-form").reset();
+                        $('#inventory-create-modal').modal('hide');
+                        document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                        document.getElementById('toast-container').classList.add('bg-success');
+                        document.getElementById('my-message').innerHTML="The items were updated successfully in the inventory";
+                        $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -94,7 +106,13 @@ function processData(){
 
 function readFileDataCallback(results){
 	fileData = results.data;
-	console.log(fileData);
+	if(fileData.length > 5000)
+        	{
+        	    document.getElementById('status-message').innerHTML = "Data length cannot be grater than 500";
+                    document.getElementById('status').style.backgroundColor = "red";
+                   	$('.toast').toast('show');
+                return false;
+        	}
 	uploadRows();
 }
 
@@ -128,6 +146,7 @@ function uploadRows(){
 	   		row.error=response.responseText
 	   		errorData.push(row);
 	   		uploadRows();
+	   		document.getElementById('download-errors').disabled=false;
 	   }
 	});
 
@@ -144,15 +163,17 @@ function displayInventoryList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteInventory(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditInventory(' + e.id + ')">edit</button>'
+		var buttonHtml = ' <button class="btn-disable btn btn-primary" onclick="displayEditInventory(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.quantity + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
+	if($("meta[name=role]").attr("content") == "operator")
+                hideSupervisorView();
+	pagination();
 }
 
 function displayEditInventory(id){
@@ -213,8 +234,15 @@ function init(){
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
     $('#inventoryFile').on('change', updateFileName)
+    if($("meta[name=role]").attr("content") == "operator"){
+            document.getElementById('supervisor-view').style.display= 'none';
+        }
 }
-
+function pagination()
+{
+   $('#inventory-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getInventoryList);
 

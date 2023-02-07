@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="snippets.html :: name_head"></head>
+<body>
+<nav th:replace="snippets.html :: name_app_navbar"></nav>
+<div class="container mt-4">
+    <div th:replace="snippets.html :: name_toast"></div>
+    <div class="p-3 mb-2 bg-primary text-white"><h3>Sales Report</h3></div>
+
+    <!-- Top row with form-->
+    <div class="container">
+        <form id="sales-form">
+            <div class="row justify-content-center">
+                <div class="col-10 col-sm-5 form-group">
+                    <label for="inputBrand" class="col-form-label">Brand</label>
+                    <div class="">
+                        <select type="text" class="form-control" name="brand" id="inputBrand">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-5 form-group">
+                    <label for="inputCategory" class="col-form-label">Category</label>
+                    <div class="">
+                        <select type="text" class="form-control" name="category" id="inputCategory">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-5 form-group">
+                    <label for="inputStartDate" class="col-form-label">Start date</label>
+                    <div class="">
+                        <input type="date" class="form-control" name="start" id="inputStartDate"/>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-5 form-group">
+                    <label for="inputEndDate" class="col-form-label">End date</label>
+                    <div class="">
+                        <input type="date" class="form-control" name="end" id="inputEndDate"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center m-auto">
+                <button type="button" class="btn btn-primary" id="filter-sales-report">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-filter" viewBox="0 0 16 16">
+                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                    Filter
+                </button>
+
+
+                <button type="button" class="btn btn-success" id="download-sales-report">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    Download
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Blank Row -->
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+
+        <!-- Table -->
+        <div class="col-12">
+            <table id="sales-table" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="th-sm" scope="col">No</th>
+                    <th class="th-sm" scope="col">Brand</th>
+                    <th class="th-sm" scope="col">Category</th>
+                    <th class="th-sm" scope="col">Quantity</th>
+                    <th class="th-sm" scope="col">Revenue</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>No
+                    </th>
+                    <th>Brand
+                    </th>
+                    <th>Category
+                    </th>
+                    <th>Quantity
+                    </th>
+                    <th>Revenue
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div> <!-- Container end-->
+
+<footer th:replace="snippets.html :: name_footer"></footer>
+
+<script th:src="@{/static/sales-report.js}"/>
+</script>
+
+</body>
+
+</html>

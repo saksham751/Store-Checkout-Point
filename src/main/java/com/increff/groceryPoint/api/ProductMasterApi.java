@@ -2,72 +2,71 @@ package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.ProductMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
 import com.increff.groceryPoint.pojo.ProductMasterPojo;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperProduct.checkProductExists;
-import static java.util.Objects.isNull;
-
 @Service
 public class ProductMasterApi {
     @Autowired
-    private ProductMasterDao pdao;
-    @Autowired
-    private BrandMasterApi brandApi;
+    private ProductMasterDao productDao;
 
-    @Autowired
-    private InventoryMasterApi inventoryApi;
-
-    public void addProductApi(ProductMasterPojo p) throws ApiException {
+    public int add(ProductMasterPojo p) throws ApiException {
         int id = p.getBrand_category();
-        BrandMasterPojo brandPojo = brandApi.getBrandApi(id);
-        if (isNull(brandPojo)) {
-            throw new ApiException("Brand id does not exist");
-        }
-
-        pdao.insertProductDao(p);
+        checkBarcodeExists(p.getBarcode());
+        return productDao.add(p);
     }
 
-    public void deleteProductApi(int id) throws ApiException {
-        getCheck(id);
-        pdao.deleteProductDao(id);
+    public void delete(int id) throws ApiException {
+        getCheckApi(id);
+        productDao.delete(id);
     }
 
-
-    public ProductMasterPojo getProductApi(int id) throws ApiException {
-        System.out.println(id);
-        ProductMasterPojo p = getCheck(id);
+    public ProductMasterPojo get(int id) throws ApiException {
+        ProductMasterPojo p = getCheckApi(id);
         return p;
     }
 
-    public List<ProductMasterPojo> getAllProductApi() {
-        return pdao.selectAllProductDao();
+    public List<ProductMasterPojo> getAll() {
+        return productDao.getAll();
     }
 
 
-    @Transactional
-    public void updateProductApi(int id, ProductMasterPojo p) throws ApiException {
-        ProductMasterPojo ex = getCheck(id);
+    @Transactional(rollbackFor = ApiException.class)
+    public void update(int id, ProductMasterPojo p) throws ApiException {
+        ProductMasterPojo ex = getCheckApi(id);
+        ProductMasterPojo pro = getfromBarcode(p.getBarcode());
+        if(pro!=null && pro.getId()!=ex.getId()) {
+            throw new ApiException("Barcode already exists");
+        }
         ex.setName(p.getName());
         ex.setMrp(p.getMrp());
         ex.setBarcode(p.getBarcode());
         ex.setBrand_category(p.getBrand_category());
-        pdao.updateProductDao(ex);
-
     }
 
-    public ProductMasterPojo getCheck(int id) throws ApiException {
-        ProductMasterPojo p = pdao.selectProductDao(id);
-        System.out.println(id);
+    public ProductMasterPojo getCheckApi(int id) throws ApiException {
+        ProductMasterPojo p = productDao.get(id);
         if (p == null) {
-            throw new ApiException("Product with given ID does not exit, id: " + id);
+            throw new ApiException("Product with given ID does not exist, id: " + id);
         }
         return p;
+    }
+    public ProductMasterPojo getfromBarcode(String barcode) throws ApiException{
+        ProductMasterPojo ex= productDao.getfromBarcode(barcode);
+        if (ex == null) {
+            throw new ApiException("Product with given barcode does not exist");
+        }
+        return ex;
+    }
+
+    public void checkBarcodeExists(String barcode) throws ApiException{
+        ProductMasterPojo ex=  productDao.getfromBarcode(barcode);
+        if(ex!=null){
+            throw new ApiException("Barcode already exists");
+        }
     }
 }

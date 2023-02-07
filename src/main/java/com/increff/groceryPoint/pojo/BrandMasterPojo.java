@@ -14,16 +14,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class BrandMasterPojo extends AbstractPojo{
-    //TODO abstract pojo should have createdat, updated at,version.
-    //TODO @TABLEgenerator or @id
-    //TODO index on appropriate field
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-
     private String brand;
     @Column(nullable = false)
-
     private String category;
 }

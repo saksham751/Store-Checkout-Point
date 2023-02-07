@@ -2,26 +2,9 @@
 <!doctype html>
 <html lang="en">
 <head th:replace="snippets.html :: name_head"></head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Jekyll v3.8.6">
+
   <title>Jumbotron Template · Bootstrap</title>
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/jumbotron/">
-
-  <!-- Bootstrap core CSS -->
-  <link href="/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" href="/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-  <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-  <link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json">
-  <link rel="mask-icon" href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
-  <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico">
-  <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
   <meta name="theme-color" content="#563d7c">
 
 
@@ -42,7 +25,7 @@
       }
     </style>
   <!-- Custom styles for this template -->
-  <link href="jumbotron.css" rel="stylesheet">
+<!--  <link href="jumbotron.css" rel="stylesheet">-->
 </head>
 <body>
 <nav th:replace="snippets.html :: name_site_navbar"></nav>
@@ -85,10 +68,9 @@
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-3">Hello, world!</h1>
-      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      <a class="btn btn-primary btn-lg" th:href="@{/site/login}" role="button">Get Started</a>
+      <h1 class="display-3">Welcome to Store Checkout Point</h1>
+      <p>Say goodbye to long lines and slow checkout processes woth our cutting-edge store checkout app. With its intuitive interface, you can quickly scan and purchase items, making
+        shopping a breeze. No more waiting in line, no more hassle. This application can streamline the shopping experience for customers and help retailers manage their inventory and sales efficiently
     </div>
   </div>
 
@@ -96,19 +78,16 @@
     <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>Brand and Category Management</h2>
+        <p>The app allows the retailers to add and manage brands and categories of products.</p>
       </div>
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>Inventory Management</h2>
+        <p> Our application allows the retailer to keep track of stock levels and update them in real-time as products are sold. It is the one stop destination for everything Inventory.</p>
       </div>
       <div class="col-md-4">
-        <h2>Heading</h2>
-        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <h2>Order System</h2>
+        <p>It has a built-in ordering systems which can be used by the checkout counters to order directly through the app and manage the orders.</p>
       </div>
     </div>
 
@@ -117,8 +96,8 @@
   </div> <!-- /container -->
 
 </main>
+</body>
+
 <footer th:replace="snippets.html :: name_footer"></footer>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script></body>
 </html>
 

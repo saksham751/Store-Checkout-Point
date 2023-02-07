@@ -19,23 +19,23 @@ public class InventoryMasterController {
 
     @ApiOperation(value = "Add a product Inventory")
     @RequestMapping(path = "/api/inventory", method = RequestMethod.POST)
-    public void addInventoryController(@RequestBody InventoryMasterForm form) throws ApiException{
-        invDto.addInventoryDto(form);
+    public void add(@RequestBody InventoryMasterForm form) throws ApiException{
+        invDto.add(form);
     }
     @ApiOperation(value="Select particular Inventory")
     @RequestMapping(path="/api/inventory/{id}",method=RequestMethod.GET)
-    public InventoryMasterData getInventoryController(@PathVariable int id)throws ApiException{
-        return invDto.getInventoryDto(id);
+    public InventoryMasterData get(@PathVariable int id)throws ApiException{
+        return invDto.get(id);
     }
     @ApiOperation(value="Gets all Inventory")
     @RequestMapping(path="api/inventory", method=RequestMethod.GET)
-    public List<InventoryMasterData> getAllInventoryController() throws ApiException{
-        return invDto.getAllInventoryDto();
+    public List<InventoryMasterData> getAll() throws ApiException{
+        return invDto.getAll();
     }
     @ApiOperation(value="Updates Inventory")
     @RequestMapping(path="/api/inventory/{id}", method = RequestMethod.PUT)
-    public void updateInventoryController(@PathVariable int id, @RequestBody InventoryMasterForm form) throws ApiException {
-        invDto.updateInventoryDto(id,form);
+    public void update(@RequestBody InventoryMasterForm form) throws ApiException {
+        invDto.update(form.getId(),form);
     }
 
 }

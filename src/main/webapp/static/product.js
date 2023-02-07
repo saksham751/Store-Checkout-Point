@@ -22,6 +22,12 @@ function addProduct(event){
        },
 	   success: function(response) {
 	   		getProductList();
+	   		document.getElementById("product-form").reset();
+                        	   		$('#create-product-modal').modal('hide');
+                                    document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                                    document.getElementById('toast-container').classList.add('bg-success');
+                                    document.getElementById('my-message').innerHTML="The product was added successfully";
+                                    $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -48,6 +54,12 @@ function updateProduct(event){
        },
 	   success: function(response) {
 	   		getProductList();
+	   		document.getElementById("product-edit-form").reset();
+            	   		$('#create-product-modal').modal('hide');
+                        document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+                        document.getElementById('toast-container').classList.add('bg-success');
+                        document.getElementById('my-message').innerHTML="The product was added successfully";
+                        $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -94,6 +106,13 @@ function processData(){
 
 function readFileDataCallback(results){
 	fileData = results.data;
+	if(fileData.length > 5000)
+        	{
+        	    document.getElementById('status-message').innerHTML = "Data length cannot be grater than 500";
+                    document.getElementById('status').style.backgroundColor = "red";
+                   	$('.toast').toast('show');
+                return false;
+        	}
 	uploadRows();
 }
 
@@ -127,6 +146,7 @@ function uploadRows(){
 	   		row.error=response.responseText
 	   		errorData.push(row);
 	   		uploadRows();
+	   		document.getElementById('download-errors').disabled=false;
 	   }
 	});
 
@@ -143,18 +163,21 @@ function displayProductList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteProduct(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditProduct(' + e.id + ')">edit</button>'
+		var buttonHtml = '<button style ="background-color:#d11a2a" class="btn-disable btn btn-primary" onclick="deleteProduct(' + e.id + ')">Delete</button>'
+		buttonHtml += ' <button class="btn-disable btn btn-primary" onclick="displayEditProduct(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.productName + '</td>'
 		+ '<td>'  + e.brand_category + '</td>'
 		+ '<td>'  + e.barcode + '</td>'
 		+ '<td>'  + e.mrp + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
+	if($("meta[name=role]").attr("content") == "operator")
+                hideSupervisorView();
+	pagination();
 }
 
 function displayEditProduct(id){
@@ -215,9 +238,16 @@ function init(){
 	$('#upload-data').click(displayUploadData);
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
-    $('#productFile').on('change', updateFileName)
+    $('#productFile').on('change', updateFileName);
+    if($("meta[name=role]").attr("content") == "operator"){
+        document.getElementById('supervisor-view').style.display= 'none';
+    }
 }
-
+function pagination()
+{
+    $('#product-table').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getProductList);
 

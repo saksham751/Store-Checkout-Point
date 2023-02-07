@@ -10,53 +10,58 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-//todo shift update brandcode to dao
+
 @Service
 public class BrandMasterApi {
     @Autowired
-    private BrandMasterDao dao;
-    //private Helper help;
+    private BrandMasterDao brandDao;
 
-    public void addBrandApi(BrandMasterPojo p) throws ApiException {
-        //help.normalize(p);
-        checkUnique(p);
-        dao.insertBrandDao(p);
+    public int add(BrandMasterPojo brandPojo) throws ApiException {
+        checkUnique(brandPojo);
+        return brandDao.add(brandPojo);
     }
-//todo remove transactional
 
-    public void deleteBrandApi(int id) throws ApiException{
+    public int delete(int id) throws ApiException{
         getCheck(id);
-        dao.deleteBrandDao(id);
+        brandDao.delete(id);
+        return id;
     }
-
-
-    public BrandMasterPojo getBrandApi(int id) throws ApiException {
+    public BrandMasterPojo get(int id) throws ApiException {
         return getCheck(id);
     }
 
-    public List<BrandMasterPojo> getAllBrandApi() {
-        return dao.selectAllBrandDao();
+    public List<BrandMasterPojo> getAll() {
+        return brandDao.getAll();
     }
 
-    @Transactional
-    public void updateBrandApi(int id, BrandMasterPojo p) throws ApiException {
-        checkUnique(p);
+    @Transactional(rollbackFor = ApiException.class)
+    public void update(int id, BrandMasterPojo brandPojo) throws ApiException {
+        checkUnique(brandPojo);
         BrandMasterPojo ex = getCheck(id);
-        ex.setCategory(p.getCategory());
-        ex.setBrand(p.getBrand());
-        dao.updateBrandDao(ex);
+        ex.setCategory(brandPojo.getCategory());
+        ex.setBrand(brandPojo.getBrand());
     }
 
     public BrandMasterPojo getCheck(int id) throws ApiException {
-        BrandMasterPojo p = dao.selectBrandDao(id);
+        BrandMasterPojo p = brandDao.get(id);
         if (p == null) {
             throw new ApiException("Brand with given ID does not exit, id: " + id);
         }
         return p;
     }
+    public List<BrandMasterPojo> getByBrand(String brand){
+        return brandDao.getByBrand(brand);
+    }
+    public List<BrandMasterPojo> getByCategory(String category){
+        return brandDao.getByCategory(category);
+    }
+    public BrandMasterPojo getByBrandCategory(String brand,String category){
+        return brandDao.getByBrandCategory(brand,category);
+    }
     public void checkUnique(BrandMasterPojo brandPojo) throws ApiException {
-        if (!Objects.isNull(dao.checkUnique(brandPojo.getBrand(), brandPojo.getCategory()))) {
+        if (!Objects.isNull(brandDao.checkUnique(brandPojo.getBrand(), brandPojo.getCategory()))) {
             throw new ApiException(brandPojo.getBrand() + " - " + brandPojo.getCategory() + " pair already exists");
         }
     }
+
 }

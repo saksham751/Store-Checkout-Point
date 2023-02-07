@@ -1,13 +1,15 @@
 package com.increff.groceryPoint.model;
 
+import com.increff.groceryPoint.pojo.AbstractPojo;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 @Getter@Setter
-public class OrderItemMasterData extends OrderItemMasterForm{
-    private int id;
-    private double sellingPrice;
+public class OrderItemMasterData{
+    private Integer id;
+    private Double sellingPrice;
+    private Integer productId;
+    private Integer quantity;
+    private Integer orderId;
+
 }

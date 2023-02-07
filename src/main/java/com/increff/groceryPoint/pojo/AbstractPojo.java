@@ -5,11 +5,13 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.sql.Timestamp;
 @Getter
 @Setter
-public class AbstractPojo {
+@MappedSuperclass
+public abstract class AbstractPojo {
     @CreationTimestamp
     private Timestamp Created_At;
     @UpdateTimestamp

@@ -7,44 +7,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
-
-import static com.increff.groceryPoint.dto.HelperProduct.checkProductExists;
-
-
 @Service
 public class OrderMasterApi {
     @Autowired
-    private OrderMasterDao oDao;
-
-
-    public void addOrderApi(OrderMasterPojo omp) throws ApiException {
-//        System.out.println(omp.getId());
-        oDao.addOrderDao(omp);
+    private OrderMasterDao orderDao;
+    public int add(OrderMasterPojo omp) throws ApiException {
+        omp.setTime(Date.from(Instant.now()));
+        omp.setStatus("Pending");
+        return orderDao.add(omp);
     }
-
-
-    public OrderMasterPojo getOrderApi(int id) throws ApiException {
-        OrderMasterPojo omp= oDao.selectOrderDao(id);
+    public OrderMasterPojo get(int id) throws ApiException {
+        OrderMasterPojo omp= orderDao.get(id);
         if (omp == null) {
             throw new ApiException("Order with given ID does not exit, id: " + id);
         }
         return omp;
     }
-
-    public List<OrderMasterPojo> getAllOrderApi() {
-        return oDao.selectAllOrderDao();
+    public List<OrderMasterPojo> getAll() {
+        return orderDao.getAll();
     }
-
-
-    public void updateOrderApi(int id, OrderMasterPojo p) throws ApiException {
-        OrderMasterPojo ex = oDao.selectOrderDao(id);
+    @Transactional(rollbackFor = ApiException.class)
+    public void update(int id, OrderMasterPojo p) throws ApiException {
+        OrderMasterPojo ex = orderDao.get(id);
         if (ex == null) {
             throw new ApiException("Order with given ID does not exit, id: " + id);
         }
-        oDao.updateOrderDao(p,ex);
-
+        ex.setStatus(p.getStatus());
+        ex.setTime(p.getTime());
     }
-
+    public List<OrderMasterPojo> getByDateFilter(Date start, Date end) throws ApiException{
+        List<OrderMasterPojo> orderList= orderDao.getByDateFilter(start,end);
+        return orderList;
+    }
 }

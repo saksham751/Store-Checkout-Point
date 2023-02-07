@@ -21,50 +21,37 @@ import io.swagger.annotations.ApiOperation;
 @Api
 @RestController
 public class BrandMasterController {
-//TODO SHOULD BE CALLING DTO LAYER
-    //TODO PACKAGE FOR DTO AND ADD HELPER CLASS
-    //todo remove api from name and add master
-    //todo brnadmastercontroller should call brandmasterdto should call brandmasterapi this should call brandmasterdao.
     @Autowired
     private BrandMasterdto brandDto;
 
-    @ApiOperation(value = "Adds an Brand")
+    @ApiOperation(value = "Adds a Brand")
     @RequestMapping(path = "/api/brand", method = RequestMethod.POST)
-    public void addBrandController(@RequestBody BrandMasterForm form) throws ApiException {
-        brandDto.addBrandDto(form);
+    public void add(@RequestBody BrandMasterForm form) throws ApiException {
+        brandDto.add(form);
 
     }
-
-
-    @ApiOperation(value = "Deletes an brand")
+    @ApiOperation(value = "Deletes a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.DELETE)
-    public void deleteBrandController(@PathVariable int id) throws ApiException{
-        brandDto.deleteBrandDto(id);
+    public void delete(@PathVariable int id) throws ApiException{
+        brandDto.delete(id);
 
     }
-
-    @ApiOperation(value = "Gets an brand by ID")
+    @ApiOperation(value = "Gets a brand by ID")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.GET)
-    public BrandMasterData getBrandController(@PathVariable int id) throws ApiException {
-        return brandDto.getBrandDto(id);
+    public BrandMasterData get(@PathVariable int id) throws ApiException {
+        return brandDto.get(id);
 
     }
-
     @ApiOperation(value = "Gets list of all brand")
     @RequestMapping(path = "/api/brand", method = RequestMethod.GET)
-    public List<BrandMasterData> getAllBrandController() throws ApiException {
-        return brandDto.getAllBrandDto();
+    public List<BrandMasterData> getAll() throws ApiException {
+        return brandDto.getAll();
 
     }
-
-    @ApiOperation(value = "Updates an brand")
+    @ApiOperation(value = "Updates a brand")
     @RequestMapping(path = "/api/brand/{id}", method = RequestMethod.PUT)
-    public void updateBrandController(@PathVariable int id, @RequestBody BrandMasterForm f) throws ApiException {
-        brandDto.updateBrandDto(id, f);
+    public void update(@PathVariable int id, @RequestBody BrandMasterForm f) throws ApiException {
+        brandDto.update(id, f);
 
     }
-
-
-
-
 }

@@ -1,76 +1,62 @@
 package com.increff.groceryPoint.api;
 
 import com.increff.groceryPoint.dao.OrderItemMasterDao;
-import com.increff.groceryPoint.dao.OrderMasterDao;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.pojo.BrandMasterPojo;
+import com.increff.groceryPoint.pojo.InventoryMasterPojo;
 import com.increff.groceryPoint.pojo.OrderItemMasterPojo;
-import com.increff.groceryPoint.pojo.ProductMasterPojo;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.increff.groceryPoint.dto.HelperProduct.checkProductExists;
-
 @Service
 public class OrderItemMasterApi {
     @Autowired
-    private OrderMasterApi orderApi;
-    @Autowired
-    private ProductMasterApi productApi;
-    @Autowired
     private OrderItemMasterDao orderItemDao;
-
-    @Autowired
-    private InventoryMasterApi invApi;
-    public void addOrderItemApi(OrderItemMasterPojo p) throws ApiException {
-        isOrderItemValid(p);
-        orderItemDao.addOrderItemDao(p);
-        //orderApi.addOrderApi(p);
+    @Transactional(rollbackFor = ApiException.class)
+    public int add(OrderItemMasterPojo p) throws ApiException {
+        return orderItemDao.add(p);
     }
 
-    public OrderItemMasterPojo getOrderItemApi(int id) throws ApiException {
+    public OrderItemMasterPojo get(int id) throws ApiException {
         checkOrderItemExists(id);
-        return orderItemDao.selectOrderItemDao(id);
+        return orderItemDao.get(id);
     }
 
-    public List<OrderItemMasterPojo> getAllOrderItemApi() {
-        return orderItemDao.selectAllOrderItemDao();
+    public List<OrderItemMasterPojo> getAll() {
+        return orderItemDao.getAll();
     }
 
-    @Transactional
-    public void updateOrderItemApi(int id, OrderItemMasterPojo p) throws ApiException {
-        OrderItemMasterPojo ex = checkOrderItemExists(id);
-        ex.setQuantity(p.getQuantity());
-        ex.setSellingPrice(p.getSellingPrice());
-        ex.setProductId(p.getProductId());
-        orderItemDao.updateOrderDao(ex);
+    @Transactional(rollbackFor = ApiException.class)
+    public void update(int id,OrderItemMasterPojo ex) throws ApiException {
+        OrderItemMasterPojo orderItemPojo =orderItemDao.get(id);
+        orderItemPojo.setQuantity(ex.getQuantity());
+        orderItemPojo.setSellingPrice(ex.getSellingPrice());
+        orderItemPojo.setProductId(ex.getProductId());
+
+        orderItemDao.update(ex);
 
     }
-    public void deleteOrderItemApi(int id) throws ApiException{
+    public void delete(int id) throws ApiException{
         checkOrderItemExists(id);
-        orderItemDao.deleteOrderItemDao(id);
+        orderItemDao.delete(id);
+    }
+
+    public OrderItemMasterPojo get(Integer id, Integer productId) throws ApiException{
+        return orderItemDao.get(id,productId);
     }
 
     public OrderItemMasterPojo checkOrderItemExists(int id) throws ApiException{
-        OrderItemMasterPojo p = orderItemDao.selectOrderItemDao(id);
+        OrderItemMasterPojo p = orderItemDao.get(id);
         if (p == null) {
             throw new ApiException("Order Item with given ID does not exit, id: " + id);
         }
         return p;
     }
 
-    public void isOrderItemValid(OrderItemMasterPojo p) throws ApiException{
-        int productId=p.getProductId();
-        productApi.getProductApi(productId);
-        orderApi.getOrderApi(p.getOrderId());
-        if(invApi.getInventoryApi(productId).getQuantity()<p.getQuantity()){
-            throw new ApiException("Not enough Quantity Available");
-        }
 
+    public List<OrderItemMasterPojo> getAllfromOrderId(Integer orderId) throws ApiException{
+        return orderItemDao.getAllfromOrderId(orderId);
     }
-
 }

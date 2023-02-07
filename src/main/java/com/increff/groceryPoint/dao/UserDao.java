@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+import javax.persistence.UniqueConstraint;
 
+import com.increff.groceryPoint.dto.ApiException;
 import org.springframework.stereotype.Repository;
 
 import com.increff.groceryPoint.pojo.UserPojo;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UserDao extends AbstractDao {
@@ -18,37 +20,16 @@ public class UserDao extends AbstractDao {
 	private static String select_email = "select p from UserPojo p where email=:email";
 	private static String select_all = "select p from UserPojo p";
 
-	
-	@Transactional
-	public void insert(UserPojo p) {
-		em().persist(p);
+	@Transactional(rollbackFor = ApiException.class)
+	public UserPojo insert(UserPojo userPojo) {
+		em().persist(userPojo);
+		return userPojo;
 	}
 
-	public int delete(int id) {
-		Query query = em().createQuery(delete_id);
-		query.setParameter("id", id);
-		return query.executeUpdate();
-	}
-
-	public UserPojo select(int id) {
-		TypedQuery<UserPojo> query = getQuery(select_id, UserPojo.class);
-		query.setParameter("id", id);
-		return getSingle(query);
-	}
-
+	@Transactional(readOnly = true)
 	public UserPojo select(String email) {
 		TypedQuery<UserPojo> query = getQuery(select_email, UserPojo.class);
 		query.setParameter("email", email);
 		return getSingle(query);
 	}
-
-	public List<UserPojo> selectAll() {
-		TypedQuery<UserPojo> query = getQuery(select_all, UserPojo.class);
-		return query.getResultList();
-	}
-
-	public void update(UserPojo p) {
-	}
-
-
 }

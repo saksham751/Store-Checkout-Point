@@ -1,13 +1,17 @@
 package com.increff.groceryPoint.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.increff.groceryPoint.model.AddUserForm;
+import com.increff.groceryPoint.model.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,7 +25,7 @@ import com.increff.groceryPoint.model.InfoData;
 import com.increff.groceryPoint.model.LoginForm;
 import com.increff.groceryPoint.pojo.UserPojo;
 import com.increff.groceryPoint.dto.ApiException;
-import com.increff.groceryPoint.dto.UserService;
+import com.increff.groceryPoint.dto.Userdto;
 import com.increff.groceryPoint.util.SecurityUtil;
 import com.increff.groceryPoint.util.UserPrincipal;
 
@@ -29,16 +33,17 @@ import io.swagger.annotations.ApiOperation;
 
 @Controller
 public class LoginController {
-
 	@Autowired
-	private UserService service;
+	private Userdto userDto;
 	@Autowired
 	private InfoData info;
-	
+	@Value("#{'${supervisor.email}'.split(',')}")
+	private List<String> supervisorList;
+	private String supervisorEmail;
 	@ApiOperation(value = "Logs in a user")
 	@RequestMapping(path = "/session/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ModelAndView login(HttpServletRequest req, LoginForm f) throws ApiException {
-		UserPojo p = service.get(f.getEmail());
+		UserPojo p = userDto.get(f.getEmail());
 		boolean authenticated = (p != null && Objects.equals(p.getPassword(), f.getPassword()));
 		if (!authenticated) {
 			info.setMessage("Invalid username or password");
@@ -57,6 +62,23 @@ public class LoginController {
 		return new ModelAndView("redirect:/ui/home");
 
 	}
+	@ApiOperation(value = "Signs up a user")
+	@RequestMapping(path = "/site/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ModelAndView signUp(HttpServletRequest req, AddUserForm userForm) throws ApiException {
+		try {
+			UserData userData = userDto.add(userForm);
+			if(userData==null){
+				ModelAndView mav = new ModelAndView("signup.html");
+				mav.addObject("info", info);
+				return mav;
+			}
+		}catch(Exception e){
+			info.setMessage(e.getMessage());
+			return new ModelAndView("redirect:/site/signup	");
+		}
+
+		return new ModelAndView("redirect:/site/login");
+	}
 
 	@RequestMapping(path = "/session/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
@@ -64,7 +86,7 @@ public class LoginController {
 		return new ModelAndView("redirect:/site/logout");
 	}
 
-	private static Authentication convert(UserPojo p) {
+	private Authentication convert(UserPojo p) {
 		// Create principal
 		UserPrincipal principal = new UserPrincipal();
 		principal.setEmail(p.getEmail());
@@ -72,7 +94,16 @@ public class LoginController {
 
 		// Create Authorities
 		ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(p.getRole()));
+		String role = "operator";
+		for(String s:supervisorList) {
+			if (Objects.equals(s, p.getEmail()))
+				role = "supervisor";
+		}
+		principal.setRole(role);
+
+		authorities.add(new SimpleGrantedAuthority(role));
+		//System.out.println(role);
+		//authorities.add(new SimpleGrantedAuthority(p.getRole()));
 		// you can add more roles if required
 
 		// Create Authentication

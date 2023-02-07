@@ -1,9 +1,13 @@
-
+console.log($("meta[name=role]").attr("content"))
 function getBrandUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
 	return baseUrl + "/api/brand";
 }
 
+function getRole(){
+    var role = $("meta[name=role]").attr("content")
+    return role;
+}
 //BUTTON ACTIONS
 function addBrand(event){
 	//Set the values to update
@@ -22,6 +26,11 @@ function addBrand(event){
        },
 	   success: function(response) {
 	   		getBrandList();
+	   		document.getElementById("brand-form").reset();
+	   		document.getElementById('toast-container').classList.remove('bg-warning','bg-danger','bg-success');
+            document.getElementById('toast-container').classList.add('bg-success');
+            document.getElementById('my-message').innerHTML="The brand was added successfully";
+            $(".toast").toast('show');
 	   },
 	   error: handleAjaxError
 	});
@@ -93,10 +102,15 @@ function processData(){
 
 	readFileData(file, readFileDataCallback);
 }
-
 function readFileDataCallback(results){
 	fileData = results.data;
-	console.log(fileData);
+	if(fileData.length > 5000)
+    	{
+    	    document.getElementById('status-message').innerHTML = "Data length cannot be grater than 500";
+                document.getElementById('status').style.backgroundColor = "red";
+               	$('.toast').toast('show');
+            return false;
+    	}
 	uploadRows();
 }
 
@@ -125,11 +139,13 @@ function uploadRows(){
        },
 	   success: function(response) {
 	   		uploadRows();
+
 	   },
 	   error: function(response){
 	   		row.error=response.responseText
 	   		errorData.push(row);
 	   		uploadRows();
+	   		document.getElementById('download-errors').disabled=false;
 	   }
 	});
 
@@ -138,7 +154,18 @@ function uploadRows(){
 function downloadErrors(){
 	writeFileData(errorData);
 }
-
+function resetUploadDialog(){
+	//Reset file name
+	var $file = $('#brandFile');
+	$file.val('');
+	$('#brandFileName').html("Choose File");
+	//Reset various counts
+	processCount = 0;
+	fileData = [];
+	errorData = [];
+	//Update counts
+	updateUploadDialog();
+}
 //UI DISPLAY METHODS
 
 function displayBrandList(data){
@@ -146,16 +173,18 @@ function displayBrandList(data){
 	$tbody.empty();
 	for(var i in data){
 		var e = data[i];
-		var buttonHtml = '<button onclick="deleteBrand(' + e.id + ')">delete</button>'
-		buttonHtml += ' <button onclick="displayEditBrand(' + e.id + ')">edit</button>'
+		var buttonHtml = ' <button class="btn-disable btn btn-primary supervisor-view" onclick="displayEditBrand(' + e.id + ')">Edit</button>'
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brand + '</td>'
 		+ '<td>'  + e.category + '</td>'
-		+ '<td>' + buttonHtml + '</td>'
+		+ '<td class ="supervisor-view">' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
 	}
+	if($("meta[name=role]").attr("content") == "operator")
+            hideSupervisorView();
+	pagination();
 }
 
 function displayEditBrand(id){
@@ -197,7 +226,7 @@ function updateFileName(){
 
 function displayUploadData(){
  	resetUploadDialog();
-        $('#upload-brand-modal').modal('toggle');
+    $('#upload-brand-modal').modal('toggle');
 }
 
 function displayBrand(data){
@@ -210,6 +239,7 @@ function displayBrand(data){
 
 //INITIALIZATION CODE
 function init(){
+
 	$('#add-brand').click(addBrand);
 	$('#update-brand').click(updateBrand);
 	$('#refresh-data').click(getBrandList);
@@ -217,8 +247,16 @@ function init(){
 	$('#process-data').click(processData);
 	$('#download-errors').click(downloadErrors);
     $('#brandFile').on('change', updateFileName)
-}
+    if($("meta[name=role]").attr("content") == "operator"){
+        document.getElementById('supervisor-view').style.display= 'none';
+    }
 
+}
+function pagination()
+{
+   $('#brand-table').DataTable();
+   $('.dataTables_length').addClass('bs-select');
+}
 $(document).ready(init);
 $(document).ready(getBrandList);
 
